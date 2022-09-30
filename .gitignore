@@ -7,7 +7,6 @@ schema.yaml
 web/
 dumps/
 staticfiles/
-logs/
 certs/
 profiles/
 
