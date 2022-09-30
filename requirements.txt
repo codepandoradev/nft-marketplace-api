@@ -1,4 +1,4 @@
-Django==4.0  # django-celery-beat: Django <= 4.0
+Django==3.2.15 # django-celery-beat: Django <= 4.0
 django-cors-headers==3.13.0
 django-environ==0.9.0
 django-filter==22.1
@@ -28,6 +28,7 @@ pydantic[email]==1.9.2
 
 # dev
 django-silk==5.0.1
+django-web3auth==0.1.0
 
 # test
 parameterized==0.8.1
