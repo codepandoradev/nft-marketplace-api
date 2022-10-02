@@ -16,14 +16,14 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     type = models.PositiveSmallIntegerField(
         choices=UserType.choices, default=UserType.DEFAULT
     )
-    username = models.TextField(unique=True)
+    wallet_address = models.TextField(unique=True, null=False, default=None)
     password = models.CharField(_('password'), max_length=128, blank=True)
     is_active = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'username'
+    USERNAME_FIELD = 'wallet_address'
     REQUIRED_FIELDS = []
 
     @property

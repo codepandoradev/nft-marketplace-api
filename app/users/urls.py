@@ -1,5 +1,4 @@
-from django.urls import path, include
-from web3auth import urls as web3auth_urls
+from django.urls import path
 
 from .views import *
 
@@ -10,5 +9,5 @@ urlpatterns = [
     path('token/', UsersTokenView.as_view()),
     path('me/', UsersMeView.as_view()),
     path('me/password/', UsersMePasswordView.as_view()),
-    path('web3/', include(web3auth_urls)),
+    path('web3/login/', UsersWalletView.as_view()),
 ]

@@ -93,7 +93,6 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'django_celery_beat',
     'djcelery_email',
-    'web3auth',
     # own apps
     'app.base',
     'app.users',
@@ -307,9 +306,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 AUTH_USER_MODEL = 'users.User'
 SESSION_ON_LOGIN = env('SESSION_ON_LOGIN', bool, DEBUG)
-AUTHENTICATION_BACKENDS = ['web3auth.backend.Web3Backend']
-WEB3AUTH_USER_ADDRESS_FIELD = 'username'
-WEB3AUTH_USER_SIGNUP_FIELDS = list()
+WEB3AUTH_USER_WALLET_ADDRESS_FIELD = 'wallet_address'
 
 # password
 
