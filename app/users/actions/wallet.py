@@ -27,7 +27,7 @@ class POST_UsersWalletAction(BaseAction):
             kwarg = {settings.WEB3AUTH_USER_WALLET_ADDRESS_FIELD: addr}
             user = User.objects.get(**kwarg)
         except User.DoesNotExist:
-            user = User.objects.create(wallet_address=addr)
+            user = User.objects.create(wallet_address=addr, is_active=True)
         if user.type == UserType.BANNED:
             raise PermissionError
         if not user.is_active:
