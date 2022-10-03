@@ -2,4 +2,4 @@ from .me import *
 from .password import *
 from .register import *
 from .token import *
-from .wallet import *
+from .web3 import *

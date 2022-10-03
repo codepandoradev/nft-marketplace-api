@@ -269,7 +269,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR + 'static'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
 # silk
 
 
@@ -306,7 +305,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 AUTH_USER_MODEL = 'users.User'
 SESSION_ON_LOGIN = env('SESSION_ON_LOGIN', bool, DEBUG)
-WEB3AUTH_USER_WALLET_ADDRESS_FIELD = 'wallet_address'
 
 # password
 

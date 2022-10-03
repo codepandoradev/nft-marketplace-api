@@ -3,7 +3,6 @@ from ethereum.utils import ecrecover_to_pub
 
 
 def sig_to_vrs(sig):
-    # sig_bytes = bytes.fromhex(sig[2:]) # Legacy
     r = int(sig[2:66], 16)
     s = int(sig[66:130], 16)
     v = int(sig[130:], 16)
