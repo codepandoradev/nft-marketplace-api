@@ -107,6 +107,8 @@ INSTALLED_APPS = [
     # own apps
     'app.base',
     'app.users',
+    'app.nft',
+    'app.sale',
 ]
 
 REST_FRAMEWORK = {
