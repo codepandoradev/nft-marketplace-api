@@ -60,10 +60,10 @@ class _TextEnumMeta(_BaseEnumMeta):
                 label = key.replace('_', ' ').capitalize()
         elif value is ...:
             label = key.replace('_', ' ').capitalize()
-            value = key.lower()
+            value = key.upper()
         else:
             label = value
-            value = key.lower()
+            value = key.upper()
         return value, label
 
 
