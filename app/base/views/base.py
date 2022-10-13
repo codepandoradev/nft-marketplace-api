@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import exceptions, status
 from rest_framework.exceptions import MethodNotAllowed
 from rest_framework.generics import GenericAPIView
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import set_rollback
 
@@ -64,9 +65,11 @@ class BaseView(GenericAPIView):
     ] = {}
     permissions_map: dict[str, list[Type[BasePermission]]] = {}
 
+    _method = ''
+
     @property
     def method(self) -> str:
-        return self.request.method.lower() if hasattr(self, 'request') else ''
+        return self.request.method.lower() if hasattr(self, 'request') else self._method
 
     @classmethod
     def _extract_serializer_class_with_status(
@@ -116,11 +119,13 @@ class BaseView(GenericAPIView):
             return wrapped_f
 
         auth_schema = TokenAuthentication.WARNING_401.get_schema()
+        self = cls()
         for method_name in cls.http_method_names:
             try:
                 method = getattr(cls, method_name)
             except AttributeError:
                 continue
+            self._method = method_name
             responses = {}
 
             extracted = cls._extract_serializer_class_with_status(method_name)
@@ -129,11 +134,11 @@ class BaseView(GenericAPIView):
                 if get_schema := getattr(serializer_class, 'get_schema'):
                     responses |= get_schema(extracted[0])
 
-            if IsAuthenticatedPermission in cls.get_permission_classes(cls()):
+            if IsAuthenticatedPermission in cls.get_permission_classes(self):
                 responses |= {401: auth_schema}
 
-            method = extend_schema(responses=responses)(method)
             method = _force_args(method)
+            method = extend_schema(responses=responses)(method)
             setattr(cls, method_name, method)
 
     @classmethod
@@ -150,6 +155,9 @@ class BaseView(GenericAPIView):
             raise exceptions.NotAuthenticated()
         raise exceptions.PermissionDenied(detail=message, code=code)
 
+    def get_data(self) -> dict:
+        return self.request.data
+
     def list(self):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
@@ -160,8 +168,7 @@ class BaseView(GenericAPIView):
         return Response(serializer.data)
 
     def create(self):
-        serializer = self.get_serializer(data=self.request.data)
-        serializer.is_valid()
+        serializer = self.get_valid_serializer(data=self.get_data())
         serializer.save()
         return Response({'id': serializer.instance.pk}, status=status.HTTP_201_CREATED)
 
@@ -172,8 +179,9 @@ class BaseView(GenericAPIView):
 
     def update(self):
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=self.request.data, partial=True)
-        serializer.is_valid()
+        serializer = self.get_valid_serializer(
+            instance, data=self.get_data(), partial=True
+        )
         serializer.save()
 
     def destroy(self):

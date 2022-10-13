@@ -42,7 +42,7 @@ class _BaseEnumMeta(ChoicesMeta):
         self: ChoicesMeta
         transcripts = []
         for member in self:
-            if member.name.lower() == member.label.lower():
+            if member.name == member.label:
                 transcripts.append(f'{member.value} — {member.label}')
             else:
                 transcripts.append(f'{member.value} — {member.name} ({member.label})')

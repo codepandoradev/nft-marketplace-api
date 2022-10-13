@@ -15,6 +15,7 @@ urlpatterns = [
     path('django_admin/', admin.site.urls),
     path('base/', include('app.base.urls')),
     path('users/', include('app.users.urls')),
+    path('nfts/', include('app.nfts.urls')),
     *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]

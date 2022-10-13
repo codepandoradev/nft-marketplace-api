@@ -107,7 +107,7 @@ INSTALLED_APPS = [
     # own apps
     'app.base',
     'app.users',
-    'app.nft',
+    'app.nfts',
     'app.sale',
 ]
 
@@ -384,9 +384,9 @@ USE_I18N = True
 
 # money
 
-CURRENCIES = tuple(Currency)
+CURRENCIES = tuple(map(str, Currency))
 CURRENCY_CHOICES = Currency.choices
-DEFAULT_CURRENCY = Currency.ETH
+DEFAULT_CURRENCY = str(Currency.ETH)
 
 # timezone
 
