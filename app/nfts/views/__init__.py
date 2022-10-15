@@ -1,1 +1,1 @@
-from .nfts import *
+from .general import *

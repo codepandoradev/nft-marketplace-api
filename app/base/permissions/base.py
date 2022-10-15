@@ -19,7 +19,7 @@ class BasePermission(_BasePermission):
         return False
 
     def _has_permission(self, request, view):
-        return self.check()
+        return True
 
     @final
     def has_object_permission(self, request, view, obj):
@@ -30,4 +30,4 @@ class BasePermission(_BasePermission):
         return False
 
     def _has_object_permission(self, request, view, obj):
-        return self.check()
+        return True

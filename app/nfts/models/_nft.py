@@ -16,7 +16,8 @@ __all__ = ['Nft']
 class Nft(BaseModel):
     author = models.ForeignKey(User, models.CASCADE)
     network = models.TextField(choices=Network.choices)
-    content = models.ImageField(
+    content = models.FileField(
+        upload_to='nft/content',
         validators=[FileExtensionValidator(ALLOWED_NFT_CONTENT_EXTENSIONS)]
     )
     sales_policy = models.TextField(choices=SalesPolicy.choices)

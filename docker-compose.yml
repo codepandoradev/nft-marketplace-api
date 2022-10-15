@@ -37,6 +37,7 @@ services:
     volumes:
       - static_volume:/api/static
       - profile_volume:/api/profile
+      - media_volume:/api/media
     ports:
       - 8000:8000
     depends_on:
@@ -81,6 +82,7 @@ volumes:
   db_volume:
   static_volume:
   profile_volume:
+  media_volume:
 
 networks:
   db_network:

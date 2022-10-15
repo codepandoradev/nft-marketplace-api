@@ -1,10 +1,14 @@
 from django.conf import settings
 from djmoney.contrib.exchange.models import convert_money
-from djmoney.money import Money as _Money
-from djmoney.models import fields
+from djmoney import money
+from djmoney import serializers
+from djmoney import utils
+from djmoney.forms import fields as forms_fields
+from djmoney.models import fields as models_fields
+from djmoney.contrib.django_rest_framework import fields as django_rest_framework_fields
 
 
-class Money(_Money):
+class Money(money.Money):
     def __init__(self, *args, **kwargs):
         if len(args) <= 1:
             kwargs.setdefault('currency', settings.DEFAULT_CURRENCY)
@@ -14,4 +18,9 @@ class Money(_Money):
         return convert_money(self, currency)
 
 
-fields.Money = Money
+money.Money = Money
+serializers.Money = Money
+utils.MONEY_CLASSES = (Money, utils.MONEY_CLASSES[1])
+forms_fields.Money = Money
+models_fields.Money = Money
+django_rest_framework_fields.Money = Money
