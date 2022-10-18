@@ -108,7 +108,8 @@ INSTALLED_APPS = [
     'app.base',
     'app.users',
     'app.nfts',
-    'app.sale',
+    'app.sales',
+    'app.collections',
 ]
 
 REST_FRAMEWORK = {

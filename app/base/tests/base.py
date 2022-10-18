@@ -2,10 +2,15 @@ from typing import Type
 
 from django.db import models
 from django.forms import model_to_dict
-from rest_framework.test import APITestCase
+from rest_framework.test import APITestCase, APIClient
+
+BOUNDARY = "BoUnDaRyStRiNg"
+MULTIPART_CONTENT = "multipart/form-data; boundary=%s" % BOUNDARY
 
 
 class BaseTest(APITestCase):
+    client: APIClient
+
     assert_equal = APITestCase.assertEqual
     assert_contains = APITestCase.assertContains
     assert_in = APITestCase.assertIn

@@ -49,20 +49,22 @@ class BaseViewTest(BaseTest):
     def setUp(self):
         _ = self.me
 
-    def get(self, path=None, query=None):
-        return self.client.get(f'{path or self.path}?{urlencode(query or {})}')
+    def get(self, path=None, query=None, format=None):
+        return self.client.get(
+            f'{path or self.path}?{urlencode(query or {})}', format=format
+        )
 
-    def post(self, path=None, data=None):
-        return self.client.post(path or self.path, data)
+    def post(self, path=None, data=None, format=None):
+        return self.client.post(path or self.path, data, format=format)
 
-    def put(self, path=None, data=None):
-        return self.client.put(path or self.path, data)
+    def put(self, path=None, data=None, format=None):
+        return self.client.put(path or self.path, data, format=format)
 
-    def patch(self, path=None, data=None):
-        return self.client.patch(path or self.path, data)
+    def patch(self, path=None, data=None, format=None):
+        return self.client.patch(path or self.path, data, format=format)
 
-    def delete(self, path=None, data=None):
-        return self.client.delete(path or self.path, data)
+    def delete(self, path=None, data=None, format=None):
+        return self.client.delete(path or self.path, data, format=format)
 
     def assert_response(self, response, status=200, data: dict = None):
         self.assert_equal(response.status_code, status)
@@ -75,8 +77,9 @@ class BaseViewTest(BaseTest):
         data: dict[str, Any] = None,
         status: int = None,
         path: str = None,
+        format=None,
     ):
-        response = getattr(self, method)(path, data)
+        response = getattr(self, method)(path, data, format)
         if response.content:
             status = status or {'post': 201, 'delete': 204}.get(method, 200)
         else:

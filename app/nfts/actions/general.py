@@ -3,9 +3,7 @@ from django.core.files import File
 from app.base.actions.base import BaseAction
 from app.base.entities.base import BaseEntity
 from app.base.enums.network import Network
-from app.base.money import Money
 from app.nfts.models import Nft
-from app.sale.enums import SalesPolicy
 from app.users.models import User
 
 
@@ -14,8 +12,6 @@ class POST_NftsAction(BaseAction):
         author: User
         network: Network
         content: File
-        sales_policy: SalesPolicy
-        price: Money
         title: str
         description: str = ''
 

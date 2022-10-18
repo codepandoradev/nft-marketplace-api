@@ -55,8 +55,8 @@ def _exception_handler(exception):
 
 
 class BaseView(GenericAPIView):
-    lookup_field = 'id'
-    ordering = 'id'
+    lookup_field = 'pk'
+    ordering = 'pk'
     serializer_class = BaseSerializer
     permission_classes = []
     serializer_map: dict[
@@ -169,7 +169,7 @@ class BaseView(GenericAPIView):
     def create(self):
         serializer = self.get_valid_serializer(data=self.get_data())
         serializer.save()
-        return Response({'id': serializer.instance.pk}, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def retrieve(self):
         instance = self.get_object()
