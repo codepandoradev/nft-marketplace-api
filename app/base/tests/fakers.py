@@ -36,6 +36,7 @@ class SubFaker(_Faker):
 
     def image(self, size: tuple[int, int] = (1, 1)) -> ContentFile:
         extension = self.file_extension(category='image')
+        extension = 'jpeg' if extension == 'jpg' else extension
         return ContentFile(
             self.__getattr__('image')(size=size, image_format=extension),
             fake.file_name(category='image', extension=extension),
