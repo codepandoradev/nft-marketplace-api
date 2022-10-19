@@ -49,6 +49,7 @@ services:
 volumes:
   db_volume:
   static_volume:
+  media_volume:
   profile_volume:
   web_volume:
 
