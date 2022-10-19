@@ -31,6 +31,7 @@ services:
       - REDIS_URL=redis://redis:6379/0
     volumes:
       - static_volume:/api/static
+      - media_volume:/api/media
       - profile_volume:/api/profile
     networks:
       - db_network
@@ -72,6 +73,7 @@ services:
 volumes:
   db_volume:
   static_volume:
+  media_volume:
   profile_volume:
   web_volume:
 

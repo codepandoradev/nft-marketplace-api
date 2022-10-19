@@ -15,6 +15,7 @@ from sentry_sdk.integrations.logging import LoggingIntegration
 from sentry_sdk.integrations.redis import RedisIntegration
 
 from app.base.logs.configs import LogConfig
+from app.base.enums.currency import Currency
 
 # env
 
@@ -102,9 +103,13 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'django_celery_beat',
     'djcelery_email',
+    'djmoney',
     # own apps
     'app.base',
     'app.users',
+    'app.nfts',
+    'app.sales',
+    'app.collections',
 ]
 
 REST_FRAMEWORK = {
@@ -377,6 +382,12 @@ LOGGING = LogConfig(_loggers).to_dict()
 # language
 
 USE_I18N = True
+
+# money
+
+CURRENCIES = tuple(map(str, Currency))
+CURRENCY_CHOICES = Currency.choices
+DEFAULT_CURRENCY = str(Currency.ETH)
 
 # timezone
 
