@@ -8,13 +8,14 @@ on:
 
 jobs:
   tests:
-    runs-on: self-hosted
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v3
     - name: Run tests
       run: docker-compose -f docker/docker-compose.test.yml run api
   deploy_dev:
     runs-on: self-hosted
+    needs: tests
     steps:
     - uses: actions/checkout@v3
     - name: Deploy dev environment
