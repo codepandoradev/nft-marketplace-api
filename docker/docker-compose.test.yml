@@ -16,9 +16,13 @@ services:
     ports:
       - 8000:8000
     command: bash -c "
-        python manage.py migrate &&
-        python manage.py test --keepdb
+      python manage.py migrate
+      && coverage run manage.py test
+      && coverage report
+      && coverage xml -o /api/coverages/coverage.xml
       "
+    volumes:
+      - ../coverages:/api/coverages
     depends_on:
       - db
       - redis
