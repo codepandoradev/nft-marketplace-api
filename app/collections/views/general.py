@@ -14,6 +14,6 @@ class CollectionsView(BaseView):
         action = POST_CollectionsAction()
         serializer = self.get_valid_serializer()
         serializer.instance = action.run(
-            action.InEntity(**serializer.validated_data | {'author': self.request.user})
+            action.InEntity(author=self.request.user, **serializer.validated_data)
         )
         return Response(serializer.data, status=201)

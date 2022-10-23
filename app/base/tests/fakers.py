@@ -12,6 +12,7 @@ class SubFaker(_Faker):
     password: Callable[..., str]
     email: Callable[..., str]
     future_date: Callable[..., datetime.date]
+    random_element: Callable
 
     def __init__(
         self,
@@ -34,8 +35,9 @@ class SubFaker(_Faker):
         numbers = [str(self.random_digit()) for _ in range(length - letters_count)]
         return ''.join(self.random_elements(letters + numbers, length, True))
 
-    def image(self, size: tuple[int, int] = (1, 1)) -> ContentFile:
-        extension = self.file_extension(category='image')
+    def image(self, size: tuple[int, int] = (1, 1), extension=None) -> ContentFile:
+        if extension is None:
+            extension = self.file_extension(category='image')
         extension = 'jpeg' if extension == 'jpg' else extension
         return ContentFile(
             self.__getattr__('image')(size=size, image_format=extension),
@@ -44,15 +46,15 @@ class SubFaker(_Faker):
 
 
 class Faker(_FactoryFaker):
+    def __init__(self, provider, **kwargs):
+        kwargs.setdefault('locale', 'en_PH')
+        super().__init__(provider, **kwargs)
+
     @classmethod
-    def _get_faker(cls, locale=None):
-        if locale is None:
-            locale = cls._DEFAULT_LOCALE
-
+    def _get_faker(cls, locale='en_PH'):
         if locale not in cls._FAKER_REGISTRY:
-            sub_faker = SubFaker(locale=locale).unique
+            sub_faker = fake.unique
             cls._FAKER_REGISTRY[locale] = sub_faker
-
         return cls._FAKER_REGISTRY[locale]
 
 

@@ -9,7 +9,7 @@ from app.users.services.auth import AuthService
 
 class UsersForceLoginView(BaseView):
     serializer_class = schema_serializer('ForceLogin', token=CharField())
-    
+
     def get(self):
         auth_service = AuthService()
         user = User.objects.get(id=1)

@@ -18,5 +18,6 @@ class Collection(BaseModel):
     description = models.TextField(blank=True, default='')
 
     def save(self, *args, **kwargs):
-        self.slug = uuslug(self.title, self)
+        if not self.slug:
+            self.slug = uuslug(self.title, self)
         super().save(*args, **kwargs)

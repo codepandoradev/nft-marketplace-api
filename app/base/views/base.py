@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from functools import lru_cache
 from typing import Type
 
 from django.conf import settings
@@ -89,8 +90,9 @@ class BaseView(GenericAPIView):
     def get_serializer(self, *args, **kwargs) -> BaseSerializer:
         return super().get_serializer(*args, **kwargs)
 
+    @lru_cache()
     def get_valid_serializer(self, *args, **kwargs) -> BaseSerializer:
-        kwargs['data'] = self.request.data
+        kwargs.setdefault('data', self.get_data())
         serializer = self.get_serializer(*args, **kwargs)
         serializer.is_valid()
         return serializer
