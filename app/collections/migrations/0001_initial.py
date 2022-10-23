@@ -18,13 +18,33 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Collection',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('avatar', models.ImageField(upload_to='collection/avatar')),
-                ('title', models.CharField(max_length=30, validators=[django.core.validators.RegexValidator('^[a-zA-Z ]+$')])),
-                ('slug', models.SlugField()),
-                ('description', models.TextField(blank=True, default='')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
+    (
+        'id',
+        models.BigAutoField(
+            auto_created=True,
+            primary_key=True,
+            serialize=False,
+            verbose_name='ID',
+        ),
+    ),
+    ('avatar', models.ImageField(upload_to='collection/avatar')),
+    (
+        'title',
+        models.CharField(
+            max_length=30,
+            validators=[django.core.validators.RegexValidator('^[a-zA-Z ]+$')],
+        ),
+    ),
+    ('slug', models.SlugField()),
+    ('description', models.TextField(blank=True, default='')),
+    (
+        'author',
+        models.ForeignKey(
+            on_delete=django.db.models.deletion.CASCADE,
+            to=settings.AUTH_USER_MODEL,
+        ),
+    ),
+],
             options={
                 'ordering': ['id'],
                 'abstract': False,
