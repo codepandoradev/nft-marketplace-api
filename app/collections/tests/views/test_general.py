@@ -12,7 +12,7 @@ class CollectionsTest(BaseViewTest):
             {
                 'avatar': fake.image(),
                 'title': fake.random_object_name(),
-                'description': fake.english_text(1000),
+                'description': fake.english_word(),
             },
             format='multipart',
         )

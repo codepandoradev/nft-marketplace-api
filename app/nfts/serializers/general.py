@@ -25,7 +25,8 @@ class POST_NftsSerializer(BaseModelSerializer):
         write_only_fields = [
             'network',
             'content',
+            'collection',
             'title',
             'description',
         ]
-        fields = ['id']
+        read_only_fields = ['slug']
