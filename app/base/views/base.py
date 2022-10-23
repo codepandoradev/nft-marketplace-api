@@ -3,6 +3,8 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Type
 
+# noinspection PyPackageRequirements
+from silk.profiling.profiler import silk_profile
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import exceptions, status
@@ -10,9 +12,6 @@ from rest_framework.exceptions import MethodNotAllowed
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework.views import set_rollback
-
-# noinspection PyPackageRequirements
-from silk.profiling.profiler import silk_profile
 
 from app.base.authentications.token import TokenAuthentication
 from app.base.exceptions import *

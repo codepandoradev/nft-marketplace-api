@@ -9,7 +9,7 @@ from app.users.models import Token, User
 class AuthService:
     def __init__(self):
         self.token_manager = Token.objects
-    
+
     def login(self, user: User, request=None) -> Token:
         """
         :raises PermissionError: if not check_user
@@ -31,7 +31,7 @@ class AuthService:
                 logout(request)
             except ValueError as e:
                 warning(e)
-    
+
     def check_user(self, user: User) -> bool:
         if user.type == UserType.BANNED:
             return False

@@ -12,7 +12,7 @@ class POST_CollectionsAction(BaseAction):
         avatar: File
         title: str
         description: str = ''
-    
+
     def __init__(self):
         self.collection_manager = Collection.objects
 
