@@ -6,8 +6,9 @@ from app.base.enums.network import Network
 from app.base.models.base import BaseModel
 from app.collections.models import Collection
 from app.nfts.constans import (
-    ALLOWED_NFT_CONTENT_EXTENSIONS, NFT_TITLE_REGEX,
-    NFT_TITLE_MAX_LENGTH
+    ALLOWED_NFT_CONTENT_EXTENSIONS,
+    NFT_TITLE_REGEX,
+    NFT_TITLE_MAX_LENGTH,
 )
 from app.users.models import User
 

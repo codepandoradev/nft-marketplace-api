@@ -6,4 +6,4 @@ class BaseConfig(AppConfig):
     name = 'app.base'
 
     def ready(self):
-        import app.base.money
+        pass

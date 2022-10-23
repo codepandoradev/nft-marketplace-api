@@ -1,5 +1,1 @@
-from .views import *
-
-urlpatterns = [
-
-]
+urlpatterns = []

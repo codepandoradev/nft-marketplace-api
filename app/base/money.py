@@ -1,8 +1,6 @@
 from django.conf import settings
 from djmoney.contrib.exchange.models import convert_money
-from djmoney import money
-from djmoney import serializers
-from djmoney import utils
+from djmoney import money, serializers, utils
 from djmoney.forms import fields as forms_fields
 from djmoney.models import fields as models_fields
 from djmoney.contrib.django_rest_framework import fields as django_rest_framework_fields
