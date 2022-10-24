@@ -20,7 +20,6 @@ from app.base.permissions.base import BasePermission
 from app.base.serializers.base import BaseSerializer
 from app.base.utils.common import status_by_method
 from app.base.utils.schema import extend_schema
-from app.users.permissions import IsAuthenticatedPermission
 
 __all__ = ['BaseView']
 
@@ -134,8 +133,8 @@ class BaseView(GenericAPIView):
                 if get_schema := getattr(serializer_class, 'get_schema'):
                     responses |= get_schema(extracted[0])
 
-            if IsAuthenticatedPermission in cls.get_permission_classes(self):
-                responses |= {401: auth_schema}
+            if any(map(lambda p: p.requires_authentication, cls.get_permissions(self))):
+    responses |= {401: auth_schema}
 
             method = _force_args(method)
             method = extend_schema(responses=responses)(method)
