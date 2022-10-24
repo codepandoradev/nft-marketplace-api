@@ -16,6 +16,7 @@ __all__ = ['Nft']
 
 class Nft(BaseModel):
     slug = models.SlugField(primary_key=True)
+    blockchain_address = models.CharField(max_length=64, blank=True, null=True)  # TODO убрать blank и null
     creator = models.ForeignKey(User, models.CASCADE, related_name='nfts_by_creator')
     owner = models.ForeignKey(User, models.CASCADE, related_name='nfts_by_owner')
     collection = models.ForeignKey(Collection, models.CASCADE, blank=True, null=True)
