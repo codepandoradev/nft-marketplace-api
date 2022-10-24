@@ -134,7 +134,7 @@ class BaseView(GenericAPIView):
                     responses |= get_schema(extracted[0])
 
             if any(map(lambda p: p.requires_authentication, cls.get_permissions(self))):
-    responses |= {401: auth_schema}
+                responses |= {401: auth_schema}
 
             method = _force_args(method)
             method = extend_schema(responses=responses)(method)
