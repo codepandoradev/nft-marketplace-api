@@ -10,4 +10,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Deploy dev environment
-      run: docker-compose -f docker/docker-compose.dev.yml up --force-recreate --build -d
+      run: docker compose -f docker/docker-compose.dev.yml up --force-recreate --build -d
