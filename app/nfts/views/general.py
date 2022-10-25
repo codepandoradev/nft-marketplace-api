@@ -4,11 +4,10 @@ from app.base.views.base import BaseView
 from app.nfts.actions.general import POST_NftsAction
 from app.nfts.permissions import IsMyCollectionPermission
 from app.nfts.serializers.general import POST_NftsSerializer
-from app.users.permissions import IsAuthenticatedPermission
 
 
 class NftsView(BaseView):
-    permissions_map = {'post': [IsAuthenticatedPermission, IsMyCollectionPermission]}
+    permissions_map = {'post': [IsMyCollectionPermission]}
     serializer_map = {'post': POST_NftsSerializer}
 
     def post(self, request):

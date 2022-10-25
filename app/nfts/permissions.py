@@ -1,17 +1,20 @@
 from app.base.permissions.base import BasePermission
-from app.collections.models import Collection
-from app.users.models import User
+from app.nfts.checks import IsMyCollectionChecker
+from app.users.checkers import AuthenticatedChecker
 
 
 class IsMyCollectionPermission(BasePermission):
+    requires_authentication = True
+
     def __init__(self):
-        super().__init__()
-        self.collection_manager = Collection.objects
+        self.authenticated_checker = AuthenticatedChecker()
+        self.is_my_collection_checker = IsMyCollectionChecker()
 
-    def check(self, user: User, collection: Collection):
-        return collection.author == user
-
-    def _has_permission(self, request, view):
-        user = request.user
+    def _has_permission(self, view):
+        user = view.request.user
+        if not self.authenticated_checker.check(user):
+            return False
         collection = view.get_valid_serializer().validated_data['collection']
-        return self.check(user, collection)
+        return self.is_my_collection_checker.check(
+            self.is_my_collection_checker.InEntity(user=user, collection=collection)
+        )

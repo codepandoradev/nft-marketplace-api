@@ -3,11 +3,11 @@ from rest_framework.response import Response
 from app.base.views.base import BaseView
 from app.collections.actions.general import POST_CollectionsAction
 from app.collections.serializers.general import POST_CollectionsSerializer
-from app.users.permissions import IsAuthenticatedPermission
+from app.users.permissions import AuthenticatedPermission
 
 
 class CollectionsView(BaseView):
-    permissions_map = {'post': [IsAuthenticatedPermission]}
+    permissions_map = {'post': [AuthenticatedPermission]}
     serializer_map = {'post': POST_CollectionsSerializer}
 
     def post(self):
