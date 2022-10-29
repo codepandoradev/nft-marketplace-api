@@ -28,7 +28,7 @@ class NftsTest(BaseViewTest):
         collection = CollectionFactory(author=user)
         self._test(
             'post',
-            [],
+            {},
              {
                 'creator': collection.author,
                 'network': fake.random_element(Network),
