@@ -18,7 +18,7 @@ djangorestframework==3.13.1
 drf-spectacular==0.23.1
 drf_base64==2.0
 
-orjson==3.7.8
+orjson==3.8.1
 psycopg2-binary==2.9.3
 redis==4.3.4
 Pillow==9.2.0
