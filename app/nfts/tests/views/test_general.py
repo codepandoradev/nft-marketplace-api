@@ -30,7 +30,7 @@ class NftsTest(BaseViewTest):
             'post',
             {},
             {
-                'creator': collection.author,
+
                 'network': fake.random_element(Network),
                 'collection': collection.slug,
                 'content': fake.image(extension='gif'),
