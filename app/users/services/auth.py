@@ -33,6 +33,4 @@ class AuthService:
                 warning(e)
 
     def check_user(self, user: User) -> bool:
-        if user.type == UserType.BANNED:
-            return False
-        return user.is_active
+        return user.type == UserType.BANNED

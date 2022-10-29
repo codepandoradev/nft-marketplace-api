@@ -24,11 +24,12 @@ class POST_UsersWeb3LoginAction(BaseAction):
         """
         :raises PermissionError: if not auth_service.check_user
         """
+        # FIXME: wrap in try-except
         address = recover_to_addr(data.token, data.signature)
         try:
             user = self.user_manager.get(wallet_address=address)
         except User.DoesNotExist:
-            user = self.user_manager.create(wallet_address=address, is_active=True)
+            user = self.user_manager.create(wallet_address=address)
         return self.OutEntity(
             auth_token=self.auth_service.login(user, data.request).key
         )

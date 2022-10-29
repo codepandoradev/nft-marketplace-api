@@ -6,13 +6,11 @@ from app.users.models import User
 
 
 class POST_UsersTokenSerializer(BaseModelSerializer):
-    WARNINGS = {
-        401: APIWarning("Invalid email or password", 401, 'invalid_email_or_password')
-    }
+    WARNINGS = {401: APIWarning("Invalid credentials", 401, 'invalid_credentials')}
 
-    token = serializers.CharField(read_only=True)
+    token = serializers.CharField()
 
     class Meta:
         model = User
-        write_only_fields = ['email', 'password']
+        write_only_fields = ['username', 'password']
         read_only_fields = ['token']
