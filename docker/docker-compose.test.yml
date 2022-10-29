@@ -16,8 +16,7 @@ services:
     ports:
       - 8000:8000
     command: bash -c "
-      python manage.py migrate
-      && coverage run manage.py test --noinput
+      coverage run manage.py test --noinput
       && coverage report
       && coverage xml -o /api/coverages/coverage.xml
       "
@@ -27,7 +26,6 @@ services:
       - db
       - redis
     restart: "no"
-
 
 volumes:
   db_volume:
