@@ -79,19 +79,19 @@ class LogMiddleware(MiddlewareMixin):
             if 'application/json' in content_type:
                 try:
                     log_data['request']['data'] = _cut_back_dict(
-                        json.loads(request.POST)
+                        json.loads(request.POST.dict())
                     )
                 except Exception:
                     try:
-                        log_data['request']['data'] = _cut_back(request.POST)
+                        log_data['request']['data'] = _cut_back(request.POST.dict())
                     except Exception:
                         log_data['request']['data'] = _cut_back(request.body)
             else:
                 try:
-                    log_data['request']['data'] = _cut_back_dict(dict(request.POST))
+                    log_data['request']['data'] = _cut_back_dict(request.POST.dict())
                 except Exception:
                     try:
-                        log_data['request']['data'] = _cut_back(request.POST)
+                        log_data['request']['data'] = _cut_back(request.POST.dict())
                     except Exception:
                         log_data['request']['data'] = _cut_back(request.body)
                 try:
