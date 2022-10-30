@@ -30,14 +30,12 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff(self):
         return self.is_superuser
-    
-    
+
     def save(self, *args, **kwargs):
         BaseModel.save(self, *args, **kwargs)
         if self._password is not None:
             password_validation.password_changed(self._password, self)
             self._password = None
-    
-    
+
     def __str__(self):
         return self.wallet_address
