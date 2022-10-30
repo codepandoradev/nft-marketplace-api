@@ -16,7 +16,9 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         choices=UserType.choices, default=UserType.DEFAULT
     )
     wallet_address = models.TextField(unique=True)
-    username = models.CharField(max_length=150, unique=True, null=True)
+    username = models.CharField(
+        max_length=150, unique=True, null=True, blank=True, default=None
+    )
     password = models.CharField(max_length=128, blank=True, default='')
     date_joined = models.DateTimeField(default=timezone.now)
 
