@@ -41,10 +41,9 @@ class NftsTest(BaseViewTest):
         )
 
     def test_collection_not_exist(self):
-        user = self.me
         self._test(
             'post',
-            ClientError(status=404),
+            ClientError(status=400),
             {
                 'network': fake.random_element(Network),
                 'collection': fake.english_word(),
