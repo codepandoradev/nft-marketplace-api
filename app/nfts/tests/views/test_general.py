@@ -39,3 +39,18 @@ class NftsTest(BaseViewTest):
             status=201,
             format='multipart',
         )
+
+    def test_collection_not_exist(self):
+        user = self.me
+        self._test(
+            'post',
+            ClientError(status=404),
+            {
+                'network': fake.random_element(Network),
+                'collection': fake.english_word(),
+                'content': fake.image(extension='gif'),
+                'title': fake.random_object_name(),
+                'description': fake.english_word(),
+            },
+            format='multipart',
+        )
