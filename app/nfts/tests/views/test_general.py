@@ -48,8 +48,8 @@ class NftsTest(BaseViewTest):
                 'network': fake.random_element(Network),
                 'collection': fake.english_word(),
                 'content': fake.image(extension='gif'),
-                'title': fake.random_object_name(),
-                'description': fake.english_word(),
+                'title': fake.english_word(),
+                'description': fake.english_text(),
             },
             format='multipart',
         )
