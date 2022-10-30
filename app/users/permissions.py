@@ -1,11 +1,13 @@
 from app.base.permissions.base import BasePermission
+from app.users.checkers import AuthenticatedChecker
 
 
-class IsAuthenticatedPermission(BasePermission):
+class AuthenticatedPermission(BasePermission):
+    requires_authentication = True
     message = "You aren't authenticated"
 
-    def check(self, user):
-        return getattr(user, 'is_authenticated', False)
+    def __init__(self):
+        self.checker = AuthenticatedChecker()
 
-    def _has_permission(self, request, view):
-        return self.check(request.user)
+    def _has_permission(self, view):
+        return self.checker.check(view.request.user)

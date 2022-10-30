@@ -22,3 +22,20 @@ class NftsTest(BaseViewTest):
             },
             format='multipart',
         )
+
+    def test_post_successful(self):
+        user = self.me
+        collection = CollectionFactory(author=user)
+        self._test(
+            'post',
+            {},
+            {
+                'network': fake.random_element(Network),
+                'collection': collection.slug,
+                'content': fake.image(extension='gif'),
+                'title': fake.random_object_name(),
+                'description': fake.english_word(),
+            },
+            status=201,
+            format='multipart',
+        )

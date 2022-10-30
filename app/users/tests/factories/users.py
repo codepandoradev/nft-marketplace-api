@@ -12,8 +12,8 @@ class UserFactory(factory.django.DjangoModelFactory):
     raw_password: str
 
     wallet_address = factory.LazyFunction(fake.random_string)
+    username = Faker('first_name')
     password = Faker('password')
-    is_active = True
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):
