@@ -1,6 +1,7 @@
 from typing import Any, Callable
 from urllib.parse import urlencode
 
+from app.base.exceptions import APIWarning
 from app.base.exceptions.base import APIException
 from app.base.tests.base import BaseTest
 from app.users.models import Token, User
@@ -86,5 +87,8 @@ class BaseViewTest(BaseTest):
             status = 204
         if isinstance(exp_data, APIException):
             status = exp_data.status
-            exp_data = exp_data.serialize()
+            exp_exception = {'error': {'type': exp_data.TYPE_NAME}}
+            if isinstance(exp_data, APIWarning):
+                exp_exception['error']['code'] = exp_data.code
+            exp_data = exp_exception
         self.assert_response(response, status, exp_data)

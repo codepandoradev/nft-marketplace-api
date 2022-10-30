@@ -5,7 +5,7 @@ from app.base.serializers.base import BaseSerializer
 
 
 class POST_UsersWeb3LoginSerializer(BaseSerializer):
-    WARNINGS = {403: APIWarning("User banned or not active", 403, 'forbidden_login')}
+    WARNINGS = {401: APIWarning("Invalid credentials", 401, 'invalid_credentials')}
 
     token = serializers.CharField(write_only=True)
     signature = serializers.CharField(write_only=True)
