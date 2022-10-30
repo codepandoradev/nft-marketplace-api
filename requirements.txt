@@ -34,7 +34,7 @@ sentry-sdk==1.10.1
 py-moneyed==2.0
 
 # dev
-django-silk==5.0.1
+django-silk==5.0.2
 
 # test
 parameterized==0.8.1
