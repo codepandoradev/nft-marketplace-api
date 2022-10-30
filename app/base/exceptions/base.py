@@ -1,11 +1,11 @@
 from __future__ import annotations
 
+import logging
 from typing import Any, Callable, Final, Type
 
-from django.conf import settings
 from rest_framework.response import Response
 
-from app.base.logs import error
+from app.base.logs import error, logger
 
 __all__ = ['APIException', 'CastSupportsError']
 
@@ -18,8 +18,8 @@ class APIException(Exception):
         self.status: Final[int] = status
 
     def serialize(self) -> dict[str, dict[str, Any]]:
-        if settings.DEBUG or settings.TEST:
-            return {'error': {'type': self.TYPE_NAME, 'detail': self.detail}}
+        if logger.level <= logging.DEBUG:
+    return {'error': {'type': self.TYPE_NAME, 'detail': self.detail}}
         return {'error': {'type': self.TYPE_NAME}}
 
     def to_response(self) -> Response:

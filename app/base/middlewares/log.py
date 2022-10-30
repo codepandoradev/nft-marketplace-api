@@ -62,8 +62,6 @@ def _cut_back_dict(json_data, max_length=200):
 # noinspection PyMethodMayBeStatic, PyBroadException
 class LogMiddleware(MiddlewareMixin):
     def process_request(self, request):
-        if request.method in ['POST', 'PUT', 'PATCH']:
-            request.req_body = request.body
         request.start_time = time.time()
 
     def extract_log_info(self, request, response):
@@ -77,19 +75,25 @@ class LogMiddleware(MiddlewareMixin):
         log_data['request']['headers'] = _cut_back_dict(dict(request.headers))
         log_data['request']['cookies'] = _cut_back_dict(dict(request.COOKIES))
         if request.method in ['PUT', 'POST', 'PATCH']:
-            content_type = _get_content_type(response)
+            content_type = _get_content_type(request)
             if 'application/json' in content_type:
                 try:
-                    log_data['request']['body'] = _cut_back_dict(
-                        json.loads(request.req_body)
+                    log_data['request']['data'] = _cut_back_dict(
+                        json.loads(request.POST)
                     )
                 except Exception:
-                    log_data['request']['body'] = _cut_back(request.req_body)
+                    try:
+                        log_data['request']['data'] = _cut_back(request.POST)
+                    except Exception:
+                        log_data['request']['data'] = _cut_back(request.body)
             else:
                 try:
-                    log_data['request']['body'] = _cut_back_dict(dict(request.req_body))
+                    log_data['request']['data'] = _cut_back_dict(dict(request.POST))
                 except Exception:
-                    log_data['request']['body'] = _cut_back(request.req_body)
+                    try:
+                        log_data['request']['data'] = _cut_back(request.POST)
+                    except Exception:
+                        log_data['request']['data'] = _cut_back(request.body)
                 try:
                     log_data['request']['files'] = {
                         k: [e.name for e in f] for k, f in dict(request.FILES).items()
@@ -114,17 +118,14 @@ class LogMiddleware(MiddlewareMixin):
                 return log_data
             if 'application/json' in content_type:
                 try:
-                    log_data['response']['body'] = _cut_back_dict(dict(response.data))
+                    log_data['response']['data'] = _cut_back_dict(dict(response.data))
                     return log_data
                 except Exception:
                     pass
             if hasattr(response, 'content'):
                 try:
-                    log_data['response']['body'] = _cut_back_dict(
-                        dict(response.content)
-                    )
-                except Exception:
-                    log_data['response']['body'] = _cut_back(response.content)
+                    log_data['response']['data'] = _cut_back_dict(dict(response.content))except Exception:
+                    log_data['response']['data'] = _cut_back(response.content)
         return log_data
 
     def process_response(self, request, response):
