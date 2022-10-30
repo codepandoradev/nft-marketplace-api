@@ -19,7 +19,7 @@ class APIException(Exception):
 
     def serialize(self) -> dict[str, dict[str, Any]]:
         if logger.level <= logging.DEBUG:
-    return {'error': {'type': self.TYPE_NAME, 'detail': self.detail}}
+            return {'error': {'type': self.TYPE_NAME, 'detail': self.detail}}
         return {'error': {'type': self.TYPE_NAME}}
 
     def to_response(self) -> Response:

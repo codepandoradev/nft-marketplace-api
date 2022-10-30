@@ -124,7 +124,10 @@ class LogMiddleware(MiddlewareMixin):
                     pass
             if hasattr(response, 'content'):
                 try:
-                    log_data['response']['data'] = _cut_back_dict(dict(response.content))except Exception:
+                    log_data['response']['data'] = _cut_back_dict(
+                        dict(response.content)
+                    )
+                except Exception:
                     log_data['response']['data'] = _cut_back(response.content)
         return log_data
 
