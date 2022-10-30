@@ -30,7 +30,6 @@ class NftsTest(BaseViewTest):
             'post',
             {},
             {
-
                 'network': fake.random_element(Network),
                 'collection': collection.slug,
                 'content': fake.image(extension='gif'),
