@@ -10,9 +10,9 @@ class CollectionsTest(BaseViewTest):
             'post',
             {'slug': lambda s: isinstance(s, str)},
             {
-                'avatar': fake.image(),
-                'title': fake.random_object_name(),
-                'description': fake.english_word(),
-            },
+    'avatar': fake.image(),
+    'title': fake.english_word(),
+    'description': fake.english_text(),
+},
             format='multipart',
         )

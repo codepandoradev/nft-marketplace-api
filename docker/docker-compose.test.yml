@@ -13,6 +13,8 @@ services:
     extends:
       file: docker-compose.base.yml
       service: api
+    env_file:
+      - ../envs/.test.env
     ports:
       - 8000:8000
     command: bash -c "
