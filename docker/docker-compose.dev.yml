@@ -13,12 +13,14 @@ services:
     extends:
       file: docker-compose.base.yml
       service: api
+    env_file:
+      - ../envs/.dev.env
     ports:
       - 8000:8000
     command: bash -c "
-        python manage.py migrate &&
-        python manage.py collectstatic --noinput &&
-        python manage.py runserver 0.0.0.0:8000
+      python manage.py migrate &&
+      python manage.py collectstatic --noinput &&
+      python manage.py runserver 0.0.0.0:8000
       "
     depends_on:
       - db

@@ -13,10 +13,12 @@ services:
     extends:
       file: docker-compose.base.yml
       service: api
+    env_file:
+      - ../envs/.prod.env
     command: bash -c "
-        python manage.py migrate &&
-        python manage.py collectstatic --noinput &&
-        gunicorn api.wsgi -c gunicorn/config.py
+      python manage.py migrate &&
+      python manage.py collectstatic --noinput &&
+      gunicorn api.wsgi -c gunicorn/config.py
       "
     depends_on:
       - db
