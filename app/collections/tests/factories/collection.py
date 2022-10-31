@@ -8,7 +8,7 @@ from app.users.tests.factories.users import UserFactory
 
 class CollectionFactory(BaseFactory):
     author = factory.SubFactory(UserFactory)
-    title = Faker('random_object_name')
+    title = Faker('english_word')
     avatar = factory.django.ImageField()
 
     class Meta:
