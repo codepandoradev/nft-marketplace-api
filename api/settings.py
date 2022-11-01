@@ -22,6 +22,7 @@ from app.base.enums.currency import Currency
 _env_value = {'value': lambda s: s.split(',')}
 
 env = environ.Env(
+    ENV_FILE=(str, None),
     WEB_DOMAIN=(str, 'local.dev'),
     API_DOMAIN=(str, 'api.local.dev'),
     SECRET_KEY=(str, 'secret'),
@@ -57,6 +58,9 @@ env = environ.Env(
     CLOUDINARY_URL=(str, None),
     SENTRY_DSN=(str, None),
 )
+
+if (ENV_FILE := env('ENV_FILE')) is not None:
+    environ.Env.read_env(ENV_FILE)
 
 # root
 
