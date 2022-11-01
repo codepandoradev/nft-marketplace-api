@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
   deploy_dev:
@@ -10,6 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        clean: 'false'
+        clean: false
     - name: Deploy dev environment
       run: docker compose -f docker/docker-compose.dev.yml up --force-recreate --build -d
