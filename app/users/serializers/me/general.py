@@ -1,3 +1,5 @@
+from rest_framework import serializers
+
 from app.base.serializers.base import BaseModelSerializer
 from app.users.models import User
 from app.users.enums.users import UserType
@@ -11,6 +13,9 @@ class GET_UsersMeSerializer(BaseModelSerializer):
 
 
 class PATCH_UsersMeSerializer(BaseModelSerializer):
+    avatar = serializers.ImageField()
+    header = serializers.ImageField()
+
     class Meta:
         model = User
-        fields = []
+        write_only_fields = ['avatar', 'header']

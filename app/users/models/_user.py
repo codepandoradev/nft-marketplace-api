@@ -20,6 +20,8 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         max_length=150, unique=True, null=True, blank=True, default=None
     )
     password = models.CharField(max_length=128, blank=True, default='')
+    avatar = models.ImageField(upload_to='user/avatar', null=True, blank=True)
+    header = models.ImageField(upload_to='user/header', null=True, blank=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
     objects = UserManager()
