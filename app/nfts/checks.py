@@ -4,7 +4,7 @@ from app.collections.models import Collection
 from app.users.models import User
 
 
-class IsMyCollectionChecker(BaseChecker):
+class MyCollectionChecker(BaseChecker):
     class InEntity(BaseEntity):
         user: User
         collection: Collection

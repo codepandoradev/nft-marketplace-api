@@ -18,7 +18,7 @@ services:
     ports:
       - 8000:8000
     command: bash -c "
-      coverage run manage.py test
+      coverage run manage.py test --noinput
       && coverage report
       && coverage xml -o /api/coverages/coverage.xml
       "

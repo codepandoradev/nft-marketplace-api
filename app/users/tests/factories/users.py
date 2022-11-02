@@ -14,6 +14,8 @@ class UserFactory(factory.django.DjangoModelFactory):
     wallet_address = factory.LazyFunction(fake.random_string)
     username = Faker('first_name')
     password = Faker('password')
+    avatar = factory.django.ImageField()
+    header = factory.django.ImageField()
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):

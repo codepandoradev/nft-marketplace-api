@@ -119,7 +119,7 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'app.base.renderers.ORJSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
+        'app.base.renderers.BrowsableAPIRenderer',
     ],
     'DEFAULT_PARSER_CLASSES': [
         'app.base.parsers.ORJSONParser',
