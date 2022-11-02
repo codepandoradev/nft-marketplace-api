@@ -1,9 +1,4 @@
-from app.base.enums.network import Network
-from app.base.exceptions import ClientError, APIWarning
-from app.base.tests.fakers import fake
 from app.base.tests.views.base import BaseViewTest
-from app.collections.tests.factories.collection import CollectionFactory
-from app.users.enums.users import UserType
 
 
 class UsersTest(BaseViewTest):
@@ -16,10 +11,8 @@ class UsersTest(BaseViewTest):
             'post',
             {},
             {
-
                 'username': user.username,
-                'password':user.password,
-
+                'password': user.password,
             },
             format='multipart',
         )
