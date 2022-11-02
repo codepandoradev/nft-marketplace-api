@@ -23,7 +23,7 @@ class POST_NftsAction(BaseAction):
         self.my_collection_checker = MyCollectionChecker()
 
     def run(self, data: InEntity) -> Nft:
-        if self.my_collection_checker.check(
+        if not self.my_collection_checker.check(
             self.my_collection_checker.InEntity(
                 user=data.creator, collection=data.collection
             )
