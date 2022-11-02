@@ -5,7 +5,10 @@ from app.users.serializers.me.general import *
 
 
 class UsersMeView(BaseView):
-    permission_classes = [AuthenticatedPermission]
+    permissions_map = {
+        'get': [AuthenticatedPermission],
+        'patch': [AuthenticatedPermission],
+    }
     serializer_map = {'get': GET_UsersMeSerializer, 'patch': PATCH_UsersMeSerializer}
 
     def get(self):
