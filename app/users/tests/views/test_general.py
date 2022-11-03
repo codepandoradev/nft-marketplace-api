@@ -1,6 +1,10 @@
+
 from app.base.tests.fakers import fake
 from app.base.tests.views.base import BaseViewTest
 from app.users.serializers.token import POST_UsersTokenSerializer
+
+from app.base.tests.views.base import BaseViewTest
+
 
 
 class UsersTest(BaseViewTest):
@@ -26,6 +30,7 @@ class UsersTest(BaseViewTest):
             {
                 'username': fake.english_word(),
                 'password': fake.english_word(),
+
             },
             format='multipart',
         )
