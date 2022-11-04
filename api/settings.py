@@ -54,7 +54,7 @@ env = environ.Env(
     CELERY_BROKER_POOL_LIMIT=int,  # default: CELERY_REDIS_MAX_CONNECTIONS
     CELERY_TASK_EAGER=(bool, False),
     SESSION_ON_LOGIN=bool,  # default: DEBUG
-    USE_SILKY=bool,  # default: DEBUG
+    USE_SILK=bool,  # default: DEBUG
     CLOUDINARY_URL=(str, None),
     SENTRY_DSN=(str, None),
 )
@@ -114,6 +114,7 @@ INSTALLED_APPS = [
     'app.nfts',
     'app.sales',
     'app.collections',
+    'app.messenger',
 ]
 
 REST_FRAMEWORK = {
@@ -295,15 +296,15 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # silk
 
-USE_SILKY = env('USE_SILKY', default=DEBUG)
+USE_SILK = env('USE_SILK', default=DEBUG)
 
-SILKY_INTERCEPT_FUNC = lambda _: USE_SILKY
+SILKY_INTERCEPT_FUNC = lambda _: USE_SILK  # noqa: E731
 SILKY_META = True
 SILKY_ANALYZE_QUERIES = True
 SILKY_PYTHON_PROFILER = True
 SILKY_PYTHON_PROFILER_BINARY = True
 SILKY_PYTHON_PROFILER_RESULT_PATH = BASE_DIR + 'profiles/'
-if USE_SILKY and not os.path.exists(SILKY_PYTHON_PROFILER_RESULT_PATH):
+if USE_SILK and not os.path.exists(SILKY_PYTHON_PROFILER_RESULT_PATH):
     os.makedirs(SILKY_PYTHON_PROFILER_RESULT_PATH)
 
 SILKY_MAX_RECORDED_REQUESTS = 1_000
