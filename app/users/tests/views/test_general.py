@@ -4,6 +4,7 @@ from app.users.serializers.token import POST_UsersTokenSerializer
 from app.base.tests.views.base import BaseViewTest
 from app.users.enums.users import UserType
 from app.users.models import User, Token
+from app.users.tests.factories.users import UserFactory
 
 
 class UsersTest(BaseViewTest):
@@ -19,7 +20,6 @@ class UsersTest(BaseViewTest):
                 'username': user.username,
                 'password': user.raw_password,
             },
-            format='json',
         )
 
     def test_user_not_exist(self):
@@ -30,14 +30,11 @@ class UsersTest(BaseViewTest):
                 'username': fake.english_word(),
                 'password': fake.english_word(),
             },
-            format='json',
         )
 
     def test_user_banned(self):
-        user = self.me
-        self.client.logout()
-        user.type = UserType.BANNED
-        user.save()
+        del self.me
+        user = UserFactory(type=UserType.BANNED)
         self._test(
             'post',
             POST_UsersTokenSerializer.WARNINGS[401],
@@ -45,15 +42,13 @@ class UsersTest(BaseViewTest):
                 'username': user.username,
                 'password': user.raw_password,
             },
-            format='json',
         )
 
     def test_delete_user(self):
-        user = self.me
+        self.me
         self._test(
             'delete',
             {},
             {},
-            format='json',
         )
         self.assert_equal(Token.objects.count(), 0)
