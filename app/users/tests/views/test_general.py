@@ -45,7 +45,6 @@ class UsersTest(BaseViewTest):
         )
 
     def test_delete_user(self):
-        self.me
         self._test(
             'delete',
             {},
