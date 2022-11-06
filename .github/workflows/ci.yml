@@ -2,26 +2,25 @@ name: CI
 
 on:
   push:
-  pull_request:
-    branches: [ "master" ]
 
 jobs:
-  checks:
+  pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Check formatting
-        uses: GentleEnvy/python-black-check@master
-        with:
-          line-length: 88
+    - uses: actions/checkout@v3.1.0
+    - uses: actions/setup-python@v4.3.0
+      with:
+        python-version: 3.11.0
+    - name: Run pre-commit
+    - uses: pre-commit/action@v3.0.0
   tests:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.1.0
       - name: Run tests
         run: docker-compose -f docker/docker-compose.test.yml run api
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v3.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverages/coverage.xml
