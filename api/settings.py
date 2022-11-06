@@ -295,7 +295,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 USE_SILKY = env('USE_SILKY', default=DEBUG)
 
-SILKY_INTERCEPT_FUNC = lambda _: USE_SILKY
+SILKY_INTERCEPT_FUNC = lambda _: USE_SILKY  # noqa:E731
 SILKY_META = True
 SILKY_ANALYZE_QUERIES = True
 SILKY_PYTHON_PROFILER = True
