@@ -1,21 +1,20 @@
 # imports
 
 import importlib
-from functools import partial
 import logging
 import os
+from functools import partial
 from pathlib import Path
 
 # noinspection PyPackageRequirements
 import environ
-
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.logging import LoggingIntegration
 from sentry_sdk.integrations.redis import RedisIntegration
 
-from app.base.logs.configs import LogConfig
 from app.base.enums.currency import Currency
+from app.base.logs.configs import LogConfig
 
 # env
 

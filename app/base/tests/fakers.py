@@ -1,9 +1,13 @@
+from __future__ import annotations
+
 import datetime
-from typing import Callable, Final, Optional, Union, Sequence, Dict, List, Any
+from collections.abc import Callable, Sequence
+from typing import Any, Final, Optional, Union
 
 from django.core.files.base import ContentFile
 from factory import Faker as _FactoryFaker
-from faker import Faker as _Faker, Generator
+from faker import Faker as _Faker
+from faker import Generator
 
 
 class SubFaker(_Faker):
@@ -16,14 +20,12 @@ class SubFaker(_Faker):
 
     def __init__(
         self,
-        locale: Optional[
-            Union[str, Sequence[str], Dict[str, Union[int, float]]]
-        ] = 'en_PH',
-        providers: Optional[List[str]] = None,
-        generator: Optional[Generator] = None,
-        includes: Optional[List[str]] = None,
+        locale: None | (str | Sequence[str] | dict[str, int | float]) = 'en_PH',
+        providers: list[str] | None = None,
+        generator: Generator | None = None,
+        includes: list[str] | None = None,
         use_weighting: bool = True,
-        **config: Any
+        **config: Any,
     ) -> None:
         super().__init__(
             locale, providers, generator, includes, use_weighting, **config

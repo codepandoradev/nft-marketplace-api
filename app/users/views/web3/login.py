@@ -1,8 +1,8 @@
 from rest_framework.response import Response
 
 from app.base.views.base import BaseView
-from app.users.serializers.web3.login import *
 from app.users.actions.web3.login import *
+from app.users.serializers.web3.login import *
 
 
 class UsersWeb3LoginView(BaseView):

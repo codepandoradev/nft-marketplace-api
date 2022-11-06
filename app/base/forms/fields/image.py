@@ -1,6 +1,6 @@
 from django.core.validators import (
-    get_available_image_extensions,
     FileExtensionValidator,
+    get_available_image_extensions,
 )
 from django_svg_image_form_field import SvgAndImageFormField
 
