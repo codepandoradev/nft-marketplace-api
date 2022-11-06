@@ -1,7 +1,10 @@
 from app.base.utils.common import response_204
 from app.base.views.base import BaseView
 from app.users.permissions import AuthenticatedPermission
-from app.users.serializers.me.general import *
+from app.users.serializers.me.general import (
+    GET_UsersMeSerializer,
+    PATCH_UsersMeSerializer,
+)
 
 
 class UsersMeView(BaseView):

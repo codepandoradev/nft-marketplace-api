@@ -2,9 +2,9 @@ from rest_framework.response import Response
 
 from app.base.utils.common import response_204
 from app.base.views.base import BaseView
+from app.users.actions.token import *
 from app.users.permissions import AuthenticatedPermission
 from app.users.serializers.token import *
-from app.users.actions.token import *
 
 
 class UsersTokenView(BaseView):

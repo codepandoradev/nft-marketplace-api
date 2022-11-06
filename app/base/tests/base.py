@@ -2,7 +2,7 @@ from typing import Type
 
 from django.db import models
 from django.forms import model_to_dict
-from rest_framework.test import APITestCase, APIClient
+from rest_framework.test import APIClient, APITestCase
 
 BOUNDARY = "BoUnDaRyStRiNg"
 MULTIPART_CONTENT = "multipart/form-data; boundary=%s" % BOUNDARY
