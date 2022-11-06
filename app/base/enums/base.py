@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from enum import EnumMeta, unique
-from typing import Type
 
 from django.db.models import IntegerChoices as _IntegerChoices
 from django.db.models import TextChoices as _TextChoices

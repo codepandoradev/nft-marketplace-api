@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import datetime
 from collections.abc import Callable, Sequence
-from typing import Any, Final, Optional, Union
+from typing import Any, Final
 
 from django.core.files.base import ContentFile
 from factory import Faker as _FactoryFaker

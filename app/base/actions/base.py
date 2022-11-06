@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import TypeAlias
+from typing import Type, TypeAlias
 
 from app.base.entities.base import BaseEntity
 from app.base.models.base import BaseModel

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import inspect
 from collections.abc import Callable
-from typing import Any, Optional, TypeVar
+from typing import Any, TypeVar
 
 from drf_spectacular.drainage import error, get_view_method_names, isolate_view_method
 from drf_spectacular.utils import OpenApiExample, OpenApiParameter
