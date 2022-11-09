@@ -17,7 +17,11 @@ django-uuslug==2.0.0
 djangorestframework==3.14.0
 drf-spectacular==0.24.2
 drf_base64==2.0
+djangochannelsrestframework==1.1.0
 
+channels==3.0.5
+channels-redis==3.4.1
+asgiref==3.5.2
 orjson==3.8.1
 psycopg2-binary==2.9.5
 redis==4.3.4
