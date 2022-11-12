@@ -45,8 +45,9 @@ class ORJSONParser(BaseParser):
             data = data_or_stram.read()
         else:
             data = data_or_stram
-
+        if not isinstance(data, str):
+            data = data.decode(encoding)
         try:
-            return orjson.loads(data.decode(encoding))
+            return orjson.loads(data)
         except orjson.JSONDecodeError as exc:
             raise ParseError(f"JSON parse error - {exc}")

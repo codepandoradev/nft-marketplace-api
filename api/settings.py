@@ -6,6 +6,8 @@ import os
 from functools import partial
 
 # noinspection PyPackageRequirements
+from urllib.parse import urlparse
+
 import environ
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -397,3 +399,16 @@ DEFAULT_CURRENCY = str(Currency.ETH)
 TIME_ZONE = 'UTC'
 USE_L10N = True
 USE_TZ = True
+
+# channels
+
+# channels
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [(urlparse(REDIS_URL).hostname, urlparse(REDIS_URL).port)],
+        },
+    },
+}
