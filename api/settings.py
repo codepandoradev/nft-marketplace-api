@@ -132,7 +132,8 @@ REST_FRAMEWORK = {
         'app.base.authentications.token.TokenAuthentication',
         'app.base.authentications.session.SessionAuthentication',
     ],
-    'DEFAULT_PAGINATION_CLASS': 'app.base.paginations.base.BasePagination',
+    'DEFAULT_PAGINATION_CLASS': 'app.base.paginations.page_number.PageNumberPagination',
+    'PAGE_SIZE': 10,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',

@@ -3,6 +3,7 @@ from __future__ import annotations
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import exceptions, status
 from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import ListModelMixin
 from rest_framework.response import Response
 
 # noinspection PyPackageRequirements
@@ -20,8 +21,7 @@ __all__ = ['BaseView']
 
 
 class BaseView(GenericAPIView):
-    lookup_field = 'pk'
-    ordering = 'pk'
+    many: bool = False
     serializer_class = BaseSerializer
     permission_classes = []
     serializer_map: dict[
@@ -107,6 +107,8 @@ class BaseView(GenericAPIView):
 
     @classmethod
     def as_view(cls, **init_kwargs):
+        if cls.many:
+            cls.__bases__ += (ListModelMixin,)
         cls._decorate_methods()
         return silk_profile(name='view')(csrf_exempt(super().as_view(**init_kwargs)))
 
