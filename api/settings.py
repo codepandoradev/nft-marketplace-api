@@ -108,6 +108,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'djcelery_email',
     'djmoney',
+    'channels',
     # own apps
     'app.base',
     'app.users',
