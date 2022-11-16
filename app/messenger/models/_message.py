@@ -7,10 +7,10 @@ from app.users.models import User
 
 
 class Message(BaseModel):
+    sender = models.ForeignKey(User, models.CASCADE, related_name='messages_by_sender')
     receiver = models.ForeignKey(
         User, models.CASCADE, related_name='messages_by_receiver'
     )
-    sender = models.ForeignKey(User, models.CASCADE, related_name='messages_by_sender')
     text = models.TextField()
     sent_at = models.DateTimeField(default=timezone.now)
 
