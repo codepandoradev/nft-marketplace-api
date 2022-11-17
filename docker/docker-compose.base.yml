@@ -36,7 +36,6 @@ services:
     networks:
       - db_network
       - redis_network
-      - nginx_network
     restart: unless-stopped
   celery:
     extends:

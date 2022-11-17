@@ -20,6 +20,8 @@ services:
       python manage.py collectstatic --noinput &&
       daphne -b 0.0.0.0 -p 8000 api.asgi:application
       "
+    networks:
+      - nginx_network
     depends_on:
       - db
       - redis
