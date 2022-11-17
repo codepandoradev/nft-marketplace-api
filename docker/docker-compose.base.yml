@@ -36,6 +36,7 @@ services:
     networks:
       - db_network
       - redis_network
+      - nginx_network
     restart: unless-stopped
   celery:
     extends:
@@ -47,11 +48,6 @@ services:
       service: api
     command: celery -A api beat -S django -l info
     restart: unless-stopped
-  web:
-    build:
-      context: ../web
-    volumes:
-      - web_volume:/usr/src/app/build
   nginx:
     image: nginx:1.21.6
     env_file:
@@ -63,9 +59,8 @@ services:
       - "443:443"
     volumes:
       - static_volume:/api/static
-      - web_volume:/usr/share/nginx/html
-      - ./nginx/nginx.conf.conf:/etc/nginx/templates/nginx.conf.conf:ro
-      - ./certs:/api/certs
+      - ../nginx/nginx.conf.conf:/etc/nginx/templates/nginx.conf.conf:ro
+      - ../certs:/api/certs
     networks:
       - nginx_network
     restart: unless-stopped
