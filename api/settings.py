@@ -6,6 +6,8 @@ import os
 from functools import partial
 
 # noinspection PyPackageRequirements
+from urllib.parse import urlparse
+
 import environ
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -52,7 +54,7 @@ env = environ.Env(
     CELERY_BROKER_POOL_LIMIT=int,  # default: CELERY_REDIS_MAX_CONNECTIONS
     CELERY_TASK_EAGER=(bool, False),
     SESSION_ON_LOGIN=bool,  # default: DEBUG
-    USE_SILKY=bool,  # default: DEBUG
+    USE_SILK=bool,  # default: DEBUG
     CLOUDINARY_URL=(str, None),
     SENTRY_DSN=(str, None),
 )
@@ -106,12 +108,14 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'djcelery_email',
     'djmoney',
+    'channels',
     # own apps
     'app.base',
     'app.users',
     'app.nfts',
     'app.sales',
     'app.collections',
+    'app.messenger',
 ]
 
 REST_FRAMEWORK = {
@@ -128,7 +132,8 @@ REST_FRAMEWORK = {
         'app.base.authentications.token.TokenAuthentication',
         'app.base.authentications.session.SessionAuthentication',
     ],
-    'DEFAULT_PAGINATION_CLASS': 'app.base.paginations.base.BasePagination',
+    'DEFAULT_PAGINATION_CLASS': 'app.base.paginations.page_number.PageNumberPagination',
+    'PAGE_SIZE': 10,
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
@@ -293,15 +298,15 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # silk
 
-USE_SILKY = env('USE_SILKY', default=DEBUG)
+USE_SILK = env('USE_SILK', default=DEBUG)
 
-SILKY_INTERCEPT_FUNC = lambda _: USE_SILKY  # noqa:E731
+SILKY_INTERCEPT_FUNC = lambda _: USE_SILK  # noqa: E731
 SILKY_META = True
 SILKY_ANALYZE_QUERIES = True
 SILKY_PYTHON_PROFILER = True
 SILKY_PYTHON_PROFILER_BINARY = True
 SILKY_PYTHON_PROFILER_RESULT_PATH = BASE_DIR + 'profiles/'
-if USE_SILKY and not os.path.exists(SILKY_PYTHON_PROFILER_RESULT_PATH):
+if USE_SILK and not os.path.exists(SILKY_PYTHON_PROFILER_RESULT_PATH):
     os.makedirs(SILKY_PYTHON_PROFILER_RESULT_PATH)
 
 SILKY_MAX_RECORDED_REQUESTS = 1_000
@@ -396,3 +401,16 @@ DEFAULT_CURRENCY = str(Currency.ETH)
 TIME_ZONE = 'UTC'
 USE_L10N = True
 USE_TZ = True
+
+# channels
+
+# channels
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [(urlparse(REDIS_URL).hostname, urlparse(REDIS_URL).port)],
+        },
+    },
+}
