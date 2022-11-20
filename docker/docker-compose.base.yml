@@ -46,9 +46,6 @@ services:
       - ../envs/.base.env
     environment:
       - NGINX_ENVSUBST_TEMPLATE_SUFFIX=.conf
-    ports:
-      - 80:80
-      - 443:443
     networks:
       - nginx_network
     restart: unless-stopped

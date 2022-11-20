@@ -48,6 +48,8 @@ services:
       service: nginx
     env_file:
       - ../envs/.stage.env
+    ports:
+      - 8080:8080
     volumes:
       - ../nginx/nginx.stage.conf.conf:/etc/nginx/templates/nginx.conf.conf:ro
       - static_volume:/etc/nginx/html/static
