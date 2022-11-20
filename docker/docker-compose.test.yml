@@ -15,8 +15,6 @@ services:
       service: api
     env_file:
       - ../envs/.test.env
-    ports:
-      - 8000:8000
     command: bash -c "
       coverage run manage.py test --noinput
       && coverage report
@@ -27,13 +25,6 @@ services:
     depends_on:
       - db
       - redis
-    restart: "no"
-
-volumes:
-  db_volume:
-  static_volume:
-  media_volume:
-  profile_volume:
 
 networks:
   db_network:
