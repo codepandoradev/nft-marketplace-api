@@ -5,6 +5,8 @@ services:
     extends:
       file: docker-compose.base.yml
       service: db
+    volumes:
+      - /home/www/${COMPOSE_PROJECT_NAME}/db:/var/lib/postgresql/data
   redis:
     extends:
       file: docker-compose.base.yml
@@ -15,10 +17,12 @@ services:
       service: api
     env_file:
       - ../envs/.prod.env
+    volumes:
+      - profile_volume:/api/profile
+      - /home/www/${COMPOSE_PROJECT_NAME}/media:/api/media
     command: bash -c "
-      python manage.py migrate &&
-      python manage.py collectstatic --noinput &&
-      daphne -b 0.0.0.0 -p 8000 api.asgi:application
+      python manage.py migrate
+      && daphne -b 0.0.0.0 -p 8000 api.asgi:application
       "
     networks:
       - nginx_network
@@ -30,28 +34,32 @@ services:
       file: docker-compose.base.yml
       service: celery
     depends_on:
-      - db
-      - redis
+      - api
   celery_beat:
     extends:
       file: docker-compose.base.yml
       service: celery_beat
     depends_on:
-      - db
-      - redis
+      - celery
+  web:
+    extends:
+      file: docker-compose.base.yml
+      service: web
   nginx:
     extends:
       file: docker-compose.base.yml
       service: nginx
     env_file:
       - ../envs/.prod.env
+    volumes:
+      - ../nginx/nginx.prod.conf.conf:/etc/nginx/templates/nginx.conf.conf:ro
+      - /home/www/${COMPOSE_PROJECT_NAME}/media:/etc/nginx/html/media
+      - ../certs:/api/certs
     depends_on:
       - api
+      - web
 
 volumes:
-  db_volume:
-  static_volume:
-  media_volume:
   profile_volume:
   web_volume:
 

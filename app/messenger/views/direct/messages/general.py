@@ -22,7 +22,10 @@ class MessengerDirectMessagesView(BaseView):
         'get': GET_MessengerDirectMessagesSerializer,
         'post': POST_MessengerDirectMessagesSerializer,
     }
-    permissions_map = {'get': [AuthenticatedPermission]}
+    permissions_map = {
+        'get': [AuthenticatedPermission],
+        'post': [AuthenticatedPermission],
+    }
     pagination_class = LimitOffsetPagination
 
     def get_object(self):
