@@ -1,0 +1,13 @@
+name: Push master
+
+on:
+  push:
+    branches:    
+      - 'master'
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pass the received secret to an action
+        uses: ./.github/workflows/ci.yml@master
