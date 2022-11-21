@@ -2,9 +2,8 @@ name: Push task
 
 on:
   push:
-    branches:    
-      - '!master'
-      - '!prod'
+    branches-ignore:
+      - 'master'
 
 jobs:
   ci:
