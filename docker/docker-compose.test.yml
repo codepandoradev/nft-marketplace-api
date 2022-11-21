@@ -25,6 +25,7 @@ services:
     depends_on:
       - db
       - redis
+    restart: 'no'
 
 networks:
   db_network:
