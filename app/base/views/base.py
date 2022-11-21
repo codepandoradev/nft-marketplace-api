@@ -1,18 +1,16 @@
 from __future__ import annotations
 
-from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import exceptions, status
-from rest_framework.exceptions import MethodNotAllowed
 from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import ListModelMixin
 from rest_framework.response import Response
-from rest_framework.views import set_rollback
 
 # noinspection PyPackageRequirements
 from silk.profiling.profiler import silk_profile
 
 from app.base.authentications.token import TokenAuthentication
-from app.base.exceptions import *
+from app.base.exceptions.handler import exception_handler
 from app.base.models.base import BaseModel
 from app.base.permissions.base import BasePermission
 from app.base.serializers.base import BaseSerializer
@@ -22,38 +20,8 @@ from app.base.utils.schema import extend_schema
 __all__ = ['BaseView']
 
 
-def _exception_handler(exception):
-    try:
-        set_rollback()
-        if settings.DEBUG and isinstance(exception, MethodNotAllowed):
-            return Response(str(exception))
-        try:
-            raise exception
-        except APIWarning as e:
-            api_error = e
-        except ClientError as e:
-            api_error = e
-        except CriticalError as e:
-            api_error = e
-        except tuple(APIWarning.EXCEPTION__CAST.keys()) as exception_to_cast:
-            api_error = APIWarning.cast_exception(exception_to_cast)
-        except tuple(ClientError.EXCEPTION__CAST.keys()) as exception_to_cast:
-            api_error = ClientError.cast_exception(exception_to_cast)
-        except tuple(CriticalError.EXCEPTION__CAST.keys()) as exception_to_cast:
-            api_error = CriticalError.cast_exception(exception_to_cast)
-
-        error = api_error
-
-    except Exception as e:
-        error = CriticalError(str(e))
-
-    error.log()
-    return error.to_response()
-
-
 class BaseView(GenericAPIView):
-    lookup_field = 'pk'
-    ordering = 'pk'
+    many: bool = False
     serializer_class = BaseSerializer
     permission_classes = []
     serializer_map: dict[
@@ -139,11 +107,13 @@ class BaseView(GenericAPIView):
 
     @classmethod
     def as_view(cls, **init_kwargs):
+        if cls.many:
+            cls.__bases__ += (ListModelMixin,)
         cls._decorate_methods()
         return silk_profile(name='view')(csrf_exempt(super().as_view(**init_kwargs)))
 
     def handle_exception(self, exception):
-        return _exception_handler(exception)
+        return exception_handler(exception)
 
     def permission_denied(self, request, message=None, code=None):
         if request.authenticators and not request.successful_authenticator:

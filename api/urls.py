@@ -17,6 +17,8 @@ urlpatterns = [
     path('users/', include('app.users.urls')),
     path('nfts/', include('app.nfts.urls')),
     path('collections/', include('app.collections.urls')),
+    path('messenger/', include('app.messenger.urls')),
+    path('games/', include('app.games.urls')),
     *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]
