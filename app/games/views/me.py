@@ -1,8 +1,6 @@
 from app.base.views.base import BaseView
+from app.games.serializers.general import GET_UserPointsSerializer
 from app.users.permissions import AuthenticatedPermission
-from app.games.serializers.general import (
-    GET_UserPointsSerializer,
-)
 
 
 class MeUserPointsView(BaseView):

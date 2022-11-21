@@ -13,7 +13,7 @@ class POST_AddPointsSerializer(BaseModelSerializer):
     md5_key = serializers.CharField(write_only=True)
 
     def is_valid(self, raise_exception=True):
-        super(POST_AddPointsSerializer, self).is_valid()
+        super().is_valid()
 
         server_md5_key = md5(
             (
