@@ -13,7 +13,6 @@ class POST_AddPointsAction(BaseAction):
         self.user_manager = User.objects
 
     def run(self, data: InEntity) -> User:
-
         if data.game_index == 1:
             data.user.first_score += data.score_to_add
         elif data.game_index == 2:

@@ -12,6 +12,7 @@ class POST_AddPointsSerializer(BaseModelSerializer):
     score_to_add = serializers.IntegerField(write_only=True, min_value=0)
     md5_key = serializers.CharField(write_only=True)
 
+    # Это должно быть в action, но на одноразовую игру пойдёт
     def is_valid(self, raise_exception=True):
         super().is_valid()
 

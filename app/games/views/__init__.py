@@ -1,3 +1,3 @@
-from .add_points import AddPointsView
-from .general import UsersPointsView
-from .me import MeUserPointsView
+from .add_points import GamesAddPointsView
+from .general import GamesView
+from .me import GamesMeView

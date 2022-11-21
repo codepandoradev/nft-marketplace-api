@@ -7,7 +7,7 @@ from app.games.serializers.add_pointts import POST_AddPointsSerializer
 from app.users.permissions import AuthenticatedPermission
 
 
-class AddPointsView(BaseView):
+class GamesAddPointsView(BaseView):
     permissions_map = {'post': [AuthenticatedPermission]}
     serializer_map = {'post': POST_AddPointsSerializer}
 
