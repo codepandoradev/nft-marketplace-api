@@ -116,6 +116,7 @@ INSTALLED_APPS = [
     'app.sales',
     'app.collections',
     'app.messenger',
+    'app.games',
 ]
 
 REST_FRAMEWORK = {

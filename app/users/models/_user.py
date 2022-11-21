@@ -23,6 +23,9 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     avatar = models.ImageField(upload_to='user/avatar', null=True, blank=True)
     header = models.ImageField(upload_to='user/header', null=True, blank=True)
     date_joined = models.DateTimeField(default=timezone.now)
+    first_score = models.IntegerField(default=0)
+    second_score = models.IntegerField(default=0)
+    third_score = models.IntegerField(default=0)
 
     objects = UserManager()
 
