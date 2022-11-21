@@ -13,6 +13,7 @@ class BasePermission(_BasePermission):
 
     @final
     def has_permission(self, request, view):
+        view.request = getattr(view, 'request', request)
         if self._has_permission(view):
             return True
         if self._allow_super and getattr(request.user, 'is_superuser', False):
@@ -24,6 +25,7 @@ class BasePermission(_BasePermission):
 
     @final
     def has_object_permission(self, request, view, obj):
+        view.request = getattr(view, 'request', request)
         if self._has_object_permission(view, obj):
             return True
         if self._allow_super and getattr(request.user, 'is_superuser', False):
