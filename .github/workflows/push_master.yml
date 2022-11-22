@@ -9,5 +9,5 @@ jobs:
   ci:
     uses: ./.github/workflows/ci.yml
   cd:
-    uses: ./.github/workflows/cd-stage.yml
+    uses: codepandoradev/nft-marketplace-cicd/.github/workflows/cd-stage.yml@main
     needs: [ci]
