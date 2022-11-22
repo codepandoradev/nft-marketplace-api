@@ -10,4 +10,5 @@ jobs:
     uses: ./.github/workflows/ci.yml
   cd:
     uses: codepandoradev/nft-marketplace-cicd/.github/workflows/cd-stage.yml@main
+    secrets: inherit
     needs: [ci]
