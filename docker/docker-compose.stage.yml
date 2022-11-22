@@ -19,7 +19,7 @@ services:
       - ../envs/.stage.env
     volumes:
       - profile_volume:/api/profile
-      - /home/www/${COMPOSE_PROJECT_NAME}/media:/api/media
+      - media_volume:/api/media
     command: bash -c "
       python manage.py migrate
       && python manage.py collectstatic --noinput
@@ -46,12 +46,13 @@ services:
     extends:
       file: docker-compose.base.yml
       service: nginx
+    build:
+      dockerfile: ../nginx/stage.dockerfile
     env_file:
       - ../envs/.stage.env
     ports:
       - 8080:8080
     volumes:
-      - ../nginx/nginx.stage.conf.conf:/etc/nginx/templates/nginx.conf.conf:ro
       - static_volume:/etc/nginx/html/static
       - media_volume:/etc/nginx/html/media
     depends_on:
