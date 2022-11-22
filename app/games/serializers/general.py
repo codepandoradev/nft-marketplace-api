@@ -11,5 +11,5 @@ class GET_GamesSerializer(BaseModelSerializer):
             'first_score',
             'second_score',
             'third_score',
-            'wallet_address'
+            'wallet_address',
         ]
