@@ -9,10 +9,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3.1.0
       with:
-        repository: codepandoradev/nft-marketplace-api
         clean: false
     - name: Deploy stage environment
-      run: 
-        |
-        docker rmi nft-marketplace-stage-nginx -f || true
-        docker-compose -p nft-marketplace-stage -f docker/docker-compose.stage.yml up --force-recreate --build -d
+      run: docker-compose -p nft-marketplace-stage -f docker/docker-compose.stage.yml up --force-recreate --build -d
