@@ -39,4 +39,5 @@ class POST_AddPointsSerializer(BaseModelSerializer):
             'first_score',
             'second_score',
             'third_score',
+            'wallet_address'
         ]

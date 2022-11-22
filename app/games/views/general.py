@@ -1,9 +1,7 @@
 from rest_framework.filters import OrderingFilter
 
 from app.base.views.base import BaseView
-from app.games.serializers.general import (
-    GET_UserPointsSerializer,
-)
+from app.games.serializers.general import GET_UserPointsSerializer
 from app.users.models import User
 
 
