@@ -33,7 +33,7 @@ argon2-cffi==21.3.0
 pydantic[email]==1.10.2
 pysha3==1.0.2
 ethereum==2.3.2
-sentry-sdk==1.10.1
+sentry-sdk==1.11.0
 py-moneyed==2.0
 
 # dev
