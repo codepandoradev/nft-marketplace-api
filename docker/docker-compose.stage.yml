@@ -49,11 +49,14 @@ services:
     env_file:
       - ../envs/.stage.env
     ports:
-      - 8080:8080
+      - 81:81
+      - 82:82
     volumes:
       - ../nginx/nginx.stage.conf.conf:/etc/nginx/templates/nginx.conf.conf:ro
       - static_volume:/etc/nginx/html/static
       - media_volume:/etc/nginx/html/media
+    networks:
+      - proxy_network
     depends_on:
       - api
 
@@ -67,3 +70,4 @@ networks:
   db_network:
   redis_network:
   nginx_network:
+  proxy_network:

@@ -41,10 +41,6 @@ services:
       service: celery_beat
     depends_on:
       - celery
-  web:
-    extends:
-      file: docker-compose.base.yml
-      service: web
   nginx:
     extends:
       file: docker-compose.base.yml
@@ -60,13 +56,13 @@ services:
       - ../certs:/api/certs
     depends_on:
       - api
-      - web
 
 volumes:
   profile_volume:
-  web_volume:
 
 networks:
   db_network:
   redis_network:
   nginx_network:
+    name: nft-marketplace-stage_proxy_network
+    external: true
