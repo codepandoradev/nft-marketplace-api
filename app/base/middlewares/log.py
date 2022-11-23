@@ -22,7 +22,7 @@ __all__ = ['LogMiddleware']
 def _get_content_type(request_or_response):
     return getattr(request_or_response, 'content_type', None) or getattr(
         request_or_response, 'headers', {}
-    ).get('Content-Type', '')
+    ).get("Content-Type", '')
 
 
 # noinspection PyBroadException
@@ -35,11 +35,11 @@ def _cut_back(value, max_length=200):
             type_name = type(value).__name__
             try:
                 return (
-                    f'{value[:max_length // 2]}<<<{length - max_length} more '
-                    f'{type_name}>>> {value[-max_length // 2:]}'
+                    f"{value[:max_length // 2]}<<<{length - max_length} more "
+                    f"{type_name}>>> {value[-max_length // 2:]}"
                 )
             except Exception:
-                return f'<<<{type_name} of length {length}>>>'
+                return f"<<<{type_name} of length {length}>>>"
         return value
     if len(str(value)) > max_length:
         return _cut_back(str(value))
@@ -69,52 +69,37 @@ class LogMiddleware(MiddlewareMixin):
             'run_time': time.time() - request.start_time,
             'request': {},
             'response': {},
-            'url': f'{request.method.upper()} {unquote(request.get_full_path())}',
+            'url': f"{request.method.upper()} {unquote(request.get_full_path())}",
         }
 
         log_data['request']['headers'] = _cut_back_dict(dict(request.headers))
         log_data['request']['cookies'] = _cut_back_dict(dict(request.COOKIES))
         if request.method in ['PUT', 'POST', 'PATCH']:
-            content_type = _get_content_type(request)
-            if 'application/json' in content_type:
-                try:
-                    log_data['request']['data'] = _cut_back_dict(
-                        json.loads(request.POST.dict())
-                    )
-                except Exception:
-                    try:
-                        log_data['request']['data'] = _cut_back(request.POST.dict())
-                    except Exception:
-                        log_data['request']['data'] = _cut_back(request.body)
-            else:
-                try:
-                    log_data['request']['data'] = _cut_back_dict(request.POST.dict())
-                except Exception:
-                    try:
-                        log_data['request']['data'] = _cut_back(request.POST.dict())
-                    except Exception:
-                        log_data['request']['data'] = _cut_back(request.body)
-                try:
-                    log_data['request']['files'] = {
-                        k: [e.name for e in f] for k, f in dict(request.FILES).items()
-                    }
-                except Exception:
-                    log_data['request']['files'] = {}
-                if not log_data['request']['files']:
-                    del log_data['request']['files']
+            try:
+                log_data['request']['data'] = _cut_back_dict(json.loads(request.body))
+            except Exception:
+                log_data['request']['data'] = _cut_back(request.body)
+            try:
+                log_data['request']['files'] = {
+                    k: [e.name for e in f] for k, f in dict(request.FILES).items()
+                }
+            except Exception:
+                log_data['request']['files'] = {}
+            if not log_data['request']['files']:
+                del log_data['request']['files']
 
         if response:
             log_data['response']['headers'] = _cut_back_dict(dict(response.headers))
             log_data['response']['cookies'] = _cut_back_dict(dict(response.cookies))
             content_type = _get_content_type(response)
             if request.path in ('/', '/__docs__/'):
-                log_data['response']['body'] = '<<<DOCS>>>'
+                log_data['response']['body'] = "<<<DOCS>>>"
                 return log_data
             if request.path.startswith('/__debug__'):
-                log_data['response']['body'] = '<<<DEBUG TOOLBAR>>>'
+                log_data['response']['body'] = "<<<DEBUG TOOLBAR>>>"
                 return log_data
             if 'text/html' in content_type and len(response.content) > 100:
-                log_data['response']['body'] = '<<<HTML>>>'
+                log_data['response']['body'] = "<<<HTML>>>"
                 return log_data
             if 'application/json' in content_type:
                 try:
