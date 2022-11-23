@@ -2,7 +2,7 @@ name: Backup media
 
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '* */12 * * *'
 
 jobs:
   backup:
