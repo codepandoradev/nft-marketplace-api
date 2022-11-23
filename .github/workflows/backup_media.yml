@@ -13,11 +13,12 @@ jobs:
         cd ~
         mkdir -p nft-marketplace/media || true
         sudo chown www nft-marketplace/
-        cd nft-marketplace
-        mkdir -p backups/media || true
+        mkdir -p nft-marketplace/backups/media || true
     - name: Make backup
-      run: cp -r media backups/media/$(date +"%Y-%m-%dT%H:%M:%S")
+      run: |
+        cd ~/nft-marketplace
+        cp -r media backups/media/$(date +"%Y-%m-%dT%H:%M:%S")
     - name: Clean old backups
       run: |
-        cd backups/media
+        cd ~/nft-marketplace/backups/media
         ls -t | sed -e '1,5d' | xargs rm -rf
