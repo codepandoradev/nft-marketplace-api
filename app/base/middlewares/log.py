@@ -63,6 +63,7 @@ def _cut_back_dict(json_data, max_length=200):
 class LogMiddleware(MiddlewareMixin):
     def process_request(self, request):
         request.start_time = time.time()
+        request.body_ = request.body
 
     def extract_log_info(self, request, response):
         log_data = {
@@ -76,9 +77,9 @@ class LogMiddleware(MiddlewareMixin):
         log_data['request']['cookies'] = _cut_back_dict(dict(request.COOKIES))
         if request.method in ['PUT', 'POST', 'PATCH']:
             try:
-                log_data['request']['data'] = _cut_back_dict(json.loads(request.body))
+                log_data['request']['data'] = _cut_back_dict(json.loads(request.body_))
             except Exception:
-                log_data['request']['data'] = _cut_back(request.body)
+                log_data['request']['data'] = _cut_back(request.body_)
             try:
                 log_data['request']['files'] = {
                     k: [e.name for e in f] for k, f in dict(request.FILES).items()
