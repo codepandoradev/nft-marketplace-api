@@ -1,0 +1,24 @@
+name: Backup media
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+
+jobs:
+  backup:
+    runs-on: [self-hosted, nft-marketplace]
+    steps:
+    - name: Create dirs
+      run: |
+        cd ~
+        mkdir -p nft-marketplace/media || true
+        sudo chown www nft-marketplace/
+        mkdir -p nft-marketplace/backups/media || true
+    - name: Make backup
+      run: |
+        cd ~/nft-marketplace
+        cp -r media backups/media/$(date +"%Y-%m-%dT%H:%M:%S")
+    - name: Clean old backups
+      run: |
+        cd ~/nft-marketplace/backups/media
+        ls -t | sed -e '1,5d' | xargs rm -rf

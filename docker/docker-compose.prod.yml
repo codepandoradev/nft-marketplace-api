@@ -18,7 +18,6 @@ services:
     env_file:
       - ../envs/.prod.env
     volumes:
-      - profile_volume:/api/profile
       - /home/www/${COMPOSE_PROJECT_NAME}/media:/api/media
     command: bash -c "
       python manage.py migrate
@@ -41,30 +40,23 @@ services:
       service: celery_beat
     depends_on:
       - celery
-  web:
-    extends:
-      file: docker-compose.base.yml
-      service: web
   nginx:
     extends:
       file: docker-compose.base.yml
       service: nginx
+    build:
+      dockerfile: ../nginx/prod.dockerfile
+      args:
+        - TAG
     env_file:
       - ../envs/.prod.env
     ports:
       - 80:80
       - 443:443
     volumes:
-      - ../nginx/nginx.prod.conf.conf:/etc/nginx/templates/nginx.conf.conf:ro
       - /home/www/${COMPOSE_PROJECT_NAME}/media:/etc/nginx/html/media
-      - ../certs:/api/certs
     depends_on:
       - api
-      - web
-
-volumes:
-  profile_volume:
-  web_volume:
 
 networks:
   db_network:
