@@ -5,8 +5,8 @@ services:
     extends:
       file: docker-compose.base.yml
       service: db
-    ports:
-      - ${DB_PORT}:5432
+    env_file: [ ../envs/.dev.env ]
+    ports: [ 5432:5432 ]
     volumes:
       - db_volume:/var/lib/postgresql/data
   redis:
@@ -19,8 +19,7 @@ services:
       service: api
     environment:
       - ENV_FILE=envs/.dev.env
-    ports:
-      - ${API_PORT}:8000
+    ports: [ 8000:8000 ]
     volumes:
       - profile_volume:/api/profile
       - media_volume:/media
@@ -29,21 +28,17 @@ services:
       && python manage.py collectstatic --noinput
       && daphne -b 0.0.0.0 -p 8000 api.asgi:application
       "
-    depends_on:
-      - db
-      - redis
+    depends_on: [ db, redis ]
   celery:
     extends:
       file: docker-compose.base.yml
       service: celery
-    depends_on:
-      - api
+    depends_on: [ api ]
   celery_beat:
     extends:
       file: docker-compose.base.yml
       service: celery_beat
-    depends_on:
-      - celery
+    depends_on: [ celery ]
 
 volumes:
   db_volume:

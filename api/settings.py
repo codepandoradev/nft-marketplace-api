@@ -19,40 +19,19 @@ from app.base.logs.configs import LogConfig
 
 # env
 
-_env_value = {'value': lambda s: s.split(',')}
-
 env = environ.Env(
     ENV_FILE=(str, None),
-    WEB_DOMAIN=(str, 'local.dev'),
-    API_DOMAIN=(str, 'api.local.dev'),
-    SECRET_KEY=(str, 'secret'),
-    DEBUG=(bool, True),
-    TEST=(bool, False),
-    ANON_THROTTLE_RATE=(str, '1000/s'),
-    USER_THROTTLE_RATE=(str, '10000/s'),
-    VERIFICATION_CODE_TIMEOUT=(int, 86400),
-    VERIFICATION_ACTIVATE_SUCCESS_PATH=(str, '#!/activate/success?token=%s'),
-    VERIFICATION_ACTIVATE_FAILURE_PATH=(str, '#!/activate/failure'),
-    VERIFICATION_PASSWORD_SUCCESS_PATH=(str, '#!/password/success?session_id=%s'),
-    VERIFICATION_PASSWORD_FAILURE_PATH=(str, '#!/password/failure'),
+    DEBUG=bool,
+    TEST=bool,
     EMAIL_BACKEND=(str, None),  # default: 'console' if DEBUG else 'smtp'
-    LOG_CONF=(_env_value, {'api': ['api_console'], 'gunicorn': ['web_console']}),
-    LOG_PRETTY=(bool, True),
-    LOG_MAX_LENGTH=(int, 130),
-    LOG_FORMATTERS=(
-        dict,
-        {
-            'api': (
-                '%(levelname)-8s| %(name)s %(asctime)s <%(module)s->%(funcName)s(%('
-                'lineno)d)>: %(message)s'
-            ),
-            'web': 'WEB     | %(asctime)s: %(message)s',
-        },
-    ),
-    LOG_LEVEL=(dict, {}),
-    CELERY_REDIS_MAX_CONNECTIONS=(int, 2),
+    LOG_CONF={'value': lambda s: s.split(',')},
+    LOG_PRETTY=bool,
+    LOG_MAX_LENGTH=int,
+    LOG_FORMATTERS=dict,
+    LOG_LEVEL=dict,
+    CELERY_REDIS_MAX_CONNECTIONS=int,
     CELERY_BROKER_POOL_LIMIT=int,  # default: CELERY_REDIS_MAX_CONNECTIONS
-    CELERY_TASK_EAGER=(bool, False),
+    CELERY_TASK_EAGER=bool,
     SESSION_ON_LOGIN=bool,  # default: DEBUG
     USE_SILK=bool,  # default: DEBUG
     CLOUDINARY_URL=(str, None),
@@ -233,22 +212,6 @@ CELERY_EMAIL_BACKEND = (
 )
 CELERY_EMAIL_TASK_CONFIG = {'name': None, 'ignore_result': False}
 CELERY_EMAIL_CHUNK_SIZE = 1
-
-# verification
-
-VERIFICATION_CODE_TIMEOUT = env('VERIFICATION_CODE_TIMEOUT')
-VERIFICATION_ACTIVATE_SUCCESS_URL: str = (
-    f"https://{WEB_DOMAIN}{env('VERIFICATION_ACTIVATE_SUCCESS_PATH')}"
-)
-VERIFICATION_ACTIVATE_FAILURE_URL: str = (
-    f"https://{WEB_DOMAIN}{env('VERIFICATION_ACTIVATE_FAILURE_PATH')}"
-)
-VERIFICATION_PASSWORD_SUCCESS_URL: str = (
-    f"https://{WEB_DOMAIN}{env('VERIFICATION_PASSWORD_SUCCESS_PATH')}"
-)
-VERIFICATION_PASSWORD_FAILURE_URL: str = (
-    f"https://{WEB_DOMAIN}{env('VERIFICATION_PASSWORD_FAILURE_PATH')}"
-)
 
 # celery[broker]
 
