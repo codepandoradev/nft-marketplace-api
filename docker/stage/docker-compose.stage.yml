@@ -19,7 +19,7 @@ services:
       service: api
     env_file: [ ../../envs/.stage.env ]
     volumes:
-      - profile_volume:/api/profile
+      - profiles_volume:/api/profiles
       - media_volume:/api/media
       - static_volume:/api/static
     command: bash -c "
@@ -56,7 +56,7 @@ services:
 
 volumes:
   db_volume:
-  profile_volume:
+  profiles_volume:
   static_volume:
   media_volume:
 

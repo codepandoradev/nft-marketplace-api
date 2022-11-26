@@ -20,7 +20,7 @@ services:
       - ENV_FILE=envs/.dev.env
     ports: [ 8000:8000 ]
     volumes:
-      - profile_volume:/api/profile
+      - profiles_volume:/api/profiles
       - media_volume:/api/media
     command: bash -c "
       python manage.py migrate
@@ -41,7 +41,7 @@ services:
 
 volumes:
   db_volume:
-  profile_volume:
+  profiles_volume:
   media_volume:
 
 networks:

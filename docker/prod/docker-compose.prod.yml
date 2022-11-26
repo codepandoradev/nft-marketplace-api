@@ -22,7 +22,7 @@ services:
     volumes:
       - /home/www/nft-marketplace/media:/api/media
       - static_volume:/api/static
-      - profile_volume:/api/profile
+      - profiles_volume:/api/profiles
     command: bash -c "
       python manage.py migrate
       && python manage.py collectstatic --noinput
@@ -58,7 +58,7 @@ services:
 
 volumes:
   static_volume:
-  profile_volume:
+  profiles_volume:
 
 networks:
   db_network:
