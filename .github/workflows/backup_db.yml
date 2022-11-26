@@ -2,7 +2,7 @@ name: Backup db
 
 on:
   schedule:
-    - cron: '5 * * * *'
+    - cron: '10 * * * *'
 
 jobs:
   backup:
@@ -15,7 +15,7 @@ jobs:
     - name: Make backup
       run: |
         cd ~/nft-marketplace/backups/db
-        docker exec nft-marketplace-prod-db-1 pg_dump -U user db -Fc | lzma -9e --threads=0 > $(date +"%Y-%m-%dT%H:%M:%S")
+        docker exec nft-marketplace-prod-db-1 pg_dump -U user db -a -Fc | lzma -9e --threads=0 > $(date +"%Y-%m-%dT%H:%M:%S")
     - name: Clean old backups
       run: |
         cd ~/nft-marketplace/backups/db
