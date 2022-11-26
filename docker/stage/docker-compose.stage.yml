@@ -47,7 +47,7 @@ services:
     build:
       dockerfile: ../nginx/stage.dockerfile
     env_file: [ ../../envs/.stage.env ]
-    ports: [ 8080:8080 ]
+    ports: [ 81:81 ]
     volumes:
       - static_volume:/etc/nginx/html/static
       - media_volume:/etc/nginx/html/media
