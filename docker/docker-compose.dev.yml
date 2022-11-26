@@ -21,7 +21,7 @@ services:
     ports: [ 8000:8000 ]
     volumes:
       - profile_volume:/api/profile
-      - media_volume:/media
+      - media_volume:/api/media
     command: bash -c "
       python manage.py migrate
       && python manage.py collectstatic --noinput

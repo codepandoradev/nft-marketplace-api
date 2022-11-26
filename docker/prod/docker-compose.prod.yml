@@ -21,6 +21,7 @@ services:
     env_file: [ ../../envs/.prod.env ]
     volumes:
       - /home/www/nft-marketplace/media:/api/media
+      - static_volume:/api/static
     command: bash -c "
       python manage.py migrate
       && python manage.py collectstatic --noinput
@@ -51,7 +52,11 @@ services:
     ports: [ 80:80, 443:443 ]
     volumes:
       - /home/www/nft-marketplace/media:/etc/nginx/html/media
+      - static_volume:/etc/nginx/html/static
     depends_on: [ api ]
+
+volumes:
+  static_volume:
 
 networks:
   db_network:

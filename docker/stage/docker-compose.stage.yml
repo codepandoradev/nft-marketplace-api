@@ -21,6 +21,7 @@ services:
     volumes:
       - profile_volume:/api/profile
       - media_volume:/api/media
+      - static_volume:/api/static
     command: bash -c "
       python manage.py migrate
       && python manage.py collectstatic --noinput
@@ -49,8 +50,8 @@ services:
     env_file: [ ../../envs/.stage.env ]
     ports: [ 81:81 ]
     volumes:
-      - static_volume:/etc/nginx/html/static
       - media_volume:/etc/nginx/html/media
+      - static_volume:/etc/nginx/html/static
     depends_on: [ api ]
 
 volumes:
