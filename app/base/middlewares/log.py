@@ -12,6 +12,7 @@ import time
 from typing import Iterable, Sized
 from urllib.parse import unquote
 
+from django.conf import settings
 from django.utils.deprecation import MiddlewareMixin
 
 from app.base.logs import debug, info
@@ -118,7 +119,8 @@ class LogMiddleware(MiddlewareMixin):
         return log_data
 
     def process_response(self, request, response):
-        self.log(request, response)
+        if settings.LOG_REQUESTS:
+            self.log(request, response)
         return response
 
     def log(self, request, response):

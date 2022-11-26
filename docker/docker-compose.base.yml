@@ -13,6 +13,7 @@ services:
     restart: unless-stopped
   redis:
     image: redis:7.0.0
+    env_file: [ ../envs/.base.env ]
     networks: [ redis_network ]
     restart: unless-stopped
   api:
@@ -24,11 +25,13 @@ services:
   celery:
     extends:
       service: api
+    env_file: [ ../envs/.base.env ]
     command: celery -A api worker -c 1 -P gevent -l info
     restart: unless-stopped
   celery_beat:
     extends:
       service: api
+    env_file: [ ../envs/.base.env ]
     command: celery -A api beat -S django -l info
     restart: unless-stopped
   nginx:

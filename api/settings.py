@@ -23,12 +23,9 @@ env = environ.Env(
     ENV_FILE=(str, None),
     DEBUG=bool,
     TEST=bool,
+    USE_BROWSABLE_API=bool,
+    URL_PREFIX=(str, None),
     EMAIL_BACKEND=(str, None),  # default: 'console' if DEBUG else 'smtp'
-    LOG_CONF={'value': lambda s: s.split(',')},
-    LOG_PRETTY=bool,
-    LOG_MAX_LENGTH=int,
-    LOG_FORMATTERS=dict,
-    LOG_LEVEL=dict,
     CELERY_REDIS_MAX_CONNECTIONS=int,
     CELERY_BROKER_POOL_LIMIT=int,  # default: CELERY_REDIS_MAX_CONNECTIONS
     CELERY_TASK_EAGER=bool,
@@ -36,10 +33,16 @@ env = environ.Env(
     USE_SILK=bool,  # default: DEBUG
     CLOUDINARY_URL=(str, None),
     SENTRY_DSN=(str, None),
+    LOG_CONF={'value': lambda s: s.split(',')},
+    LOG_PRETTY=bool,
+    LOG_MAX_LENGTH=int,
+    LOG_FORMATTERS=dict,
+    LOG_LEVEL=dict,
+    LOG_REQUESTS=bool,
 )
 
 if (ENV_FILE := env('ENV_FILE')) is not None:
-    environ.Env.read_env(ENV_FILE)
+    environ.Env.read_env(ENV_FILE, overwrite=True)
 
 # root
 
@@ -51,17 +54,17 @@ ROOT_URLCONF = 'api.urls'
 
 # site
 
-SITE_NAME = 'Dev'
+SITE_NAME = 'NFT marketplace'
 SITE_ROOT = BASE_DIR
-WEB_DOMAIN = env('WEB_DOMAIN')
-API_DOMAIN = env('API_DOMAIN')
-DOMAIN = WEB_DOMAIN
+DOMAIN = env('DOMAIN')
 
 # django
 
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 TEST = env('TEST')
+USE_BROWSABLE_API = env('USE_BROWSABLE_API')
+URL_PREFIX = env('URL_PREFIX')
 
 INSTALLED_APPS = [
     # django apps
@@ -99,10 +102,7 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': [
-        'app.base.renderers.ORJSONRenderer',
-        'app.base.renderers.BrowsableAPIRenderer',
-    ],
+    'DEFAULT_RENDERER_CLASSES': ['app.base.renderers.ORJSONRenderer'],
     'DEFAULT_PARSER_CLASSES': [
         'app.base.parsers.ORJSONParser',
         'rest_framework.parsers.FormParser',
@@ -126,6 +126,11 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
+
+if USE_BROWSABLE_API:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] += [
+        'app.base.renderers.BrowsableAPIRenderer'
+    ]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # should be as high as possible
@@ -263,18 +268,19 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # silk
 
 USE_SILK = env('USE_SILK', default=DEBUG)
-
 SILKY_INTERCEPT_FUNC = lambda _: USE_SILK  # noqa: E731
+SILKY_MAX_RECORDED_REQUESTS = 10_000
+SILKY_AUTHENTICATION = True
+SILKY_AUTHORISATION = True
 SILKY_META = True
 SILKY_ANALYZE_QUERIES = True
+SILKY_EXPLAIN_FLAGS = {'format': 'JSON', 'costs': True}
+SILKY_SENSITIVE_KEYS = set()
 SILKY_PYTHON_PROFILER = True
 SILKY_PYTHON_PROFILER_BINARY = True
 SILKY_PYTHON_PROFILER_RESULT_PATH = BASE_DIR + 'profiles/'
 if USE_SILK and not os.path.exists(SILKY_PYTHON_PROFILER_RESULT_PATH):
     os.makedirs(SILKY_PYTHON_PROFILER_RESULT_PATH)
-
-SILKY_MAX_RECORDED_REQUESTS = 1_000
-SILKY_MAX_RECORDED_REQUESTS_CHECK_PERCENT = 50
 
 # sentry
 
@@ -289,7 +295,7 @@ if (SENTRY_DSN := env('SENTRY_DSN')) is not None:
             DjangoIntegration(),
             RedisIntegration(),
         ],
-        environment={True: 'Dev', False: 'Prod'}[DEBUG],
+        environment=env('SENTRY_ENVIRONMENT'),
         traces_sample_rate=1,
     )
 
@@ -297,8 +303,7 @@ if (SENTRY_DSN := env('SENTRY_DSN')) is not None:
 
 SPECTACULAR_SETTINGS = {
     'TITLE': f'{SITE_NAME} API',
-    'VERSION': '1.0',
-    'DISABLE_ERRORS_AND_WARNINGS': not DEBUG,
+    'DISABLE_ERRORS_AND_WARNINGS': True,
 }
 
 # db
@@ -330,6 +335,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LOG_FORMATTERS = env('LOG_FORMATTERS')
 LOG_PRETTY = env('LOG_PRETTY')
 LOG_MAX_LENGTH = env('LOG_MAX_LENGTH')
+LOG_REQUESTS = env('LOG_REQUESTS')
 
 _loggers = {
     k: {
