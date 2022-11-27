@@ -48,3 +48,7 @@ def response_201(f):
             201: schema_serializer('Created', id=IntegerField(read_only=True)),
         }
     )(_f_decorator)
+
+
+def inline_exception(name: str):
+    return type(name, (Exception,), {})
