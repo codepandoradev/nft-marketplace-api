@@ -1,9 +1,9 @@
 from app.base.tests.fakers import fake
 from app.base.tests.views.base import BaseViewTest
+from app.users.enums.users import UserType
 from app.users.models import Token, User
 from app.users.serializers.web3.login import POST_UsersWeb3LoginSerializer
 from app.users.tests.factories.users import UserFactory
-from app.users.enums.users import UserType
 
 
 class UsersWeb3LoginTest(BaseViewTest):
