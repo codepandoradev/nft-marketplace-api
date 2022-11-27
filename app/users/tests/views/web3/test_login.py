@@ -3,6 +3,7 @@ from app.base.tests.views.base import BaseViewTest
 from app.users.models import Token, User
 from app.users.serializers.web3.login import POST_UsersWeb3LoginSerializer
 from app.users.tests.factories.users import UserFactory
+from app.users.enums.users import UserType
 
 
 class UsersWeb3LoginTest(BaseViewTest):
@@ -35,9 +36,19 @@ class UsersWeb3LoginTest(BaseViewTest):
         self.assert_equal(User.objects.count(), 1)
 
     def test_invalid_signature(self):
-        UserFactory(wallet_address=self.__wallet_address)
+        UserFactory(
+            wallet_address=self.__wallet_address,
+        )
         self._test(
             'post',
             POST_UsersWeb3LoginSerializer.WARNINGS[401],
             {'token': self.__token, 'signature': fake.english_word()},
+        )
+
+    def test_user_banned(self):
+        UserFactory(wallet_address=self.__wallet_address, type=UserType.BANNED)
+        self._test(
+            'post',
+            {POST_UsersWeb3LoginSerializer.WARNINGS[401]},
+            {'token': self.__token, 'signature': self.__signature},
         )
