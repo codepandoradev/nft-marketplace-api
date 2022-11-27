@@ -6,7 +6,7 @@ from app.users.serializers.token import POST_UsersTokenSerializer
 from app.users.tests.factories.users import UserFactory
 
 
-class UsersTest(BaseViewTest):
+class UsersTokenTest(BaseViewTest):
     path = '/users/token/'
 
     def test_post_success(self):

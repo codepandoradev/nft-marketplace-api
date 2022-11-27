@@ -22,9 +22,9 @@ djangochannelsrestframework==1.1.0
 channels==3.0.5
 channels-redis==4.0.0
 asgiref==3.5.2
-orjson==3.8.1
+orjson==3.8.2
 psycopg2-binary==2.9.5
-redis==4.3.4
+redis==4.3.5
 Pillow==9.3.0
 whitenoise==6.2.0
 celery==5.2.7
@@ -43,5 +43,5 @@ daphne==3.0.2
 # test
 parameterized==0.8.1
 factory_boy==3.2.1
-Faker==15.3.2
+Faker==15.3.3
 coverage==6.5.0

@@ -6,6 +6,11 @@ on:
       tag:
         required: true
         type: string
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: true
+        type: string
 
 jobs:
   deploy:
@@ -18,4 +23,4 @@ jobs:
       run:
         |
         export TAG=${{ inputs.tag }}
-        docker-compose -p nft-marketplace-prod -f docker/docker-compose.prod.yml up --renew-anon-volumes --force-recreate --build -d
+        docker-compose -p nft-marketplace-prod -f docker/prod/docker-compose.prod.yml up --build -d

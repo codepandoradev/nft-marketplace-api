@@ -50,20 +50,27 @@ class BaseTest(APITestCase):
         **filters,
     ):
         match model:
-            case type():
+            case type():  # model is type fo Model
                 return self.assert_model(model.objects, instance_data, **filters)
             case models.Manager():
                 return self.assert_model(model.all(), instance_data, **filters)
             case models.QuerySet():
+                queryset = model
+                model = queryset.model
                 try:
                     return self.assert_model(
-                        model.filter(**filters or {}).get(), instance_data
+                        queryset.filter(**filters or {}).get(), instance_data
                     )
-                except model.model.DoesNotExist:
+                except model.DoesNotExist as exc:
                     self.fail(
-                        f'{model.model.__name__} matching query ({filters}) does not '
-                        f'exists'
+                        f"{model.__name__} matching query ({filters}) does not exist: "
+                        f"({exc})"
                     )
-            case _:
+                except model.MultipleObjectsReturned as exc:
+                    self.fail(
+                        f"{model.__name__} matching query ({filters}) returns "
+                        f"multiple objects: ({exc})"
+                    )
+            case _:  # model is instance
                 self.assert_instance(model, instance_data)
         return model
