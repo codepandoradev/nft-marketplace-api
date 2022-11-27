@@ -145,9 +145,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     # third-party middlewares
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'silk.middleware.SilkyMiddleware',
+    'app.base.middlewares.SilkyMiddleware',
     # own middlewares
-    'app.base.middlewares.log.LogMiddleware',
+    'app.base.middlewares.LogMiddleware',
 ]
 
 TEMPLATES = [
@@ -272,10 +272,12 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 USE_SILK = env('USE_SILK', default=DEBUG)
 SILKY_INTERCEPT_FUNC = lambda _: USE_SILK  # noqa: E731
-SILKY_MAX_RECORDED_REQUESTS = 10_000
+SILKY_MIDDLEWARE_CLASS = 'app.base.middlewares.SilkyMiddleware'
+SILKY_MAX_RECORDED_REQUESTS = 100_000
 SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
 SILKY_META = True
+SILKY_HIDE_COOKIES = False
 SILKY_ANALYZE_QUERIES = env('SILKY_ANALYZE_QUERIES')
 SILKY_EXPLAIN_FLAGS = {
     'format': 'JSON',
