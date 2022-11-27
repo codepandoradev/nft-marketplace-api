@@ -49,6 +49,6 @@ class UsersWeb3LoginTest(BaseViewTest):
         UserFactory(wallet_address=self.__wallet_address, type=UserType.BANNED)
         self._test(
             'post',
-            {POST_UsersWeb3LoginSerializer.WARNINGS[401]},
+            POST_UsersWeb3LoginSerializer.WARNINGS[401],
             {'token': self.__token, 'signature': self.__signature},
         )
