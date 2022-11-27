@@ -30,10 +30,6 @@ def int_to_32bytearray(i):
     return o
 
 
-def encode_int32(v):
-    return v.to_bytes(32, byteorder='big')
-
-
 # noinspection SpellCheckingInspection
 def ecrecover_to_pub(rawhash, v, r, s):
     # noinspection PyBroadException
