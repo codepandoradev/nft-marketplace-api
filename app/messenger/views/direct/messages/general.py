@@ -32,7 +32,9 @@ class MessengerDirectMessagesView(BaseView):
         return get_object_or_404(User, pk=self.kwargs[self.lookup_url_kwarg])
 
     def get_queryset(self):
-        return Message.objects.all_from_direct(self.get_object(), self.request.user)
+        return Message.objects.all_from_direct(
+            self.get_object(), self.request.user
+        ).prefetch_related('attachments')
 
     def get(self):
         return self.list()
@@ -40,6 +42,9 @@ class MessengerDirectMessagesView(BaseView):
     def post(self):
         action = POST_MessengerDirectMessagesAction()
         serializer = self.get_valid_serializer()
+        serializer.validated_data['attachments'] = self.request.FILES.getlist(
+            'attachments'
+        )
         serializer.instance = action.run(
             action.InEntity(
                 sender=self.request.user,
