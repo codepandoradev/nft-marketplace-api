@@ -6,6 +6,7 @@ from app.users.models import User
 
 
 class GamesView(BaseView):
+    many = True
     serializer_map = {'get': GET_GamesSerializer}
     filter_backends = [OrderingFilter]
     ordering_fields = ['first_score', 'second_score', 'third_score']

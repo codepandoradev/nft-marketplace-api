@@ -15,6 +15,6 @@ class UsersWeb3LoginView(BaseView):
             serializer.instance = action.run(
                 action.InEntity(**serializer.validated_data, request=self.request)
             ).dict()
-        except PermissionError:
+        except (PermissionError, action.RecoverToAddrException):
             raise serializer.WARNINGS[401]
         return Response(serializer.data, status=201)

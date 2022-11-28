@@ -30,7 +30,7 @@ def _delete_none(f):
     def _decorator(*args, **kwargs):
         res = f(*args, **kwargs)
         if isinstance(res, dict):
-            res = {k: v for k, v in res.items() if v is not None}
+            res = {k: '' if k == 204 else v for k, v in res.items() if v is not None}
         return res
 
     return _decorator
@@ -136,8 +136,8 @@ def extend_schema(
             _method__status = {
                 'GET': 200,
                 'POST': 201,
-                'PUT': 200,
-                'PATCH': 200,
+                'PUT': 204,
+                'PATCH': 204,
                 'DELETE': 204,
                 'HEAD': 200,
                 'OPTIONS': 200,
