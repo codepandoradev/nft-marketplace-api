@@ -16,7 +16,7 @@ def status_by_method(method: str) -> int:
     match method.lower():
         case 'post':
             return 201
-        case 'delete':
+        case 'delete' | 'patch' | 'put':
             return 204
         case _:
             return 200

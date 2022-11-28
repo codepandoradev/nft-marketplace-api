@@ -257,6 +257,7 @@ CELERY_BEAT_SCHEDULE = {}
 
 if (CLOUDINARY_URL := env('CLOUDINARY_URL')) is not None:
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    CLOUDINARY_STORAGE = {'PREFIX': env('CLOUDINARY_PREFIX')}
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR + 'media'

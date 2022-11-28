@@ -1,12 +1,13 @@
 from django.contrib.auth import login
-from rest_framework.response import Response
 
 from app.base.exceptions import ClientError
+from app.base.utils.common import response_204
 from app.base.views.base import BaseView
 from app.users.models import User
 
 
 class UsersSessionView(BaseView):
+    @response_204
     def get(self):
         qs = self.request.query_params
         try:
@@ -20,4 +21,3 @@ class UsersSessionView(BaseView):
         except (User.DoesNotExist, PermissionError) as exc:
             raise ClientError("Invalid credentials") from exc
         login(self.request, user)
-        return Response()

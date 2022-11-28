@@ -19,7 +19,7 @@ class UsersMeView(BaseView):
 
     @response_204
     def patch(self):
-        return self.update()
+        self.update()
 
     def get_object(self):
         return self.request.user
