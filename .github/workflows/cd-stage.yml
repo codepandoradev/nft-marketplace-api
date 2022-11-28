@@ -11,4 +11,4 @@ jobs:
       with:
         clean: false
     - name: Deploy stage environment
-      run: docker-compose -p nft-marketplace-stage -f docker/docker-compose.stage.yml up --force-recreate --build -d
+      run: docker-compose -p nft-marketplace-stage -f docker/stage/docker-compose.stage.yml up --build -d

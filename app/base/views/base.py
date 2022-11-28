@@ -80,6 +80,8 @@ class BaseView(GenericAPIView):
                         return f(args[0])
                 return f(*args, **kwargs)
 
+            for key, value in f.__dict__.items():
+                setattr(wrapped_f, key, value)
             return wrapped_f
 
         auth_schema = TokenAuthentication.WARNING_401.get_schema()
