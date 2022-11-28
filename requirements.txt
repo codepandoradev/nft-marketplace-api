@@ -39,7 +39,7 @@ py-moneyed==2.0
 
 # dev
 django-silk==5.0.2
-daphne==3.0.2
+daphne==4.0.0
 
 # test
 parameterized==0.8.1
