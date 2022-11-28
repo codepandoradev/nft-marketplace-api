@@ -2,7 +2,6 @@ from asgiref.sync import async_to_sync
 from channels.db import database_sync_to_async
 from channels.layers import get_channel_layer
 from channels_redis.core import RedisChannelLayer
-from cloudinary_storage.storage import MediaCloudinaryStorage
 from djangochannelsrestframework.generics import GenericAsyncAPIConsumer
 
 from app.base.consumers import AsyncJsonConsumerMixin
@@ -14,8 +13,6 @@ from app.messenger.serializers.direct.messages.general import (
 )
 from app.users.models import User
 from app.users.permissions import AuthenticatedPermission
-
-MediaCloudinaryStorage
 
 
 class MessengerDirectConsumer(AsyncJsonConsumerMixin, GenericAsyncAPIConsumer):
