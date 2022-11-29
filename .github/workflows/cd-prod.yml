@@ -1,0 +1,26 @@
+name: CD prod
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, nft-marketplace]
+    steps:
+    - uses: actions/checkout@v3.1.0
+      with:
+        clean: false
+    - name: Deploy prod environment
+      run:
+        |
+        export TAG=${{ inputs.tag }}
+        docker-compose -p nft-marketplace-prod -f docker/prod/docker-compose.prod.yml up --build -d

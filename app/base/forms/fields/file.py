@@ -9,7 +9,7 @@ class FileFormField(FileField):
         allowed_extensions=None,
         max_length=None,
         allow_empty_file=False,
-        **kwargs
+        **kwargs,
     ):
         """
         :param allowed_extensions: None means that all extensions are allowed

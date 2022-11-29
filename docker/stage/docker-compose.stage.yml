@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+  db:
+    extends:
+      file: ../docker-compose.base.yml
+      service: db
+    env_file: [ ../../envs/.stage.env ]
+    ports: [ 5433:5432 ]
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+  redis:
+    extends:
+      file: ../docker-compose.base.yml
+      service: redis
+  api:
+    extends:
+      file: ../docker-compose.base.yml
+      service: api
+    env_file: [ ../../envs/.stage.env ]
+    volumes:
+      - profiles_volume:/api/profiles
+      - media_volume:/api/media
+      - static_volume:/api/static
+    command: bash -c "
+      python manage.py migrate
+      && python manage.py collectstatic --noinput
+      && daphne -b 0.0.0.0 -p 8000 api.asgi:application
+      "
+    networks: [ nginx_network ]
+    depends_on: [ db, redis ]
+  celery:
+    extends:
+      file: ../docker-compose.base.yml
+      service: celery
+    env_file: [ ../../envs/.stage.env ]
+    depends_on: [ api ]
+  celery_beat:
+    extends:
+      file: ../docker-compose.base.yml
+      service: celery_beat
+    env_file: [ ../../envs/.stage.env ]
+    depends_on: [ celery ]
+  nginx:
+    extends:
+      file: ../docker-compose.base.yml
+      service: nginx
+    build:
+      dockerfile: ../nginx/stage.dockerfile
+    env_file: [ ../../envs/.stage.env ]
+    ports: [ 81:81 ]
+    volumes:
+      - media_volume:/etc/nginx/html/media
+      - static_volume:/etc/nginx/html/static
+    depends_on: [ api ]
+
+volumes:
+  db_volume:
+  profiles_volume:
+  static_volume:
+  media_volume:
+
+networks:
+  db_network:
+  redis_network:
+  nginx_network:

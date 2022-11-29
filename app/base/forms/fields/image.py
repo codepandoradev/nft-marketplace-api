@@ -14,7 +14,7 @@ class ImageFormField(SvgAndImageFormField):
         allowed_extensions=tuple(get_available_image_extensions() + ['svg']),
         max_length=None,
         allow_empty_file=False,
-        **kwargs
+        **kwargs,
     ):
         kwargs['validators'] = [
             *kwargs['validators'],
