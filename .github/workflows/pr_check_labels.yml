@@ -1,11 +1,11 @@
-name: 'Check PR labels'
+name: "PR: check labels"
 
 on:
   pull_request:
     types: [ labeled, unlabeled, opened ]
 
 jobs:
-  build:
+  check:
     name: Check labels
     runs-on: ubuntu-22.04
     steps:

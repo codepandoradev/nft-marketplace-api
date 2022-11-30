@@ -1,14 +1,14 @@
-name: On pull request opened
+name: "PR: add reviewers"
 
 on:
   pull_request:
     types: opened
 
 jobs:
-  build:
+  add:
     runs-on: ubuntu-22.04
     steps:
-    - name: Add Reviewers
+    - name: Add reviewers
       uses: madrapps/add-reviewers@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
