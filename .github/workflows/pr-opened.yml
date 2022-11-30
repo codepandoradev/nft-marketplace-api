@@ -1,0 +1,16 @@
+name: On pull request opened
+
+on:
+  pull_request:
+    types: opened
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Add Reviewers
+      uses: madrapps/add-reviewers@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        reviewers: GentleEnvy
+        re-request-when-changes-requested: true
