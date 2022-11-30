@@ -9,7 +9,16 @@ categories:
     labels:
       - 'bug'
 
+  - title: ' Added tests'
+    labels:
+      - 'test'
+
+  - title: ' Updated dependencies'
+    labels:
+      - 'dependencies'
+
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 template: |
   ## Changes
+  
   $CHANGES
