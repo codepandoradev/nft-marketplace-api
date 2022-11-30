@@ -3,6 +3,8 @@ name: "Push: update PRs"
 on:
   push:
 
+permissions: write-all
+
 jobs:
   update:
     runs-on: ubuntu-22.04
