@@ -1,4 +1,4 @@
-name: Push not master
+name: "Push: not master"
 
 on:
   push:
