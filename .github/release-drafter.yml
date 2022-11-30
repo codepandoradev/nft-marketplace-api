@@ -22,4 +22,7 @@ categories:
       - 'dependencies'
 
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
-template: ''
+template: |
+  ## Contributors
+  
+  $CONTRIBUTORS
