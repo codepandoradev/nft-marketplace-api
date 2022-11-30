@@ -1,4 +1,4 @@
-name: Push master
+name: On push in the master branch
 
 on:
   push:
@@ -11,4 +11,8 @@ jobs:
     secrets: inherit
   cd:
     uses: ./.github/workflows/cd-stage.yml
-    needs: [ci]
+    needs: [ ci ]
+  release-draft:
+    uses: ./.github/workflows/call-release_draft.yml
+    secrets: inherit
+    needs: [ ci ]
