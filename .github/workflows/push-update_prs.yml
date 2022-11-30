@@ -1,0 +1,14 @@
+name: "Push: update PRs"
+
+on:
+  push:
+
+permissions: write-all
+
+jobs:
+  update:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: chinthakagodawita/autoupdate-action@v1.6.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

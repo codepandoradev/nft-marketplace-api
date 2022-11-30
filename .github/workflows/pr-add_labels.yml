@@ -11,6 +11,6 @@ jobs:
   add:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/labeler@v4.0.2
+      - uses: actions/labeler@4.1.0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
