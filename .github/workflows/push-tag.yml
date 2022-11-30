@@ -1,16 +1,18 @@
-name: Push tag
+name: "Push: tag"
 
 on:
   push:
     tags:
       - '*'
 
+permissions: write-all
+
 jobs:
   ci:
-    uses: ./.github/workflows/ci.yml
+    uses: ./.github/workflows/call-ci.yml
     secrets: inherit
   cd:
-    uses: ./.github/workflows/cd-prod.yml
+    uses: ./.github/workflows/call-deploy_prod.yml
     with:
       tag: ${{ github.ref_name }}
     needs: [ci]

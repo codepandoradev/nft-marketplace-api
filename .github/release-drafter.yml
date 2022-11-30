@@ -1,0 +1,15 @@
+name-template: 'v$NEXT_PATCH_VERSION'
+tag-template: 'v$NEXT_PATCH_VERSION'
+categories:
+  - title: ' Solved tasks'
+    labels:
+      - 'task'
+
+  - title: ' Fixed bugs'
+    labels:
+      - 'bug'
+
+change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+template: |
+  ## Changes
+  $CHANGES

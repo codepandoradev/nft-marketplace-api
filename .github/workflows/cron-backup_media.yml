@@ -6,7 +6,7 @@ on:
 
 jobs:
   backup:
-    runs-on: [self-hosted, nft-marketplace]
+    runs-on: [ self-hosted, nft-marketplace ]
     steps:
     - name: Create dirs
       run: |

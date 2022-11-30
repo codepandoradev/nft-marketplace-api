@@ -8,5 +8,5 @@ urlpatterns = [
 ]
 
 ws_urlpatterns = [
-    path('echo/', EchoConsumer.as_asgi()),
+    path('ws/echo/', EchoConsumer.as_asgi()),
 ]

@@ -10,7 +10,7 @@ from app.users.services.auth import AuthService
 
 class UsersWeb3ForceLoginSerializer(BaseSerializer):
     wallet_address = CharField(
-        write_only=True, validators=[RegexValidator(r"0x[a-z0-9]{40}")]
+        write_only=True, validators=[RegexValidator(r"^0x[a-z0-9]{40}$")]
     )
     token = CharField(read_only=True)
 

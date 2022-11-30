@@ -8,5 +8,5 @@ urlpatterns = [
 ]
 
 ws_urlpatterns = [
-    path('messenger/direct/<int:interlocutor>/', MessengerDirectConsumer.as_asgi()),
+    path('ws/messenger/direct/<int:interlocutor>/', MessengerDirectConsumer.as_asgi()),
 ]

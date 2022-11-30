@@ -1,0 +1,15 @@
+name: "PR: check labels"
+
+on:
+  pull_request:
+    types: [ labeled, unlabeled, opened ]
+
+jobs:
+  check:
+    name: Check labels
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: UKHomeOffice/match-label-action@main
+        with:
+          labels: task,test,bug,enhancement,dependencies
+          mode: singular
