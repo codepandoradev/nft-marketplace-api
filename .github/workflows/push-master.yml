@@ -1,11 +1,11 @@
-name: On push in the master branch
+name: Push in the master branch
 
 on:
   push:
     branches:    
       - 'master'
 
-permissions: read-all|write-all
+permissions: write-all
 
 jobs:
   ci:
