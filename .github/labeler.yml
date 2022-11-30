@@ -15,6 +15,7 @@ area:cicd:
 area:api:
   - "api/**/*"
   - "app/**/*"
+  - "!app/*/tests/**/*"
 
 area:requirements:
   - "requirements.txt"
