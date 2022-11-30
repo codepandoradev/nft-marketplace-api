@@ -5,10 +5,16 @@ on:
     branches:    
       - 'master'
 
+permissions: write-all
+
 jobs:
   ci:
     uses: ./.github/workflows/ci.yml
     secrets: inherit
   cd:
     uses: ./.github/workflows/cd-stage.yml
-    needs: [ci]
+    needs: [ ci ]
+  release-draft:
+    uses: ./.github/workflows/call-release_draft.yml
+    secrets: inherit
+    needs: [ ci ]
