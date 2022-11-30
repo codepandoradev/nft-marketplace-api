@@ -1,4 +1,4 @@
-name: CD prod
+name: Deploy prod
 
 on:
   workflow_call:
@@ -14,7 +14,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: [self-hosted, nft-marketplace]
+    runs-on: [ self-hosted, nft-marketplace ]
     steps:
     - uses: actions/checkout@v3.1.0
       with:

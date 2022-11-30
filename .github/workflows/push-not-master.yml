@@ -1,0 +1,13 @@
+name: "Push: not master"
+
+on:
+  push:
+    branches-ignore:
+      - 'master'
+
+permissions: write-all
+
+jobs:
+  ci:
+    uses: ./.github/workflows/call-ci.yml
+    secrets: inherit
