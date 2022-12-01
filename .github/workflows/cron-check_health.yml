@@ -1,0 +1,31 @@
+name: "Cron: check health"
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  check:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        include:
+          - site: "prod: WEB"
+            url: "https://wonderplace.io/"
+          - site: "prod: API"
+            url: "https://wonderplace.io/api/"
+          - site: "stage: WEB"
+            url: "http://stage.wonderplace.io:81/"
+          - site: "stage: API"
+            url: "http://stage.wonderplace.io:81/api/"
+    steps:
+      - name: Ping ${{ matrix.site }}
+        id: ping
+        run: echo "::set-output name=status::$(curl -I ${{ matrix.url }} 2>/dev/null | head -n 1 | cut -d$' ' -f2)"
+      - name: Check ${{ matrix.site }} health
+        run: |
+          if [[ ${{ steps.ping.outputs.status }} != 200 ]]; then
+            >&2 echo "FAIL: status=${{ steps.ping.outputs.status }}"
+            exit 1
+          fi
+          echo "OK"
