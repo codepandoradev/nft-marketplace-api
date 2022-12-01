@@ -16,6 +16,7 @@ area:api:
   - "api/**"
   - "app/**"
   - "!app/*/tests/"
+  - "!app/*/tests/*"
   - "!app/*/tests/**"
 
 area:requirements:
