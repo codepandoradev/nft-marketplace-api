@@ -1,6 +1,6 @@
 area:cicd:
-  - ".github/**/*"
-  - "docker/**/*"
+  - ".github/**"
+  - "docker/**"
   - "envs/*"
   - "nginx/*"
   - ".coveragerc"
@@ -13,12 +13,13 @@ area:cicd:
   - "Dockerfile"
 
 area:api:
-  - "api/**/*"
-  - "app/**/*"
-  - "!app/*/tests/**/*"
+  - "api/**"
+  - "app/**"
+  - "!app/*/tests/"
+  - "!app/*/tests/**"
 
 area:requirements:
   - "requirements.txt"
 
 area:tests:
-  - "app/*/tests/**/*"
+  - "app/*/tests/**"
