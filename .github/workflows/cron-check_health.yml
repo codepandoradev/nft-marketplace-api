@@ -14,7 +14,7 @@ jobs:
           - site: "Prod: WEB"
             url: "https://wonderplace.io/"
           - site: "Prod: API"
-            url: "https://wonderplace.io/api/base/echo/invalid"
+            url: "https://wonderplace.io/api/base/echo/"
           - site: "Stage: WEB"
             url: "http://stage.wonderplace.io:81/"
           - site: "Stage: API"
@@ -38,6 +38,6 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: html
           message: |
-            <u>🔥 Health check</u>:
-                <b>${{ matrix.site }}</b> не работает:
+            ❤️ <u>Health check</u>:
+                🔥 <b>${{ matrix.site }}</b> не работает:
                     <a href="${{ matrix.url }}">запрос</a> вернул статус: <i>${{ steps.ping.outputs.status }}</i>
