@@ -39,7 +39,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            __Health check__:
+            \_\_Health check\_\_:
               *${{ matrix.site }}* не работает:
                 [запрос](${{ matrix.url }})
-                вернул статус _${{ steps.ping.outputs.status }}_
+                вернул статус \_${{ steps.ping.outputs.status }}\_
