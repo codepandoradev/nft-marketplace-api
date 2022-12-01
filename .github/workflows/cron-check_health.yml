@@ -41,4 +41,4 @@ jobs:
           message: |
             <u>Health check</u>:
               <b>${{ matrix.site }}</b> не работает:
-                <a href=\"${{ matrix.url }}\">запрос</a> вернул статус <i>${{ steps.ping.outputs.status }}</i>
+#               <a href=\"${{ matrix.url }}\">запрос</a> вернул статус <i>${{ steps.ping.outputs.status }}</i>
