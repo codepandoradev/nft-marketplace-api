@@ -14,7 +14,7 @@ jobs:
           - site: "Prod: WEB"
             url: "https://wonderplace.io/"
           - site: "Prod: API"
-            url: "https://wonderplace.io/api/base/echo/invalid"
+            url: "https://wonderplace.io/api/base/echo/"
           - site: "Stage: WEB"
             url: "http://stage.wonderplace.io:81/"
           - site: "Stage: API"
