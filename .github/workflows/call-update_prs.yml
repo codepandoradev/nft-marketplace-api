@@ -1,7 +1,7 @@
-name: "Push: update PRs"
+name: "Call: update PRs"
 
 on:
-  push:
+  workflow_call:
 
 permissions: write-all
 

@@ -14,7 +14,11 @@ jobs:
   cd:
     uses: ./.github/workflows/call-deploy_stage.yml
     needs: [ ci ]
+  update_prs:
+    uses: ./.github/workflows/call-update_prs.yml
+    secrets: inherit
+    needs: [ ci ]
   release_draft:
     uses: ./.github/workflows/call-release_draft.yml
     secrets: inherit
-    needs: [ ci ]
+    needs: [ update_prs ]
