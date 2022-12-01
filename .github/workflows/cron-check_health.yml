@@ -37,9 +37,8 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_GROUP_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          format: markdown
+          format: html
           message: |
-            \_\_Health check\_\_:
-              *${{ matrix.site }}* не работает:
-                [запрос](${{ matrix.url }})
-                вернул статус \_${{ steps.ping.outputs.status }}\_
+            <u>Health check</u>:
+              <b>${{ matrix.site }}</b> не работает:
+#               <a href=\"${{ matrix.url }}\">запрос</a> вернул статус <i>${{ steps.ping.outputs.status }}</i>
