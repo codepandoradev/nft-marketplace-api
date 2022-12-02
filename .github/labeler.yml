@@ -14,8 +14,8 @@ area:devops:
 
 area:api:
   - "api/**"
-  - any: "app/**"
-    all: "!app/*/tests/**"
+  - any: [ "app/**" ]
+    all: [ "!app/*/tests/**" ]
 
 area:requirements:
   - "requirements.txt"
