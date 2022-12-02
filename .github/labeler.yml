@@ -1,0 +1,26 @@
+area:cicd:
+  - ".github/**"
+  - "docker/**"
+  - "envs/*"
+  - "nginx/*"
+  - ".coveragerc"
+  - ".dockerignore"
+  - ".pre-commit-config.yaml"
+  - "codecov.yml"
+  - "pyproject.toml"
+  - "setup.cfg"
+  - ".run"
+  - "Dockerfile"
+
+area:api:
+  - "api/**"
+  - "app/**"
+  - "!app/*/tests/"
+  - "!app/*/tests/*"
+  - "!app/*/tests/**"
+
+area:requirements:
+  - "requirements.txt"
+
+area:tests:
+  - "app/*/tests/**"

@@ -5,22 +5,42 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "⬆️ "
+    pull-request-branch-name:
+      separator: "-"
+    reviewers:
+      - "GentleEnvy"
 
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "⬆️ "
+    pull-request-branch-name:
+      separator: "-"
+    reviewers:
+      - "GentleEnvy"
 
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "⬆️ "
+    pull-request-branch-name:
+      separator: "-"
+    reviewers:
+      - "GentleEnvy"
 
   - package-ecosystem: "docker"
     directory: "nginx"
     schedule:
       interval: "daily"
-    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "⬆️ "
+    pull-request-branch-name:
+      separator: "-"
+    reviewers:
+      - "GentleEnvy"

@@ -44,5 +44,5 @@ daphne==4.0.0
 # test
 parameterized==0.8.1
 factory_boy==3.2.1
-Faker==15.3.3
+Faker==15.3.4
 coverage==6.5.0

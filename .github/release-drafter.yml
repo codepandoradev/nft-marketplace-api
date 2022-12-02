@@ -1,0 +1,32 @@
+name-template: 'v$NEXT_PATCH_VERSION'
+tag-template: 'v$NEXT_PATCH_VERSION'
+categories:
+  - title: '🚀 Solved tasks'
+    labels:
+      - 'task'
+
+  - title: '💪🏻 Improved'
+    labels:
+      - 'enhancement'
+
+  - title: '🔧 Fixed bugs'
+    labels:
+      - 'bug'
+
+  - title: '☂️ Added tests'
+    labels:
+      - 'test'
+
+  - title: '⬆️ Updated dependencies'
+    labels:
+      - 'dependencies'
+
+change-template: '- $TITLE by @$AUTHOR in #$NUMBER'
+template: |
+  # Changes
+  
+  $CHANGES
+  
+  # Contributors
+  
+  $CONTRIBUTORS
