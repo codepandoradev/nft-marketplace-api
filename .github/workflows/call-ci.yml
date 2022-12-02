@@ -17,10 +17,11 @@ jobs:
   test:
     runs-on: [ self-hosted, nft-marketplace ]
     steps:
+      - run: pwd && cd .. && pwd
       - uses: actions/checkout@v3.1.0
         with:
           clean: false
-          path: $GITHUB_WORKSPACE-test
+          path: nft-marketplace-test
       - name: Run tests
         run: docker-compose -f docker/test/docker-compose.test.yml -p nft-marketplace-test up --build api
       - name: Upload coverage to Codecov
