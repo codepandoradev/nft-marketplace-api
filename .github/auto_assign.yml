@@ -1,3 +1,5 @@
-addReviewers: false
+addReviewers: true
+reviewers:
+  - GentleEnvy
 
 addAssignees: author
