@@ -1,4 +1,4 @@
-area:cicd:
+area:devops:
   - ".github/**"
   - "docker/**"
   - "envs/*"
@@ -14,10 +14,8 @@ area:cicd:
 
 area:api:
   - "api/**"
-  - "app/**"
-  - "!app/*/tests/"
-  - "!app/*/tests/*"
-  - "!app/*/tests/**"
+  - any: "app/**"
+    all: "!app/*/tests/**"
 
 area:requirements:
   - "requirements.txt"
