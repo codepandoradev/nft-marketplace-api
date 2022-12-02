@@ -15,12 +15,14 @@ jobs:
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.0
   test:
-    runs-on: ubuntu-22.04
-    if: true  # FIXME: для экономии actions minutes quota
+    runs-on: [ self-hosted, nft-marketplace ]
     steps:
       - uses: actions/checkout@v3.1.0
+        with:
+          clean: false
+          path: $GITHUB_WORKSPACE-test
       - name: Run tests
-        run: docker-compose -f docker/test/docker-compose.test.yml run api
+        run: docker-compose -f docker/test/docker-compose.test.yml -p nft-marketplace-test up --build api
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3.1.1
         with:
