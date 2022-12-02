@@ -26,6 +26,7 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     first_score = models.IntegerField(default=0)
     second_score = models.IntegerField(default=0)
     third_score = models.IntegerField(default=0)
+    first_top = models.IntegerField(blank=True, null=True)
 
     objects = UserManager()
 
