@@ -21,7 +21,11 @@ categories:
     labels:
       - 'dependencies'
 
-change-template: '- $TITLE by @$AUTHOR in #$NUMBER'
+  - title: '♾️ Upgraded CI/CD'
+    labels:
+      - 'cicd'
+
+change-template: '- $TITLE created by @$AUTHOR in #$NUMBER'
 template: |
   # Changes
   
