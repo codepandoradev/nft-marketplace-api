@@ -3,3 +3,5 @@ reviewers:
   - GentleEnvy
 
 addAssignees: author
+
+runOnDraft: true
