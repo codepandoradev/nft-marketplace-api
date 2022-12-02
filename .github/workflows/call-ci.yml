@@ -17,7 +17,7 @@ jobs:
   test:
     runs-on: [ self-hosted, nft-marketplace ]
     steps:
-      - run: cd ..
+      - run: pwd && cd .. && pwd
       - uses: actions/checkout@v3.1.0
         with:
           clean: false
