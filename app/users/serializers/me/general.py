@@ -12,6 +12,7 @@ class GET_UsersMeSerializer(BaseModelSerializer):
             'type',
             'username',
             'wallet_address',
+            'first_top',
             'avatar',
             'header',
         ]
