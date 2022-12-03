@@ -15,4 +15,5 @@ jobs:
     uses: ./.github/workflows/call-deploy_prod.yml
     with:
       tag: ${{ github.ref_name }}
+    secrets: inherit
     needs: [ci]

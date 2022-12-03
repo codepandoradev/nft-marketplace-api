@@ -15,10 +15,15 @@ on:
 jobs:
   deploy:
     runs-on: [ self-hosted, nft-marketplace ]
+    environment:
+      name: prod
+      url: 'https://wonderplace.io'
     steps:
     - uses: actions/checkout@v3.1.0
       with:
         clean: false
+    - name: Set prod envs
+      run: echo "${{ secrets.PROD_ENVS }}" > envs/.prod.env
     - name: Deploy prod environment
       run:
         |
