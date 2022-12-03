@@ -7,7 +7,9 @@ on:
 jobs:
   deploy:
     runs-on: [ self-hosted, nft-marketplace ]
-    environment: stage
+    environment:
+      name: stage
+      url: 'http://stage.wonderplace.io:81'
     steps:
     - uses: actions/checkout@v3.1.0
       with:
