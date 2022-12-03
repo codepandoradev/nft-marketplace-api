@@ -17,3 +17,10 @@ jobs:
       tag: ${{ github.ref_name }}
     secrets: inherit
     needs: [ci]
+  sentry_release:
+    uses: ./.github/workflows/call-sentry_release.yml
+    with:
+      environment: prod
+      version: ${{ github.ref_name }}
+    secrets: inherit
+    needs: [ cd ]
