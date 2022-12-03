@@ -33,5 +33,6 @@ jobs:
           SENTRY_ORG: code-pandora
           SENTRY_PROJECT: nft-marketplace
         with:
+          ignore_empty: true
           environment: ${{ inputs.environment }}
           version: ${{ inputs.version }}
