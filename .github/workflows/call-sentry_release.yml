@@ -1,0 +1,39 @@
+name: "Call: Sentry ralease"
+
+on:
+  push:
+    branches:
+      - sentry-release
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      version:
+        required: false
+        type: string
+        default: ${{ github.sha }}
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        type: string
+      version:
+        required: false
+        type: string
+        default: ${{ github.sha }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - name: Create Sentry release
+        uses: getsentry/action-release@v1.2.1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: code-pandora
+          SENTRY_PROJECT: nft-marketplace
+        with:
+          environment: ${{ inputs.environment }}
+          version: ${{ inputs.version }}
