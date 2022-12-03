@@ -13,6 +13,6 @@ jobs:
       with:
         clean: false
     - name: Set stage envs
-      run: ${{ secrets.ENVS }} > envs/.env.tmp
+      run: echo "${{ secrets.ENVS }}" > envs/.env.tmp
     - name: Deploy stage environment
       run: docker-compose -p nft-marketplace-stage -f docker/stage/docker-compose.stage.yml up --build -d
