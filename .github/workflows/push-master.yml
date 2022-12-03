@@ -15,6 +15,12 @@ jobs:
     uses: ./.github/workflows/call-deploy_stage.yml
     secrets: inherit
     needs: [ ci ]
+  sentry_release:
+    uses: ./.github/workflows/call-sentry_release.yml
+    with:
+      environment: stage
+    secrets: inherit
+    needs: [ cd ]
   update_prs:
     uses: ./.github/workflows/call-update_prs.yml
     secrets: inherit
