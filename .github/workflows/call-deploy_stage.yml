@@ -15,6 +15,8 @@ jobs:
       with:
         clean: false
     - name: Set stage envs
-      run: echo "${{ secrets.STAGE_ENVS }}" > envs/.stage.env
+      run: |
+        echo "${{ secrets.STAGE_ENVS }}" > envs/.stage.env
+        echo "SENTRY_RELEASE=${{ github.sha }}" >> envs/.stage.env
     - name: Deploy stage environment
       run: docker-compose -p nft-marketplace-stage -f docker/stage/docker-compose.stage.yml up --build -d
