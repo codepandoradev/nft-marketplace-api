@@ -23,7 +23,9 @@ jobs:
       with:
         clean: false
     - name: Set prod envs
-      run: echo "${{ secrets.PROD_ENVS }}" > envs/.prod.env
+      run: |
+        echo "${{ secrets.PROD_ENVS }}" > envs/.prod.env
+        echo "SENTRY_RELEASE=${{ inputs.tag }}" >> envs/.prod.env
     - name: Deploy prod environment
       run:
         |
