@@ -105,7 +105,9 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': ['app.base.renderers.ORJSONRenderer'],
+    'DEFAULT_RENDERER_CLASSES': [
+        'app.base.renderers.ORJSONRenderer',
+    ],
     'DEFAULT_PARSER_CLASSES': [
         'app.base.parsers.ORJSONParser',
         'rest_framework.parsers.FormParser',
