@@ -1,4 +1,6 @@
+from app.base.tests.fakers import fake
 from app.base.tests.views.base import BaseViewTest
+from app.messenger.models._message import Message, MessageAttachment
 from app.messenger.tests.factories import MessageFactory
 from app.users.models import User
 from app.users.tests.factories.users import UserFactory
@@ -24,3 +26,25 @@ class MessengerDirectMessagesTest(BaseViewTest):
                 ),
             },
         )
+
+    def test_post_message_success(self):
+        self.interlocutor = UserFactory()
+        self._test(
+            'post',
+            {},
+            {
+                'text': 'Hellow my friend,i am working',
+            },
+        )
+        self.assert_equal(Message.objects.count(), 1)
+
+    def test_post_message_pick_success(self):
+        self.interlocutor = UserFactory()
+        self._test(
+            'post',
+            {},
+            {'text': 'Hellow my friend,i am working', 'attachments': fake.image()},
+            format='multipart',
+        )
+        self.assert_equal(Message.objects.count(), 1)
+        self.assert_equal(MessageAttachment.objects.count(), 1)
