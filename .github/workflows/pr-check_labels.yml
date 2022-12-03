@@ -10,10 +10,9 @@ permissions:
 
 jobs:
   check:
-    name: Check labels
     runs-on: ubuntu-22.04
     steps:
-      - uses: docker://agilepathway/pull-request-label-checker:latest
+      - uses: agilepathway/pull-request-label-checker@1.2.9
         with:
           one_of: task,test,bug,enhancement,dependencies,cicd
           repo_token: ${{ secrets.GITHUB_TOKEN }}
