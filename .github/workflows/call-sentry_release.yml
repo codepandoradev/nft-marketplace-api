@@ -1,9 +1,6 @@
 name: "Call: Sentry ralease"
 
 on:
-  push:
-    branches:
-      - sentry-release
   workflow_call:
     inputs:
       environment:
@@ -22,7 +19,7 @@ on:
         type: string
 
 jobs:
-  deploy:
+  release:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3.1.0
