@@ -7,9 +7,12 @@ on:
 jobs:
   deploy:
     runs-on: [ self-hosted, nft-marketplace ]
+    environment: stage
     steps:
     - uses: actions/checkout@v3.1.0
       with:
         clean: false
+    - name: Set stage envs
+      run: echo "${{ secrets.ENVS }}" > envs/.stage.env
     - name: Deploy stage environment
       run: docker-compose -p nft-marketplace-stage -f docker/stage/docker-compose.stage.yml up --build -d
