@@ -33,6 +33,8 @@ services:
     command: celery -A api beat -S django -l info
     restart: unless-stopped
   nginx:
+    build:
+      context: ../nginx
     env_file: [ ../envs/.base.env ]
     environment:
       - NGINX_ENVSUBST_TEMPLATE_SUFFIX=.conf
