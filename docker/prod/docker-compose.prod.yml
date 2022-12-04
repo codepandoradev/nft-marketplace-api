@@ -18,6 +18,7 @@ services:
     extends:
       file: ../docker-compose.base.yml
       service: api
+    image: ghcr.io/codepandoradev/nft-marketplace-api/api:${TAG}
     env_file: [ ../../envs/.prod.env ]
     volumes:
       - /home/www/nft-marketplace/media:/api/media
