@@ -17,6 +17,7 @@ services:
     extends:
       file: ../docker-compose.base.yml
       service: api
+    image: ghcr.io/codepandoradev/nft-marketplace-api/api:latest
     env_file: [ ../../envs/.stage.env ]
     volumes:
       - profiles_volume:/api/profiles
