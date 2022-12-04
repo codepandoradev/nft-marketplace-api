@@ -312,7 +312,7 @@ if (SENTRY_DSN := env('SENTRY_DSN')) is not None:
             RedisIntegration(),
         ],
         environment=env('SENTRY_ENVIRONMENT'),
-        traces_sample_rate=1,
+        traces_sample_rate=1.0,
         attach_stacktrace=True,
         send_default_pii=True,
         request_bodies='always',

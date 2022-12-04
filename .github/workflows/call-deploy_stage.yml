@@ -1,4 +1,4 @@
-name: Deploy stage
+name: "Call: deploy stage"
 
 on:
   workflow_call:
@@ -19,4 +19,4 @@ jobs:
         echo "${{ secrets.STAGE_ENVS }}" > envs/.stage.env
         echo "SENTRY_RELEASE=${{ github.sha }}" >> envs/.stage.env
     - name: Deploy stage environment
-      run: docker-compose -p nft-marketplace-stage -f docker/stage/docker-compose.stage.yml up --build -d
+      run: docker-compose -f docker/stage/docker-compose.stage.yml up --build -d
