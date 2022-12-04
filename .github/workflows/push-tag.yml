@@ -8,15 +8,17 @@ on:
 permissions: write-all
 
 jobs:
-  ci:
-    uses: ./.github/workflows/call-ci.yml
+  build:
+    uses: ./.github/workflows/call-build.yml
     secrets: inherit
+    with:
+      tag: ${{ github.ref_name }}
   cd:
     uses: ./.github/workflows/call-deploy_prod.yml
     with:
       tag: ${{ github.ref_name }}
     secrets: inherit
-    needs: [ci]
+    needs: [ build ]
   sentry_release:
     uses: ./.github/workflows/call-sentry_release.yml
     with:

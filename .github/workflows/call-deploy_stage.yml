@@ -1,4 +1,4 @@
-name: Deploy stage
+name: "Call: deploy stage"
 
 on:
   workflow_call:

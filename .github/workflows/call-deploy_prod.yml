@@ -1,4 +1,4 @@
-name: Deploy prod
+name: "Call: deploy prod"
 
 on:
   workflow_call:
