@@ -6,5 +6,5 @@ from .views import EchoView, StatusView
 urlpatterns = [path('echo/', EchoView.as_view()), path('status/', StatusView.as_view())]
 
 ws_urlpatterns = [
-    path('echo/', EchoConsumer.as_asgi()),
+    path('ws/echo/', EchoConsumer.as_asgi()),
 ]

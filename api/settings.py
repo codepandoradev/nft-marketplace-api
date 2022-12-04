@@ -257,9 +257,12 @@ CELERY_BEAT_SCHEDULE = {}
 
 # media
 
-if (CLOUDINARY_URL := env('CLOUDINARY_URL')) is not None:
+USE_CLOUDINARY = False
+if (CLOUDINARY_URL := env('CLOUDINARY_URL')) != 'cloudinary://0:stub@_':
+    USE_CLOUDINARY = True
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    CLOUDINARY_STORAGE = {'PREFIX': env('CLOUDINARY_PREFIX')}
+
+CLOUDINARY_STORAGE = {'PREFIX': env('CLOUDINARY_PREFIX')}
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR + 'media'

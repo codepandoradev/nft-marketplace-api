@@ -1,3 +1,5 @@
+from cloudinary_storage.storage import RawMediaCloudinaryStorage
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
@@ -12,7 +14,7 @@ class Message(BaseModel):
         User, models.CASCADE, related_name='messages_by_receiver'
     )
     text = models.TextField()
-    sent_at = models.DateTimeField(default=timezone.now)
+    sent_at = models.DateTimeField(default=timezone.now, db_index=True)
 
     objects = MessageManager()
 
@@ -22,4 +24,7 @@ class Message(BaseModel):
 
 class MessageAttachment(BaseModel):
     message = models.ForeignKey(Message, models.CASCADE, related_name='attachments')
-    file = models.FileField(upload_to='message_attachment/file')
+    file = models.FileField(
+        upload_to='message_attachment/file',
+        **{'storage': RawMediaCloudinaryStorage} if settings.USE_CLOUDINARY else {},
+    )
