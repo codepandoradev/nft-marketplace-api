@@ -33,7 +33,7 @@ class MessengerDirectMessagesTest(BaseViewTest):
             'post',
             {},
             {
-                'text': 'Hellow my friend,i am working',
+                'text': fake.english_text(),
             },
         )
         self.assert_equal(Message.objects.count(), 1)
@@ -43,7 +43,7 @@ class MessengerDirectMessagesTest(BaseViewTest):
         self._test(
             'post',
             {},
-            {'text': 'Hellow my friend,i am working', 'attachments': fake.image()},
+            {'text': fake.english_text(), 'attachments': fake.image()},
             format='multipart',
         )
         self.assert_equal(Message.objects.count(), 1)
