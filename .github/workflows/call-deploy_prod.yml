@@ -1,4 +1,4 @@
-name: Deploy prod
+name: "Call: deploy prod"
 
 on:
   workflow_call:
@@ -30,4 +30,4 @@ jobs:
       run:
         |
         export TAG=${{ inputs.tag }}
-        docker-compose -p nft-marketplace-prod -f docker/prod/docker-compose.prod.yml up --build -d
+        docker-compose -f docker/prod/docker-compose.prod.yml up --build -d

@@ -16,6 +16,8 @@ services:
     extends:
       file: docker-compose.base.yml
       service: api
+    build:
+      context: ..
     environment:
       - ENV_FILE=envs/.dev.env
     ports: [ 8000:8000 ]
