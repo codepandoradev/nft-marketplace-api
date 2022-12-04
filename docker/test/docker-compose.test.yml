@@ -15,6 +15,8 @@ services:
     extends:
       file: ../docker-compose.base.yml
       service: api
+    build:
+      context: ..
     env_file: [ ../../envs/.test.env ]
     command: bash -c "
       coverage run manage.py test --noinput
@@ -23,7 +25,7 @@ services:
       "
     volumes: [ ../../coverages:/api/coverages ]
     depends_on: [ db, redis ]
-    restart: 'no'
+    restart: no
 
 networks:
   db_network:
