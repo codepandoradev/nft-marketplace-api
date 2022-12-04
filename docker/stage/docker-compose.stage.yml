@@ -35,12 +35,14 @@ services:
     extends:
       file: ../docker-compose.base.yml
       service: celery
+    image: ghcr.io/codepandoradev/nft-marketplace-api/api:latest
     env_file: [ ../../envs/.stage.env ]
     depends_on: [ api ]
   celery_beat:
     extends:
       file: ../docker-compose.base.yml
       service: celery_beat
+    image: ghcr.io/codepandoradev/nft-marketplace-api/api:latest
     env_file: [ ../../envs/.stage.env ]
     depends_on: [ celery ]
   nginx:
