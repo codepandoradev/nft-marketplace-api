@@ -5,7 +5,6 @@ on:
     types:
       - opened
       - edited  # FIXME: for trigger
-  workflow_dispatch:  # FIXME: for trigger
 
 jobs:
   track_issue:
@@ -13,7 +12,7 @@ jobs:
     steps:
       - name: Get project data
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
           ORGANIZATION: codepandoradev
           PROJECT_NUMBER: 15
         run: |
@@ -35,7 +34,7 @@ jobs:
           echo 'PROJECT_ID='$(jq '.data.organization.projectNext.id' project_data.json) >> $GITHUB_ENV
       - name: Add issue to project
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
           ISSUE_ID: ${{ github.event.issue.node_id }}
         run: |
           item_id="$( gh api graphql -f query='
