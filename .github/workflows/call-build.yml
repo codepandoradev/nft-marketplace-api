@@ -16,7 +16,7 @@ on:
 
 jobs:
   build:
-    runs-on: [ self-hosted, nft-marketplace ]
+    runs-on: ubuntu-22.04
     permissions:
       contents: read
       packages: write
