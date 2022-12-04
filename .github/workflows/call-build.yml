@@ -21,7 +21,7 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3.0.0
         with:
           clean: false
       - name: Login to container registry
@@ -36,3 +36,6 @@ jobs:
           context: .
           push: true
           tags: ghcr.io/codepandoradev/nft-marketplace-api/api:${{ inputs.tag }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
