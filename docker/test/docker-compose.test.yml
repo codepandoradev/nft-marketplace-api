@@ -25,7 +25,7 @@ services:
       "
     volumes: [ ../../coverages:/api/coverages ]
     depends_on: [ db, redis ]
-    restart: no
+    restart: 'no'
 
 networks:
   db_network:
