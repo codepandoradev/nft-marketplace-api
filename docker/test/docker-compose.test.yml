@@ -16,7 +16,7 @@ services:
       file: ../docker-compose.base.yml
       service: api
     build:
-      context: ..
+      context: ../..
     env_file: [ ../../envs/.test.env ]
     command: bash -c "
       coverage run manage.py test --noinput
