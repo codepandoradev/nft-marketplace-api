@@ -1,0 +1,42 @@
+name: "Call: check health"
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        include:
+          - site: "Prod: WEB"
+            url: "https://wonderplace.io/"
+          - site: "Prod: API"
+            url: "https://wonderplace.io/api/base/status/"
+          - site: "Stage: WEB"
+            url: "http://stage.wonderplace.io:81/"
+          - site: "Stage: API"
+            url: "http://stage.wonderplace.io:81/api/"
+    steps:
+      - name: Ping ${{ matrix.site }}
+        id: ping
+        run: echo "::set-output name=status::$(curl -I ${{ matrix.url }} 2>/dev/null | head -n 1 | cut -d$' ' -f2)"
+      - name: Check ${{ matrix.site }} health
+        run: |
+          if [[ ${{ steps.ping.outputs.status }} != 200 ]]; then
+            >&2 echo "FAIL: status=${{ steps.ping.outputs.status }}"
+            exit 1
+          fi
+          echo "OK"
+      - name: Send alert in telegram
+        if: ${{ failure() }}
+        uses: appleboy/telegram-action@v0.1.1
+        with:
+          to: ${{ secrets.TELEGRAM_GROUP_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: html
+          message: |
+            ❤️ <u>Health check</u>:
+                🔥 <b>${{ matrix.site }}</b> не работает:
+                    <a href="${{ matrix.url }}">запрос</a> вернул статус: <i>${{ steps.ping.outputs.status }}</i>
