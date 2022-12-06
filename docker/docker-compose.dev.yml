@@ -34,8 +34,12 @@ services:
     extends:
       file: docker-compose.base.yml
       service: celery
+    build:
+      context: ..
     depends_on: [ api ]
   celery_beat:
+    build:
+      context: ..
     extends:
       file: docker-compose.base.yml
       service: celery_beat
