@@ -18,7 +18,7 @@ jobs:
         with:
           pr_title: ${GITHUB_REF##*/}
           pr_body: "close #${{ env.TASK_NUMBER }}"
-          pr_assignee: ${{ github.event.commits[0].author }}
+          pr_assignee: ${{ github.event.commits[0].author.username }}
           pr_label: task
           pr_draft: true
           pr_allow_empty: true
