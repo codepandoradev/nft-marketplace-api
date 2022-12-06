@@ -1,0 +1,21 @@
+name: "Push: create PR"
+
+on:
+  push:
+    branches:
+      - task-*
+
+jobs:
+  create:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - run: |
+          branch_name=${GITHUB_REF##*/}
+          echo "TASK_NUMBER=${branch_name/task-/}" >> $GITHUB_ENV
+      - uses: repo-sync/pull-request@v2.9
+        with:
+          pr_title: ${GITHUB_REF##*/}
+          pr_body: "close ${{ env.TASK_NUMBER }}"
+          pr_draft: true
+          pr_allow_empty: true
