@@ -17,5 +17,7 @@ jobs:
         with:
           pr_title: ${GITHUB_REF##*/}
           pr_body: "close #${{ env.TASK_NUMBER }}"
+          pr_label: task
           pr_draft: true
           pr_allow_empty: true
+          github_token: ${{ secrets.TOKEN }} 
