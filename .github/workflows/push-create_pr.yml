@@ -16,6 +16,6 @@ jobs:
       - uses: repo-sync/pull-request@v2.9
         with:
           pr_title: ${GITHUB_REF##*/}
-          pr_body: "close ${{ env.TASK_NUMBER }}"
+          pr_body: "close #${{ env.TASK_NUMBER }}"
           pr_draft: true
           pr_allow_empty: true
