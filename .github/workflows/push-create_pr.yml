@@ -9,6 +9,7 @@ jobs:
   create:
     runs-on: ubuntu-22.04
     steps:
+      - run: echo ${{ github.event.commits[0].author.name }}
       - uses: actions/checkout@v3.1.0
       - run: |
           branch_name=${GITHUB_REF##*/}
