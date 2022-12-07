@@ -2,8 +2,8 @@
 
 name: Test
 about: Протестировать
-title: Сделать ...
-labels: task
+title: Testing #...
+labels: test
 
 ---
 
