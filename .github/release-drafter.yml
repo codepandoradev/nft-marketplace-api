@@ -1,5 +1,3 @@
-name-template: 'v$NEXT_PATCH_VERSION'
-tag-template: 'v$NEXT_PATCH_VERSION'
 categories:
   - title: '🚀 Solved tasks'
     labels:
@@ -25,7 +23,15 @@ categories:
     labels:
       - 'cicd'
 
-change-template: '- $TITLE created by @$AUTHOR in #$NUMBER'
+exclude-contributors:
+  - dependabot
+  - dependabot[bot]
+  - github-actions[bot]
+
+change-template: |
+  - $TITLE in #$NUMBER
+  - - $BODY
+
 template: |
   # Changes
   
