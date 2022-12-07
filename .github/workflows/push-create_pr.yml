@@ -15,11 +15,14 @@ jobs:
           branch_name=${GITHUB_REF##*/}
           echo "TASK_NUMBER=${branch_name/task-/}" >> $GITHUB_ENV
           if [[ "${{ env.TASK_NUMBER }}" =~ ^[[:digit:]]+$ ]]; then exit 0; fi
+          echo ${{ github.event.commits[0].author }}
+          echo ${{ github.event.commits[0].author.name }}
+          echo ${{ github.event.commits[0].author.username }}
       - uses: repo-sync/pull-request@v2.9
         with:
           pr_title: ${GITHUB_REF##*/}
           pr_body: "close #${{ env.TASK_NUMBER }}"
-          pr_assignee: ${{ github.event.commits[0].author.username }}
+          pr_assignee: ${{ github.event.commits[0].author }}
           pr_draft: true
           pr_allow_empty: true
           github_token: ${{ secrets.TOKEN }} 
