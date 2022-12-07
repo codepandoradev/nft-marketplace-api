@@ -12,6 +12,7 @@ import time
 from typing import Iterable, Sized
 from urllib.parse import unquote
 
+from django.conf import settings
 from django.utils.deprecation import MiddlewareMixin
 
 from app.base.logs import debug, info
@@ -22,7 +23,7 @@ __all__ = ['LogMiddleware']
 def _get_content_type(request_or_response):
     return getattr(request_or_response, 'content_type', None) or getattr(
         request_or_response, 'headers', {}
-    ).get('Content-Type', '')
+    ).get("Content-Type", '')
 
 
 # noinspection PyBroadException
@@ -35,11 +36,11 @@ def _cut_back(value, max_length=200):
             type_name = type(value).__name__
             try:
                 return (
-                    f'{value[:max_length // 2]}<<<{length - max_length} more '
-                    f'{type_name}>>> {value[-max_length // 2:]}'
+                    f"{value[:max_length // 2]}<<<{length - max_length} more "
+                    f"{type_name}>>> {value[-max_length // 2:]}"
                 )
             except Exception:
-                return f'<<<{type_name} of length {length}>>>'
+                return f"<<<{type_name} of length {length}>>>"
         return value
     if len(str(value)) > max_length:
         return _cut_back(str(value))
@@ -62,73 +63,64 @@ def _cut_back_dict(json_data, max_length=200):
 # noinspection PyMethodMayBeStatic, PyBroadException
 class LogMiddleware(MiddlewareMixin):
     def process_request(self, request):
-        if request.method in ['POST', 'PUT', 'PATCH']:
-            request.req_body = request.body
         request.start_time = time.time()
+        request.body_ = request.body
 
     def extract_log_info(self, request, response):
         log_data = {
             'run_time': time.time() - request.start_time,
             'request': {},
             'response': {},
-            'url': f'{request.method.upper()} {unquote(request.get_full_path())}',
+            'url': f"{request.method.upper()} {unquote(request.get_full_path())}",
         }
 
         log_data['request']['headers'] = _cut_back_dict(dict(request.headers))
         log_data['request']['cookies'] = _cut_back_dict(dict(request.COOKIES))
         if request.method in ['PUT', 'POST', 'PATCH']:
-            content_type = _get_content_type(response)
-            if 'application/json' in content_type:
-                try:
-                    log_data['request']['body'] = _cut_back_dict(
-                        json.loads(request.req_body)
-                    )
-                except Exception:
-                    log_data['request']['body'] = _cut_back(request.req_body)
-            else:
-                try:
-                    log_data['request']['body'] = _cut_back_dict(dict(request.req_body))
-                except Exception:
-                    log_data['request']['body'] = _cut_back(request.req_body)
-                try:
-                    log_data['request']['files'] = {
-                        k: [e.name for e in f] for k, f in dict(request.FILES).items()
-                    }
-                except Exception:
-                    log_data['request']['files'] = {}
-                if not log_data['request']['files']:
-                    del log_data['request']['files']
+            try:
+                log_data['request']['data'] = _cut_back_dict(json.loads(request.body_))
+            except Exception:
+                log_data['request']['data'] = _cut_back(request.body_)
+            try:
+                log_data['request']['files'] = {
+                    k: [e.name for e in f] for k, f in dict(request.FILES).items()
+                }
+            except Exception:
+                log_data['request']['files'] = {}
+            if not log_data['request']['files']:
+                del log_data['request']['files']
 
         if response:
             log_data['response']['headers'] = _cut_back_dict(dict(response.headers))
             log_data['response']['cookies'] = _cut_back_dict(dict(response.cookies))
             content_type = _get_content_type(response)
             if request.path in ('/', '/__docs__/'):
-                log_data['response']['body'] = '<<<DOCS>>>'
+                log_data['response']['body'] = "<<<DOCS>>>"
                 return log_data
             if request.path.startswith('/__debug__'):
-                log_data['response']['body'] = '<<<DEBUG TOOLBAR>>>'
+                log_data['response']['body'] = "<<<DEBUG TOOLBAR>>>"
                 return log_data
             if 'text/html' in content_type and len(response.content) > 100:
-                log_data['response']['body'] = '<<<HTML>>>'
+                log_data['response']['body'] = "<<<HTML>>>"
                 return log_data
             if 'application/json' in content_type:
                 try:
-                    log_data['response']['body'] = _cut_back_dict(dict(response.data))
+                    log_data['response']['data'] = _cut_back_dict(dict(response.data))
                     return log_data
                 except Exception:
                     pass
             if hasattr(response, 'content'):
                 try:
-                    log_data['response']['body'] = _cut_back_dict(
+                    log_data['response']['data'] = _cut_back_dict(
                         dict(response.content)
                     )
                 except Exception:
-                    log_data['response']['body'] = _cut_back(response.content)
+                    log_data['response']['data'] = _cut_back(response.content)
         return log_data
 
     def process_response(self, request, response):
-        self.log(request, response)
+        if settings.LOG_REQUESTS:
+            self.log(request, response)
         return response
 
     def log(self, request, response):

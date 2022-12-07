@@ -3,81 +3,40 @@ version: '3.9'
 services:
   db:
     image: postgres:14.2
-    volumes:
-      - db_volume:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
+    env_file: [ ../envs/.base.env ]
     environment:
       - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=password
       - POSTGRES_DB=db
       - POSTGRES_HOST=127.0.0.1
       - PGDATA=/var/lib/postgresql/data/pgdata
-    networks:
-      - db_network
+    networks: [ db_network ]
     restart: unless-stopped
   redis:
     image: redis:7.0.0
-    networks:
-      - redis_network
+    env_file: [ ../envs/.base.env ]
+    networks: [ redis_network ]
     restart: unless-stopped
   api:
-    build:
-      context: ..
-    env_file:
-      - ../envs/.base.env
-    environment:
-      - DATABASE_URL=psql://user:password@db:5432/db
-      - REDIS_URL=redis://redis:6379/0
-    volumes:
-      - static_volume:/api/static
-      - media_volume:/api/media
-      - profile_volume:/api/profile
-    networks:
-      - db_network
-      - redis_network
+    env_file: [ ../envs/.base.env ]
+    networks: [ db_network, redis_network ]
     restart: unless-stopped
   celery:
     extends:
       service: api
+    env_file: [ ../envs/.base.env ]
     command: celery -A api worker -c 1 -P gevent -l info
     restart: unless-stopped
   celery_beat:
     extends:
       service: api
+    env_file: [ ../envs/.base.env ]
     command: celery -A api beat -S django -l info
     restart: unless-stopped
-  web:
-    build:
-      context: ../web
-    volumes:
-      - web_volume:/usr/src/app/build
   nginx:
-    image: nginx:1.21.6
-    env_file:
-      - ../envs/.base.env
+    build:
+      context: ../nginx
+    env_file: [ ../envs/.base.env ]
     environment:
-      NGINX_ENVSUBST_TEMPLATE_SUFFIX: ".conf"
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - static_volume:/api/static
-      - web_volume:/usr/share/nginx/html
-      - ./nginx/nginx.conf.conf:/etc/nginx/templates/nginx.conf.conf:ro
-      - ./certs:/api/certs
-    networks:
-      - nginx_network
+      - NGINX_ENVSUBST_TEMPLATE_SUFFIX=.conf
+    networks: [ nginx_network ]
     restart: unless-stopped
-
-volumes:
-  db_volume:
-  static_volume:
-  media_volume:
-  profile_volume:
-  web_volume:
-
-networks:
-  db_network:
-  redis_network:
-  nginx_network:

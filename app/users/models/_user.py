@@ -5,8 +5,8 @@ from django.db import models
 from django.utils import timezone
 
 from app.base.models.base import BaseModel
-from app.users.managers import UserManager
 from app.users.enums.users import UserType
+from app.users.managers import UserManager
 
 __all__ = ['User']
 
@@ -16,9 +16,17 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         choices=UserType.choices, default=UserType.DEFAULT
     )
     wallet_address = models.TextField(unique=True)
-    username = models.CharField(max_length=150, unique=True, null=True)
+    username = models.CharField(
+        max_length=150, unique=True, null=True, blank=True, default=None
+    )
     password = models.CharField(max_length=128, blank=True, default='')
+    avatar = models.ImageField(upload_to='user/avatar', null=True, blank=True)
+    header = models.ImageField(upload_to='user/header', null=True, blank=True)
     date_joined = models.DateTimeField(default=timezone.now)
+    first_score = models.IntegerField(default=0)
+    second_score = models.IntegerField(default=None, null=True, blank=True)
+    third_score = models.IntegerField(default=0)
+    first_top = models.IntegerField(blank=True, null=True)
 
     objects = UserManager()
 
@@ -34,3 +42,6 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         if self._password is not None:
             password_validation.password_changed(self._password, self)
             self._password = None
+
+    def __str__(self):
+        return self.wallet_address

@@ -1,8 +1,8 @@
 from rest_framework.response import Response
 
 from app.base.views.base import BaseView
-from app.users.serializers.web3.login import *
 from app.users.actions.web3.login import *
+from app.users.serializers.web3.login import *
 
 
 class UsersWeb3LoginView(BaseView):
@@ -15,6 +15,6 @@ class UsersWeb3LoginView(BaseView):
             serializer.instance = action.run(
                 action.InEntity(**serializer.validated_data, request=self.request)
             ).dict()
-        except PermissionError:
+        except (PermissionError, action.RecoverToAddrException):
             raise serializer.WARNINGS[401]
         return Response(serializer.data, status=201)

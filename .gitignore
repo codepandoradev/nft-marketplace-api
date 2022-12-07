@@ -8,14 +8,16 @@
 /dumps/
 /staticfiles/
 /logs/
-/certs/
+/nginx/certs/
 /profiles/
 /media/
 !/envs/
 /envs/*
 !/envs/.base.env
+!/envs/.test.env
 !/envs/*.example.env
-
+/.env
+/nft-marketplace-web
 
 ### python_gitignore template
 # Created by .ignore support plugin (hsz.mobi)

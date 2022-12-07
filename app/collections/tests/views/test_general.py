@@ -11,8 +11,8 @@ class CollectionsTest(BaseViewTest):
             {'slug': lambda s: isinstance(s, str)},
             {
                 'avatar': fake.image(),
-                'title': fake.random_object_name(),
-                'description': fake.english_word(),
+                'title': fake.english_word(),
+                'description': fake.english_text(),
             },
             format='multipart',
         )

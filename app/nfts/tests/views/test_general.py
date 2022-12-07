@@ -17,8 +17,8 @@ class NftsTest(BaseViewTest):
                 'content': fake.image(extension='gif'),
                 'collection': collection.slug,
                 'network': fake.random_element(Network),
-                'title': fake.random_object_name(),
-                'description': fake.english_word(),
+                'title': fake.english_word(),
+                'description': fake.english_text(),
             },
             format='multipart',
         )
@@ -33,9 +33,23 @@ class NftsTest(BaseViewTest):
                 'network': fake.random_element(Network),
                 'collection': collection.slug,
                 'content': fake.image(extension='gif'),
-                'title': fake.random_object_name(),
-                'description': fake.english_word(),
+                'title': fake.english_word(),
+                'description': fake.english_text(),
             },
             status=201,
+            format='multipart',
+        )
+
+    def test_collection_not_exist(self):
+        self._test(
+            'post',
+            ClientError(status=400),
+            {
+                'network': fake.random_element(Network),
+                'collection': fake.english_word(),
+                'content': fake.image(extension='gif'),
+                'title': fake.english_word(),
+                'description': fake.english_text(),
+            },
             format='multipart',
         )

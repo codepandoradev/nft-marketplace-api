@@ -4,4 +4,6 @@ omit =
     api/*
     app/*/migrations/*
     app/base/*
-    app/users/views/force_login.py
+    app/users/views/web3/force_login.py
+    app/users/views/session.py
+    app/games/*

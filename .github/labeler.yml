@@ -1,0 +1,24 @@
+area:devops:
+  - ".github/**"
+  - "docker/**"
+  - "envs/*"
+  - "nginx/*"
+  - ".coveragerc"
+  - ".dockerignore"
+  - ".pre-commit-config.yaml"
+  - "codecov.yml"
+  - "pyproject.toml"
+  - "setup.cfg"
+  - ".run"
+  - "Dockerfile"
+
+area:api:
+  - "api/**"
+  - any: [ "app/**" ]
+    all: [ "!app/*/tests/**" ]
+
+area:requirements:
+  - "requirements.txt"
+
+area:tests:
+  - "app/*/tests/**"

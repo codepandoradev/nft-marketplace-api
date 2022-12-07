@@ -9,10 +9,10 @@
 schema.yaml
 .idea/
 dumps/
-staticfiles/
+static/
+profiles/
 media/
 logs/
-certs/
 web/
 
 

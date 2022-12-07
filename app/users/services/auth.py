@@ -15,22 +15,22 @@ class AuthService:
         :raises PermissionError: if not check_user
         """
         if not self.check_user(user):
-            raise PermissionError
+            raise PermissionError("fail AuthService.check_user")
         token = self.token_manager.get_or_create(user=user)[0]
-        if settings.SESSION_ON_LOGIN:
+        if settings.SESSION_ON_LOGIN or user.is_staff:
             try:
                 login(request, user)
-            except ValueError as e:
-                warning(e)
+            except ValueError as exc:
+                warning(exc)
         return token
 
     def logout(self, user: User, request=None) -> None:
         self.token_manager.filter(user=user).delete()
-        if settings.SESSION_ON_LOGIN:
+        if settings.SESSION_ON_LOGIN or user.is_staff:
             try:
                 logout(request)
-            except ValueError as e:
-                warning(e)
+            except ValueError as exc:
+                warning(exc)
 
     def check_user(self, user: User) -> bool:
-        return user.type == UserType.BANNED
+        return user.type > UserType.BANNED

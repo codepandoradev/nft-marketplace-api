@@ -15,7 +15,6 @@ class POST_NftsSerializer(BaseModelSerializer):
     #     write_only=True,
     # )
     content = serializers.FileField(
-        write_only=True,
         validators=[FileExtensionValidator(ALLOWED_NFT_CONTENT_EXTENSIONS)],
     )
 

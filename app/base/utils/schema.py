@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import inspect
-from typing import Any, Callable, Dict, List, Optional, Type, TypeVar
+from collections.abc import Callable
+from typing import Any, TypeVar
 
 from drf_spectacular.drainage import error, get_view_method_names, isolate_view_method
 from drf_spectacular.utils import OpenApiExample, OpenApiParameter
@@ -13,7 +16,7 @@ __all__ = ['schema_serializer', 'extend_schema']
 
 def schema_serializer(
     _name: str, **fields: serializers.Field
-) -> Type[serializers.Serializer]:
+) -> type[serializers.Serializer]:
     if not _name.endswith('Serializer'):
         _name += 'Serializer'
     # noinspection PyTypeChecker
@@ -27,7 +30,7 @@ def _delete_none(f):
     def _decorator(*args, **kwargs):
         res = f(*args, **kwargs)
         if isinstance(res, dict):
-            res = {k: v for k, v in res.items() if v is not None}
+            res = {k: '' if k == 204 else v for k, v in res.items() if v is not None}
         return res
 
     return _decorator
@@ -35,22 +38,22 @@ def _delete_none(f):
 
 # taken from drf_spectacular.utils.extend_schema
 def extend_schema(
-    operation_id: Optional[str] = None,
-    parameters: Optional[List[OpenApiParameter]] = None,
+    operation_id: str | None = None,
+    parameters: list[OpenApiParameter] | None = None,
     request: Any = empty,
     responses: Any = empty,
-    auth: Optional[List[str]] = None,
-    description: Optional[str] = None,
-    summary: Optional[str] = None,
-    deprecated: Optional[bool] = None,
-    tags: Optional[List[str]] = None,
-    filters: Optional[bool] = None,
+    auth: list[str] | None = None,
+    description: str | None = None,
+    summary: str | None = None,
+    deprecated: bool | None = None,
+    tags: list[str] | None = None,
+    filters: bool | None = None,
     exclude: bool = False,
-    operation: Optional[Dict] = None,
-    methods: Optional[List[str]] = None,
-    versions: Optional[List[str]] = None,
-    examples: Optional[List[OpenApiExample]] = None,
-    extensions: Optional[Dict[str, Any]] = None,
+    operation: dict | None = None,
+    methods: list[str] | None = None,
+    versions: list[str] | None = None,
+    examples: list[OpenApiExample] | None = None,
+    extensions: dict[str, Any] | None = None,
 ) -> Callable[[_F], _F]:
     """
     Decorator mainly for the "view" method kind. Partially or completely overrides
@@ -133,8 +136,8 @@ def extend_schema(
             _method__status = {
                 'GET': 200,
                 'POST': 201,
-                'PUT': 200,
-                'PATCH': 200,
+                'PUT': 204,
+                'PATCH': 204,
                 'DELETE': 204,
                 'HEAD': 200,
                 'OPTIONS': 200,

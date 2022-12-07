@@ -3,7 +3,7 @@ from django.db import models
 from uuslug import uuslug
 
 from app.base.models.base import BaseModel
-from app.collections.constans import COLLECTION_TITLE_REGEX, COLLECTION_TITLE_MAX_LENGTH
+from app.collections.constans import COLLECTION_TITLE_MAX_LENGTH, COLLECTION_TITLE_REGEX
 from app.users.models import User
 
 

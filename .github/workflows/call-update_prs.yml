@@ -1,0 +1,17 @@
+name: "Call: update PRs"
+
+on:
+  workflow_call:
+
+permissions: write-all
+
+jobs:
+  update:
+    runs-on: [ self-hosted, nft-marketplace ]
+    steps:
+      - uses: chinthakagodawita/autoupdate-action@v1.6.0
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          MERGE_MSG: "auto-update"
+          MERGE_CONFLICT_ACTION: ignore

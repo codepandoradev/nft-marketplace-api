@@ -4,7 +4,7 @@
 
 # Didn't pip install because https://github.com/brianjbuck/drf_orjson_renderer/issues/20
 
-from typing import Any, Optional, IO
+from typing import IO, Any, Optional
 
 import orjson
 from django.conf import settings
@@ -45,8 +45,9 @@ class ORJSONParser(BaseParser):
             data = data_or_stram.read()
         else:
             data = data_or_stram
-
+        if not isinstance(data, str):
+            data = data.decode(encoding)
         try:
-            return orjson.loads(data.decode(encoding))
+            return orjson.loads(data)
         except orjson.JSONDecodeError as exc:
             raise ParseError(f"JSON parse error - {exc}")
