@@ -2,12 +2,10 @@
   <configuration default="false" name="dev" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
     <deployment type="docker-compose.yml">
       <settings>
-        <option name="composeProjectName" value="nft-marketplace-dev" />
         <option name="envFilePath" value="" />
         <option name="commandLineOptions" value="--build" />
         <option name="sourceFilePath" value="docker/docker-compose.dev.yml" />
         <option name="upDetach" value="false" />
-        <option name="upForceRecreate" value="true" />
       </settings>
     </deployment>
     <method v="2" />

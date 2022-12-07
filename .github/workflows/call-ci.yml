@@ -1,7 +1,8 @@
-name: CI
+name: "Call: CI"
 
 on:
   workflow_call:
+  workflow_dispatch:
 
 jobs:
   lint:
@@ -13,19 +14,14 @@ jobs:
           python-version: 3.10.8
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.0
-  build:
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v3.1.0
-      - run: cp envs/.stage.example.env envs/.stage.env
-      - name: Build docker-compose
-        run: docker-compose -f docker/docker-compose.stage.yml build
   test:
-    runs-on: ubuntu-22.04
+    runs-on: [ self-hosted, nft-marketplace ]
     steps:
       - uses: actions/checkout@v3.1.0
+        with:
+          clean: false
       - name: Run tests
-        run: docker-compose -f docker/docker-compose.test.yml run api
+        run: docker-compose -f docker/test/docker-compose.test.yml up --build api
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3.1.1
         with:

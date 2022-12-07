@@ -2,7 +2,6 @@
   <configuration default="false" name="test" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
     <deployment type="docker-compose.yml">
       <settings>
-        <option name="composeProjectName" value="nft-marketplace-test" />
         <option name="envFilePath" value="" />
         <option name="commandLineOptions" value="--build" />
         <option name="services">
@@ -10,10 +9,8 @@
             <option value="api" />
           </list>
         </option>
-        <option name="sourceFilePath" value="docker/docker-compose.test.yml" />
+        <option name="sourceFilePath" value="docker/test/docker-compose.test.yml" />
         <option name="upDetach" value="false" />
-        <option name="upForceRecreate" value="true" />
-        <option name="upRenewAnonVolumes" value="true" />
       </settings>
     </deployment>
     <method v="2" />

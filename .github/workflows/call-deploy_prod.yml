@@ -1,0 +1,33 @@
+name: "Call: deploy prod"
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: [ self-hosted, nft-marketplace ]
+    environment:
+      name: prod
+      url: 'https://wonderplace.io'
+    steps:
+    - uses: actions/checkout@v3.1.0
+      with:
+        clean: false
+    - name: Set prod envs
+      run: |
+        echo "${{ secrets.PROD_ENVS }}" > envs/.prod.env
+        echo "SENTRY_RELEASE=${{ inputs.tag }}" >> envs/.prod.env
+    - name: Deploy prod environment
+      run:
+        |
+        export TAG=${{ inputs.tag }}
+        docker-compose -f docker/prod/docker-compose.prod.yml up --build -d

@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from app.base.exceptions import ClientError
 from app.base.views.base import BaseView
 from app.games.actions.add_points import POST_AddPointsAction
-from app.games.serializers.add_pointts import POST_AddPointsSerializer
+from app.games.serializers.add_points import POST_AddPointsSerializer
 from app.users.permissions import AuthenticatedPermission
 
 

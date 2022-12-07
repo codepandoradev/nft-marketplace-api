@@ -8,7 +8,7 @@
 /dumps/
 /staticfiles/
 /logs/
-/certs/
+/nginx/certs/
 /profiles/
 /media/
 !/envs/

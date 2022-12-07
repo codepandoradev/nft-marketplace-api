@@ -1,0 +1,40 @@
+name: "Call: build"
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: false
+        type: string
+        default: latest
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: false
+        type: string
+        default: latest
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v3.1.0
+        with:
+          clean: false
+      - name: Login to container registry
+        uses: docker/login-action@v2.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3.2.0
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/codepandoradev/nft-marketplace-api/api:${{ inputs.tag }}
+          cache-from: type=registry,ref=ghcr.io/codepandoradev/nft-marketplace-api/api:${{ inputs.tag }}
+          cache-to: type=inline

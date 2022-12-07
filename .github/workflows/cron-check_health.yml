@@ -1,0 +1,10 @@
+name: "Cron: check health"
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  check_health:
+    uses: ./.github/workflows/call-check_health.yml
+    secrets: inherit
