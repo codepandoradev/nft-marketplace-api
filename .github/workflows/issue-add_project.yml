@@ -2,9 +2,7 @@ name: "Issue: add project"
 
 on:
   issues:
-    types:
-      - opened
-      - edited  # FIXME: for trigger
+    types: [ opened ]
 
 jobs:
   track_issue:
