@@ -10,6 +10,7 @@ jobs:
     runs-on: [ self-hosted, nft-marketplace ]
     steps:
       - uses: chinthakagodawita/autoupdate-action@v1.6.0
+        if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
           MERGE_MSG: "auto-update"

@@ -2,4 +2,4 @@ addReviewers: true
 reviewers:
   - GentleEnvy
 
-addAssignees: author
+addAssignees: false

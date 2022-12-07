@@ -2,7 +2,7 @@ name: "PR: check labels"
 
 on:
   pull_request:
-    types: [ labeled, unlabeled, opened, reopened, synchronize ]
+    types: [ labeled, unlabeled, opened, reopened, synchronize, ready_to_review ]
 
 permissions:
   contents: read
@@ -11,8 +11,9 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-22.04
+    if: github.event.pull_request.draft == false
     steps:
       - uses: docker://agilepathway/pull-request-label-checker:latest
         with:
-          one_of: task,test,bug,enhancement,dependencies,cicd
+          one_of: task,test,bug,dependencies,cicd
           repo_token: ${{ secrets.GITHUB_TOKEN }}
