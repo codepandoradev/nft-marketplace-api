@@ -29,7 +29,7 @@ services:
       && (daphne -b 0.0.0.0 -p 8001 api.asgi:application &)
       && gunicorn api.wsgi -c gunicorn/config.py
       "
-    networks: [ nginx_network ]
+    networks: [ proxy_network ]
     depends_on: [ db, redis ]
   celery:
     extends:
@@ -52,7 +52,8 @@ services:
     build:
       dockerfile: ../nginx/stage.dockerfile
     env_file: [ ../../envs/.stage.env ]
-    ports: [ 81:81 ]
+    ports: [ 81:81, 82:82 ]
+    networks: [ proxy_network ]
     volumes:
       - media_volume:/etc/nginx/html/media
       - static_volume:/etc/nginx/html/static
@@ -67,4 +68,4 @@ volumes:
 networks:
   db_network:
   redis_network:
-  nginx_network:
+  proxy_network:
