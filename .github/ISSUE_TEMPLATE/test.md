@@ -2,7 +2,7 @@
 
 name: Test
 about: Протестировать
-title: Testing #...
+title: "Testing #"
 labels: test
 
 ---
