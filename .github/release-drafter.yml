@@ -25,12 +25,10 @@ categories:
 
 exclude-contributors:
   - dependabot
-  - dependabot[bot]
   - github-actions[bot]
 
 change-template: |
   - $TITLE in #$NUMBER
-  - - $BODY
 
 template: |
   # Changes
