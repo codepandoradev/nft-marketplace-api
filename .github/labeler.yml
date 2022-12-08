@@ -1,24 +1,43 @@
 area:devops:
-  - ".github/**"
-  - "docker/**"
-  - "envs/*"
-  - "nginx/*"
-  - ".coveragerc"
-  - ".dockerignore"
-  - ".pre-commit-config.yaml"
-  - "codecov.yml"
-  - "pyproject.toml"
-  - "setup.cfg"
-  - ".run"
-  - "Dockerfile"
-
-area:api:
-  - "api/**"
-  - any: [ "app/**" ]
-    all: [ "!app/*/tests/**" ]
+  - .github/**
+  - docker/**
+  - envs/*
+  - nginx/*
+  - .coveragerc
+  - .dockerignore
+  - .pre-commit-config.yaml
+  - codecov.yml
+  - pyproject.toml
+  - setup.cfg
+  - .run
+  - Dockerfile
 
 area:requirements:
-  - "requirements.txt"
+  - requirements.txt
 
 area:tests:
-  - "app/*/tests/**"
+  - app/*/tests/**
+
+area:api:
+  - api/**
+
+area:app:base:
+  - app/base/**
+
+area:app:collections:
+  - app/collections/**
+
+area:app:games:
+  - app/games/**
+
+area:app:messenger:
+  - app/messenger/**
+
+area:app:nfts:
+  - app/nfts/**
+
+area:app:sales:
+  - app/sales/**
+
+area:app:users:
+  - app/users/**
