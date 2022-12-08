@@ -14,8 +14,8 @@ from app.messenger.urls import ws_urlpatterns as messenger_ws_urls  # noqa:E402
 
 application = ProtocolTypeRouter(
     {
-        'websocket': TokenAuthMiddleware(
-            WsLogMiddleware(URLRouter(base_ws_urls + messenger_ws_urls))
+        'websocket': WsLogMiddleware(
+            TokenAuthMiddleware(URLRouter(base_ws_urls + messenger_ws_urls))
         ),
     }
 )

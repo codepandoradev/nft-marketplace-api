@@ -52,7 +52,6 @@ services:
     build:
       dockerfile: ../nginx/stage.dockerfile
     env_file: [ ../../envs/.stage.env ]
-    ports: [ 81:81, 82:82 ]
     networks: [ proxy_network ]
     volumes:
       - media_volume:/etc/nginx/html/media
@@ -68,4 +67,5 @@ volumes:
 networks:
   db_network:
   redis_network:
+  nginx_network:
   proxy_network:
