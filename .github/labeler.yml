@@ -41,3 +41,6 @@ area:app:sales:
 
 area:app:users:
   - app/users/**
+
+area:app:exhibitions:
+  - app/exhibitions/**
