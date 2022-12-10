@@ -8,13 +8,12 @@ on:
 permissions: write-all
 
 jobs:
-  ci:
-    uses: ./.github/workflows/call-ci.yml
+  update_prs:
+    uses: ./.github/workflows/call-update_prs.yml
     secrets: inherit
   build:
     uses: ./.github/workflows/call-build.yml
     secrets: inherit
-    needs: [ ci ]
   cd:
     uses: ./.github/workflows/call-deploy_stage.yml
     secrets: inherit
@@ -29,10 +28,6 @@ jobs:
       environment: stage
     secrets: inherit
     needs: [ cd ]
-  update_prs:
-    uses: ./.github/workflows/call-update_prs.yml
-    secrets: inherit
-    needs: [ ci ]
   release_draft:
     uses: ./.github/workflows/call-release_draft.yml
     secrets: inherit
