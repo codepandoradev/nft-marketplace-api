@@ -50,4 +50,4 @@ class ORJSONParser(BaseParser):
         try:
             return orjson.loads(data)
         except orjson.JSONDecodeError as exc:
-            raise ParseError(f"JSON parse error - {exc}")
+            raise ParseError(f"JSON parse error - {exc.args[0]}")
