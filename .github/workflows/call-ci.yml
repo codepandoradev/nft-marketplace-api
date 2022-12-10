@@ -15,11 +15,9 @@ jobs:
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.0
   test:
-    runs-on: [ self-hosted, nft-marketplace ]
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3.1.0
-        with:
-          clean: false
       - name: Run tests
         run: docker-compose -f docker/test/docker-compose.test.yml up --build api
       - name: Upload coverage to Codecov
@@ -27,3 +25,19 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverages/coverage.xml
+  analyze:
+    runs-on: ubuntu-22.04
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2.1.36
+        with:
+          languages: python
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v2.1.36
+        with:
+          category: "/language:python"

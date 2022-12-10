@@ -14,4 +14,3 @@ jobs:
   update_prs:
     uses: ./.github/workflows/call-update_prs.yml
     secrets: inherit
-    needs: [ ci ]
