@@ -1,3 +1,4 @@
+from django.utils.html import escape
 from rest_framework.response import Response
 
 from app.base.views.base import BaseView
@@ -10,9 +11,9 @@ class EchoView(BaseView):
     def get(self, request, *args, **kwargs):
         return Response(
             {
-                'data': str(request.data),
-                'query_params': str(request.query_params),
-                'files': str(request.FILES),
+                'data': escape(str(request.data)),
+                'query_params': escape(str(request.query_params)),
+                'files': escape(str(request.FILES)),
             }
         )
 
