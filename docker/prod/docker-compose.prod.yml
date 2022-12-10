@@ -66,3 +66,5 @@ networks:
   db_network:
   redis_network:
   nginx_network:
+    name: nft-marketplace-stage_proxy_network
+    external: true
