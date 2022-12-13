@@ -15,8 +15,7 @@ jobs:
         run: |
           branch_name=${GITHUB_REF##*/}
           number=${branch_name/task-/}
-          if [[ ! number =~ ^[[:digit:]]+$ ]]; then exit 0; fi
-          echo VAL=number >> $GITHUB_OUTPUT
+          echo VAL=$number >> $GITHUB_OUTPUT
       - name: Get author
         id: get_author
         run: |
@@ -28,9 +27,7 @@ jobs:
         id: get_token
         run: |
           author=${{ steps.get_author.outputs.UPPER }}
-          token=$(echo '${{ toJSON(secrets) }}' | \
-            python -c \
-            "import sys, json; print(json.load(sys.stdin).get ('${author}_TOKEN', ''))")
+          token=$(echo '${{ toJSON(secrets) }}' | python -c "import sys, json; print(json.load(sys.stdin).get ('${author}_TOKEN', ''))")
           echo VAL=$token >> $GITHUB_OUTPUT
       - run: |
           echo ${{ steps.get_task_number.outputs.VAL }}
