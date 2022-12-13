@@ -9,7 +9,6 @@ jobs:
   create:
     runs-on: ubuntu-22.04
     steps:
-      - run: echo ${{ github.event.commits[0].author }}
       - uses: actions/checkout@v3.2.0
       - name: Get task number
         id: get_task_number
@@ -28,9 +27,10 @@ jobs:
       - name: Get token
         id: get_token
         run: |
-          author=${{ steps.get_author.output.UPPER }}
+          author=${{ steps.get_author.outputs.UPPER }}
           echo $author
-#           token=$(echo '${{ toJSON(secrets) }}' | python -c "import sys, json; print(json.load(sys.stdin).get('${author}_TOKEN', ''))")
+          token=$(echo '${{ toJSON(secrets) }}' | python -c "import sys, json; print(json.load(sys.stdin).get('${author}_TOKEN', ''))")
+          echo $token
 #          if [[ $token == "" ]]; then token=${{ secrets.TOKEN }}; fi
 #          echo "VAL=$token" >> $GITHUB_OUTPUT
 #      - uses: repo-sync/pull-request@v2.9
