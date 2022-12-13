@@ -20,14 +20,14 @@ jobs:
           echo $author
           echo AUTHOR=$author >> $GITHUB_ENV
       - run: |
-          author=${{ env.AUTHOR }}
-          author=$(echo ${author^^})
+#          author=${{ env.AUTHOR }}
+#          author=$(echo ${author^^})
           echo $author
-          token=$(echo '${{ toJSON(secrets) }}' | \
-            python -c \
-            "import sys, json; print(json.load(sys.stdin).get('${author}_TOKEN', ''))")
+#          token=$(echo '${{ toJSON(secrets) }}' | \
+#            python -c \
+#            "import sys, json; print(json.load(sys.stdin).get('${author}_TOKEN', ''))")
 #          if [[ $token == "" ]]; then token=${{ secrets.TOKEN }}; fi
-          echo "TOKEN=$token" >> $GITHUB_ENV
+#          echo "TOKEN=$token" >> $GITHUB_ENV
       - uses: repo-sync/pull-request@v2.9
         with:
           pr_title: ${GITHUB_REF##*/}
