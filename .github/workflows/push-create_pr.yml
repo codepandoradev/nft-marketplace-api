@@ -15,7 +15,9 @@ jobs:
           branch_name=${GITHUB_REF##*/}
           echo "TASK_NUMBER=${branch_name/task-/}" >> $GITHUB_ENV
           if [[ "${{ env.TASK_NUMBER }}" =~ ^[[:digit:]]+$ ]]; then exit 0; fi
-      - run: echo "AUTHOR=${{ github.event.commits[0].author.username }}" >> $GITHUB_ENV
+      - run: |
+          author=${{ github.event.commits[0].author.username }}
+          echo "AUTHOR=$author" >> $GITHUB_ENV
       - run: |
           author=$(echo ${{ env.AUTHOR }}^^)
           echo $author
