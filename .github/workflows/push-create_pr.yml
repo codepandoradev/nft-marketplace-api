@@ -17,7 +17,7 @@ jobs:
           if [[ "${{ env.TASK_NUMBER }}" =~ ^[[:digit:]]+$ ]]; then exit 0; fi
       - run: |
           author=${{ github.event.commits[0].author.username }}
-          echo "AUTHOR=$author" >> $GITHUB_ENV
+          echo "AUTHOR=${author}" >> $GITHUB_ENV
       - run: |
           author=$(echo ${{ env.AUTHOR }}^^)
           echo $author
