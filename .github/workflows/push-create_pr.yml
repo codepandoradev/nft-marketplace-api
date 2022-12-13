@@ -16,10 +16,7 @@ jobs:
           echo "TASK_NUMBER=${branch_name/task-/}" >> $GITHUB_ENV
           if [[ "${{ env.TASK_NUMBER }}" =~ ^[[:digit:]]+$ ]]; then exit 0; fi
       - run: |
-          author=${{ github.event.commits[0].author.username }}
-          echo "AUTHOR=${author}" >> $GITHUB_ENV
-      - run: |
-          author=$(echo ${{ env.AUTHOR }}^^)
+          author=$(echo ${{ github.event.commits[0].author.username }}^^)
           echo $author
           token=${{ format('secrets.{0}_TOKEN', $author) }}
 # if [[ $token == "" ]]; then token=${{ secrets.TOKEN }}; fi
@@ -28,7 +25,7 @@ jobs:
         with:
           pr_title: ${GITHUB_REF##*/}
           pr_body: "close #${{ env.TASK_NUMBER }}"
-          pr_assignee: ${ env.AUTHOR }}
+          pr_assignee: ${{ github.event.commits[0].author.username }}
           pr_draft: true
           pr_allow_empty: true
           github_token: ${{ env.TOKEN }}
