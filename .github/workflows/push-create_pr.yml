@@ -11,10 +11,13 @@ jobs:
     steps:
       - run: echo ${{ github.event.commits[0].author }}
       - uses: actions/checkout@v3.2.0
-      - run: |
+      - id: task_number
+        run: |
           branch_name=${GITHUB_REF##*/}
-          echo "TASK_NUMBER=${branch_name/task-/}" >> $GITHUB_ENV
-          if [[ "${{ env.TASK_NUMBER }}" =~ ^[[:digit:]]+$ ]]; then exit 0; fi
+          echo "NUM=${branch_name/task-/}" >> $GITHUB_OUTPUT
+      - run: |
+          if [[ "${{ steps.task_number.output.NUM }}" =~ ^[[:digit:]]+$ ]]; \
+            then exit 0; fi
       - run: |
           author=${{ github.event.commits[0].author.username }}
           author=$(echo ${author^^})
@@ -26,7 +29,7 @@ jobs:
       - uses: repo-sync/pull-request@v2.9
         with:
           pr_title: ${GITHUB_REF##*/}
-          pr_body: "close #${{ env.TASK_NUMBER }}"
+          pr_body: "close #${{ steps.task_number.output.NUM }}"
           pr_assignee: ${{ github.event.commits[0].author.username }}
           pr_draft: true
           pr_allow_empty: true
