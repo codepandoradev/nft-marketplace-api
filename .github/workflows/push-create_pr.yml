@@ -16,7 +16,7 @@ jobs:
         run: |
           branch_name=${GITHUB_REF##*/}
           val=${branch_name/task-/}
-          if [[ $val =~ ^[[:digit:]]+$ ]]; then exit 0; fi
+          if [[ ! $val =~ ^[[:digit:]]+$ ]]; then exit 0; fi
           echo VAL=$val >> $GITHUB_OUTPUT
       - name: Get author
         id: get_author
