@@ -17,22 +17,17 @@ jobs:
           if [[ "${{ env.TASK_NUMBER }}" =~ ^[[:digit:]]+$ ]]; then exit 0; fi
       - run: |
           author=${{ github.event.commits[0].author.username }}
-          echo $author
-          echo AUTHOR=$author >> $GITHUB_ENV
-      - run: |
-#          author=${{ env.AUTHOR }}
-#          author=$(echo ${author^^})
-          echo $author
-#          token=$(echo '${{ toJSON(secrets) }}' | \
-#            python -c \
-#            "import sys, json; print(json.load(sys.stdin).get('${author}_TOKEN', ''))")
+          author=$(echo ${author^^})
+          token=$(echo '${{ toJSON(secrets) }}' | \
+            python -c \
+            "import sys, json; print(json.load(sys.stdin).get('${author}_TOKEN', ''))")
 #          if [[ $token == "" ]]; then token=${{ secrets.TOKEN }}; fi
-#          echo "TOKEN=$token" >> $GITHUB_ENV
+          echo "TOKEN=$token" >> $GITHUB_ENV
       - uses: repo-sync/pull-request@v2.9
         with:
           pr_title: ${GITHUB_REF##*/}
           pr_body: "close #${{ env.TASK_NUMBER }}"
-          pr_assignee: ${{ env.AUTHOR }}
+          pr_assignee: ${{ github.event.commits[0].author.username }}
           pr_draft: true
           pr_allow_empty: true
           github_token: ${{ env.TOKEN }}
