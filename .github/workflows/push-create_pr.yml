@@ -25,15 +25,13 @@ jobs:
           upper=$(echo ${val^^})
           echo VAL=$val >> $GITHUB_OUTPUT
           echo UPPER=$upper >> $GITHUB_OUTPUT
-#      - id: get_token
-#        run: |
-#          author=${{ github.event.commits[0].author.username }}
-#          author=$(echo ${author^^})
-#          token=$(echo '${{ toJSON(secrets) }}' | \
-#          python -c \
-#          "import sys, json; print(json.load(sys.stdin).get('${author}_TOKEN', ''))")
+      - name: Get token
+        id: get_token
+        run: |
+          author=${{ steps.get_author.output.UPPER }}
+          token=$(echo '${{ toJSON(secrets) }}' | python -c "import sys, json; print(json.load(sys.stdin).get('${author}_TOKEN', ''))")
 #          if [[ $token == "" ]]; then token=${{ secrets.TOKEN }}; fi
-#          echo "VAL=$token" >> $GITHUB_OUTPUT
+          echo "VAL=$token" >> $GITHUB_OUTPUT
 #      - uses: repo-sync/pull-request@v2.9
 #        with:
 #          pr_title: ${GITHUB_REF##*/}
