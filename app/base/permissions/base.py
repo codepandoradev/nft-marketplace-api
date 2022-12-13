@@ -2,8 +2,6 @@ from typing import final
 
 from rest_framework.permissions import BasePermission as _BasePermission
 
-import app.base.views.base as views_base
-
 
 class BasePermission(_BasePermission):
     requires_authentication: bool = True
@@ -20,7 +18,7 @@ class BasePermission(_BasePermission):
             return True
         return False
 
-    def _has_permission(self, view: 'views_base.BaseView'):
+    def _has_permission(self, view):
         return True
 
     @final
@@ -32,5 +30,5 @@ class BasePermission(_BasePermission):
             return True
         return False
 
-    def _has_object_permission(self, view: 'views_base.BaseView', obj):
+    def _has_object_permission(self, view, obj):
         return True

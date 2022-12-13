@@ -1,6 +1,6 @@
 from app.base.tests.fakers import fake
 from app.base.tests.views.base import BaseViewTest
-from app.messenger.models._message import Message, MessageAttachment
+from app.messenger.models import Message, MessageAttachment
 from app.messenger.tests.factories import MessageFactory
 from app.users.models import User
 from app.users.tests.factories.users import UserFactory
@@ -31,10 +31,7 @@ class MessengerDirectMessagesTest(BaseViewTest):
         self.interlocutor = UserFactory()
         self._test(
             'post',
-            {},
-            {
-                'text': fake.english_text(),
-            },
+            data={'text': fake.english_text()},
         )
         self.assert_equal(Message.objects.count(), 1)
 
