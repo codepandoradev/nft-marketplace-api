@@ -21,6 +21,7 @@ jobs:
         run: |
           author=${{ github.event.commits[0].author.username }}
           upper=$(echo ${val^^})
+          echo $upper
           echo VAL=$author >> $GITHUB_OUTPUT
           echo UPPER=$upper >> $GITHUB_OUTPUT
       - name: Get token
