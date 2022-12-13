@@ -28,8 +28,9 @@ jobs:
         id: get_token
         run: |
           author=${{ steps.get_author.outputs.UPPER }}
-          echo $author
-          token=$(echo '${{ toJSON(secrets) }}' | python -c "import sys, json; print(json.load(sys.stdin).get('${author}_TOKEN', ''))")
+          token=$(echo '${{ toJSON(secrets) }}' | \
+            python -c \
+            "import sys, json; print(json.load(sys.stdin).get ('${author}_TOKEN', ''))")
           echo $token
 #          if [[ $token == "" ]]; then token=${{ secrets.TOKEN }}; fi
 #          echo "VAL=$token" >> $GITHUB_OUTPUT
