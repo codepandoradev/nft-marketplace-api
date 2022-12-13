@@ -20,8 +20,7 @@ jobs:
         id: get_author
         run: |
           author=${{ github.event.commits[0].author.username }}
-          upper=$(echo ${val^^})
-          echo $upper
+          upper=$(echo ${author^^})
           echo VAL=$author >> $GITHUB_OUTPUT
           echo UPPER=$upper >> $GITHUB_OUTPUT
       - name: Get token
@@ -29,6 +28,7 @@ jobs:
         run: |
           author=${{ steps.get_author.outputs.UPPER }}
           token=$(echo '${{ toJSON(secrets) }}' | python -c "import sys, json; print(json.load(sys.stdin).get ('${author}_TOKEN', ''))")
+          echo $token
           echo VAL=$token >> $GITHUB_OUTPUT
       - run: |
           echo ${{ steps.get_task_number.outputs.VAL }}
