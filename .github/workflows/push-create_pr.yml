@@ -11,26 +11,27 @@ jobs:
     steps:
       - run: echo ${{ github.event.commits[0].author }}
       - uses: actions/checkout@v3.2.0
-      - id: task_number
+      - id: get_task_number
         run: |
           branch_name=${GITHUB_REF##*/}
-          echo "NUM=${branch_name/task-/}" >> $GITHUB_OUTPUT
+          echo "VAL=${branch_name/task-/}" >> $GITHUB_OUTPUT
       - run: |
-          if [[ "${{ steps.task_number.output.NUM }}" =~ ^[[:digit:]]+$ ]]; \
-            then exit 0; fi
-      - run: |
+          if [[ "${{ steps.get_task_number.output.VAL }}" =~ ^[[:digit:]]+$ ]]; \
+          then exit 0; fi
+      - id: get_token
+        run: |
           author=${{ github.event.commits[0].author.username }}
           author=$(echo ${author^^})
           token=$(echo '${{ toJSON(secrets) }}' | \
             python -c \
             "import sys, json; print(json.load(sys.stdin).get('${author}_TOKEN', ''))")
 #          if [[ $token == "" ]]; then token=${{ secrets.TOKEN }}; fi
-          echo "TOKEN=$token" >> $GITHUB_ENV
+          echo "VAL=$token" >> $GITHUB_OUTPUT
       - uses: repo-sync/pull-request@v2.9
         with:
           pr_title: ${GITHUB_REF##*/}
-          pr_body: "close #${{ steps.task_number.output.NUM }}"
+          pr_body: "close #${{ steps.get_task_number.output.VAL }}"
           pr_assignee: ${{ github.event.commits[0].author.username }}
           pr_draft: true
           pr_allow_empty: true
-          github_token: ${{ env.TOKEN }}
+          github_token: ${{ steps.get_token.output.VAL }}
