@@ -14,9 +14,9 @@ jobs:
       - id: get_task_number
         run: |
           branch_name=${GITHUB_REF##*/}
-          echo "VAL=${branch_name/task-/}" >> $GITHUB_OUTPUT
-      - run: |
-          if [[ ${{ steps.get_task_number.output.VAL }} =~ ^[[:digit:]]+$ ]]; then exit 0; fi
+          val=${branch_name/task-/}
+          echo VAL=$val >> $GITHUB_OUTPUT
+          if [[ $val =~ ^[[:digit:]]+$ ]]; then exit 0; fi
 #      - id: get_token
 #        run: |
 #          author=${{ github.event.commits[0].author.username }}
