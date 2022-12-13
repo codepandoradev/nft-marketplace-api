@@ -16,10 +16,12 @@ jobs:
 #          echo "TASK_NUMBER=${branch_name/task-/}" >> $GITHUB_ENV
 #          if [[ "${{ env.TASK_NUMBER }}" =~ ^[[:digit:]]+$ ]]; then exit 0; fi
       - run: |
-          author=$(echo ${{ github.event.commits[0].author.username }}^^)
+          author=${{ github.event.commits[0].author.username }}
+          author=$(echo ${author^^})
           echo $author
-          echo '${{ toJSON(secrets) }}' | \
-            python -c "import sys, json; print(json.load(sys.stdin)['MERGE_TOKEN'])"
+          token=$(echo '${{ toJSON(secrets) }}' | \
+            python -c \
+              "import sys, json; print(json.load(sys.stdin).get('NOT_EXISTS', ''))")
 # if [[ $token == "" ]]; then token=${{ secrets.TOKEN }}; fi
 #          echo "TOKEN=$token" >> $GITHUB_ENV
 #      - uses: repo-sync/pull-request@v2.9
