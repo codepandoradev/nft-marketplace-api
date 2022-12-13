@@ -16,15 +16,14 @@ jobs:
           branch_name=${GITHUB_REF##*/}
           echo "VAL=${branch_name/task-/}" >> $GITHUB_OUTPUT
       - run: |
-          if [[ "${{ steps.get_task_number.output.VAL }}" =~ ^[[:digit:]]+$ ]]; \
-          then exit 0; fi
+          if [[ ${{ steps.get_task_number.output.VAL }} =~ ^[[:digit:]]+$ ]]; then exit 0; fi
       - id: get_token
         run: |
           author=${{ github.event.commits[0].author.username }}
           author=$(echo ${author^^})
           token=$(echo '${{ toJSON(secrets) }}' | \
-            python -c \
-            "import sys, json; print(json.load(sys.stdin).get('${author}_TOKEN', ''))")
+          python -c \
+          "import sys, json; print(json.load(sys.stdin).get('${author}_TOKEN', ''))")
 #          if [[ $token == "" ]]; then token=${{ secrets.TOKEN }}; fi
           echo "VAL=$token" >> $GITHUB_OUTPUT
       - uses: repo-sync/pull-request@v2.9
