@@ -28,18 +28,12 @@ jobs:
         run: |
           author=${{ steps.get_author.outputs.UPPER }}
           token=$(echo '${{ toJSON(secrets) }}' | python -c "import sys, json; print(json.load(sys.stdin).get ('${author}_TOKEN', ''))")
-          echo $token
           echo VAL=$token >> $GITHUB_OUTPUT
-      - run: |
-          echo ${{ steps.get_task_number.outputs.VAL }}
-          echo ${{ steps.get_author.outputs.VAL }}
-          echo ${{ steps.get_author.outputs.UPPER }}
-          echo ${{ steps.get_token.outputs.VAL }}
-#      - uses: repo-sync/pull-request@v2.9
-#        with:
-#          pr_title: ${GITHUB_REF##*/}
-#          pr_body: "close #${{ steps.get_task_number.outputs.VAL }}"
-#          pr_assignee: ${{ steps.get_author.outputs.VAL }}
-#          pr_draft: true
-#          pr_allow_empty: true
-#          github_token: ${{ steps.get_token.outputs.VAL }}
+      - uses: repo-sync/pull-request@v2.9
+        with:
+          pr_title: ${GITHUB_REF##*/}
+          pr_body: "close #${{ steps.get_task_number.outputs.VAL }}"
+          pr_assignee: ${{ steps.get_author.outputs.VAL }}
+          pr_draft: true
+          pr_allow_empty: true
+          github_token: ${{ steps.get_token.outputs.VAL }}
