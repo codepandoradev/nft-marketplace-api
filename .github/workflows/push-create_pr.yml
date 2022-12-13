@@ -17,20 +17,20 @@ jobs:
           echo "VAL=${branch_name/task-/}" >> $GITHUB_OUTPUT
       - run: |
           if [[ ${{ steps.get_task_number.output.VAL }} =~ ^[[:digit:]]+$ ]]; then exit 0; fi
-      - id: get_token
-        run: |
-          author=${{ github.event.commits[0].author.username }}
-          author=$(echo ${author^^})
-          token=$(echo '${{ toJSON(secrets) }}' | \
-          python -c \
-          "import sys, json; print(json.load(sys.stdin).get('${author}_TOKEN', ''))")
-#          if [[ $token == "" ]]; then token=${{ secrets.TOKEN }}; fi
-          echo "VAL=$token" >> $GITHUB_OUTPUT
-      - uses: repo-sync/pull-request@v2.9
-        with:
-          pr_title: ${GITHUB_REF##*/}
-          pr_body: "close #${{ steps.get_task_number.output.VAL }}"
-          pr_assignee: ${{ github.event.commits[0].author.username }}
-          pr_draft: true
-          pr_allow_empty: true
-          github_token: ${{ steps.get_token.output.VAL }}
+#      - id: get_token
+#        run: |
+#          author=${{ github.event.commits[0].author.username }}
+#          author=$(echo ${author^^})
+#          token=$(echo '${{ toJSON(secrets) }}' | \
+#          python -c \
+#          "import sys, json; print(json.load(sys.stdin).get('${author}_TOKEN', ''))")
+##          if [[ $token == "" ]]; then token=${{ secrets.TOKEN }}; fi
+#          echo "VAL=$token" >> $GITHUB_OUTPUT
+#      - uses: repo-sync/pull-request@v2.9
+#        with:
+#          pr_title: ${GITHUB_REF##*/}
+#          pr_body: "close #${{ steps.get_task_number.output.VAL }}"
+#          pr_assignee: ${{ github.event.commits[0].author.username }}
+#          pr_draft: true
+#          pr_allow_empty: true
+#          github_token: ${{ steps.get_token.output.VAL }}
