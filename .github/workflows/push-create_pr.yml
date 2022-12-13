@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - run: echo ${{ github.event.commits[0].author }}
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3.2.0
       - run: |
           branch_name=${GITHUB_REF##*/}
           echo "TASK_NUMBER=${branch_name/task-/}" >> $GITHUB_ENV
