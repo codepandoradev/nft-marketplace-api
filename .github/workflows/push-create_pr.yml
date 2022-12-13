@@ -18,7 +18,7 @@ jobs:
       - run: |
           author=$(echo ${{ github.event.commits[0].author.username }}^^)
           echo $author
-          ${{ toJSON(secrets) }} | \
+          echo "${{ toJSON(secrets) }}" | \
             python -c "import sys, json; print(json.load(sys.stdin)['MERGE_TOKEN'])"
 # if [[ $token == "" ]]; then token=${{ secrets.TOKEN }}; fi
 #          echo "TOKEN=$token" >> $GITHUB_ENV
