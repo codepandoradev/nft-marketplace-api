@@ -1,3 +1,6 @@
+name-template: 'v$RESOLVED_VERSION 🔥'
+tag-template: 'v$RESOLVED_VERSION'
+
 categories:
   - title: '🚀 Solved tasks'
     labels:
@@ -22,6 +25,7 @@ categories:
 exclude-contributors:
   - dependabot
   - github-actions[bot]
+  - pre-commit-ci
 
 change-template: |
   - $TITLE in #$NUMBER
