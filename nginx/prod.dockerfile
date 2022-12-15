@@ -2,7 +2,7 @@ ARG TAG
 
 FROM envy42/nft-marketplace-web:$TAG as web
 
-FROM nginx:1.23.2 as nginx
+FROM nginx:1.23.3 as nginx
 
 WORKDIR /etc/nginx
 
