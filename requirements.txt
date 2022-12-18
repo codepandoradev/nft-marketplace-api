@@ -15,7 +15,7 @@ django-svg-image-form-field==1.0.1
 django-uuslug==2.0.0
 
 djangorestframework==3.14.0
-drf-spectacular==0.25.0
+drf-spectacular==0.25.1
 drf_base64==2.0
 djangochannelsrestframework==1.1.0
 
