@@ -2,7 +2,7 @@ name: "Cron: check health"
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '1 1 1 1 1'  # temp
 
 jobs:
   check_health:
