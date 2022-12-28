@@ -4,11 +4,13 @@ from .views import (
     UsersMeView,
     UsersSessionView,
     UsersTokenView,
+    UsersView,
     UsersWeb3ForceLoginView,
     UsersWeb3LoginView,
 )
 
 urlpatterns = [
+    path('', UsersView.as_view()),
     path('me/', UsersMeView.as_view()),
     path('token/', UsersTokenView.as_view()),
     path('session/', UsersSessionView.as_view()),
