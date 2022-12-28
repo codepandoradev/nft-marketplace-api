@@ -28,9 +28,10 @@ jobs:
         run: |
           author=${{ steps.get_author.outputs.UPPER }}
           token=$(echo '${{ toJSON(secrets) }}' | python -c "import sys, json; print(json.load(sys.stdin).get ('${author}_TOKEN', ''))")
-          if [[ $token == "" ]]; then token=${{ secrets.TOKEN }}; fi
+          if [[ $token == "" ]]; then exit 0; fi
           echo VAL=$token >> $GITHUB_OUTPUT
-      - uses: repo-sync/pull-request@v2.9
+      - if: ${{ steps.get_token.outputs.VAL }}
+        uses: repo-sync/pull-request@v2.11
         with:
           pr_title: ${GITHUB_REF##*/}
           pr_body: "close #${{ steps.get_task_number.outputs.VAL }}"
