@@ -14,14 +14,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          owner=${{ github.repository_owner }}
-          repo=${{ github.repository_name }}
+          repo=${{ github.repository }}
           number=${{ github.event.issue.number }}
           labels=$(gh api repos/$owner/$repo/issues/$number/labels)
-          milestone=$(gh api repos/$owner/$repo/issues/$number \
+          milestone=$(gh api repos/$repo/issues/$number \
             --output json | jq '.milestone.title')
           if echo $labels | grep -q task && [ -z "$milestone" ]; then
-              gh api repos/$owner/$repo/issues/$number/labels \
+              gh api repos/$repo/issues/$number/labels \
                 --method POST \
                 --input '{"labels":["not_milestone"]}'
           fi
