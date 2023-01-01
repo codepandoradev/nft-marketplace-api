@@ -15,10 +15,9 @@ jobs:
           repo=${{ github.repository }}
           number=${{ github.event.issue.number }}
           labels=$(gh api repos/$repo/issues/$number/labels)
-          milestone=$(gh api repos/$repo/issues/$number \
-            --output json | jq '.milestone.title')
+          milestone=$(gh api repos/$repo/issues/$number --jq '.milestone.title')
           if echo $labels | grep -q task && [ -z "$milestone" ]; then
-              gh api repos/$repo/issues/$number/labels \
-                --method POST \
-                --input '{"labels":["not_milestone"]}'
+            gh api repos/$repo/issues/$number/labels \
+              --method POST \
+              --input '{"labels":["not_milestone"]}'
           fi
