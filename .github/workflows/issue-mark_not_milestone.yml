@@ -2,17 +2,14 @@ name: "Issue: mark not_milestone"
 
 on:
   issues:
-    types: [labeled, opened, reopened]
+    types: [unlabeled, labeled, opened, reopened]
 
 jobs:
   masrk:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Install jq
-        run: |
-          apt-get update
-          apt-get sudo
-          sudo apt-get install jq -y
+        run: sudo apt-get install jq -y
       - name: Add label "not_milestone" to issues
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
