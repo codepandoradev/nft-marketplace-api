@@ -8,15 +8,13 @@ jobs:
   masrk:
     runs-on: ubuntu-22.04
     steps:
-      - name: Install jq
-        run: sudo apt-get install jq -y
-      - name: Add label "not_milestone" to issues
+      - name: Add label "not_milestone"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           repo=${{ github.repository }}
           number=${{ github.event.issue.number }}
-          labels=$(gh api repos/$owner/$repo/issues/$number/labels)
+          labels=$(gh api repos/$repo/issues/$number/labels)
           milestone=$(gh api repos/$repo/issues/$number \
             --output json | jq '.milestone.title')
           if echo $labels | grep -q task && [ -z "$milestone" ]; then
