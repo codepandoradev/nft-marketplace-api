@@ -11,7 +11,8 @@ jobs:
       - name: Install jq
         run: |
           apt-get update
-          apt-get install jq -y
+          apt-get sudo
+          sudo apt-get install jq -y
       - name: Add label "not_milestone" to issues
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
