@@ -30,7 +30,7 @@ whitenoise==6.2.0
 celery==5.2.7
 gevent==22.10.2
 argon2-cffi==21.3.0
-pydantic[email]==1.10.3
+pydantic[email]==1.10.4
 pycryptodome==3.16.0
 coincurve==18.0.0
 py-ecc==6.0.0
