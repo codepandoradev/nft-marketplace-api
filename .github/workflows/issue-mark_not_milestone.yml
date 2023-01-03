@@ -2,7 +2,7 @@ name: "Issue: mark not_milestone"
 
 on:
   issues:
-    types: [ unlabeled, labeled, opened, reopened ]
+    types: [ unlabeled, labeled, opened, reopened, milestoned ]
 
 jobs:
   masrk:
@@ -20,4 +20,6 @@ jobs:
           milestone=$(gh api repos/$repo/issues/$number --jq .milestone)
           if [ -z $milestone ] && [ -n $label ]; then
             gh issue edit $number -R $repo --add-label not_milestone
+          else
+            gh issue edit $number -R $repo --remove-label not_milestone
           fi
