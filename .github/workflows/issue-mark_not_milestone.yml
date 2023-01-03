@@ -19,5 +19,5 @@ jobs:
           )
           milestone=$(gh api repos/$repo/issues/$number --jq .milestone)
           if [ -z $milestone ] && [ -n $label ]; then
-            gh issue edit $number --add-label not_milestone
+            gh issue edit $number -R $repo --add-label not_milestone
           fi
