@@ -18,11 +18,8 @@ jobs:
             --jq '.[] | select(.name == "task")'
           )
           milestone=$(gh api repos/$repo/issues/$number --jq .milestone)
-          echo -e "label=$label\nmilestone=$milestone"
-          if [ -z $milestone ] && [ -n $label ]; then
-            echo mark
+          if [ -z "$milestone" ] && [ -n "$label" ]; then
             gh issue edit $number -R $repo --add-label not_milestone
           else
-            echo unmark
             gh issue edit $number -R $repo --remove-label not_milestone
           fi
