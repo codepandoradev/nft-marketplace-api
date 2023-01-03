@@ -5,10 +5,10 @@ on:
     types: [ unlabeled, labeled, opened, reopened, milestoned ]
 
 jobs:
-  masrk:
+  mark:
     runs-on: ubuntu-22.04
     steps:
-      - name: Add label "not_milestone"
+      - name: Add label not_milestone
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
