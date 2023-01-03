@@ -2,7 +2,7 @@ name: "Issue: mark not_milestone"
 
 on:
   issues:
-    types: [unlabeled, labeled, opened, reopened]
+    types: [ unlabeled, labeled, opened, reopened ]
 
 jobs:
   masrk:
@@ -14,10 +14,10 @@ jobs:
         run: |
           repo=${{ github.repository }}
           number=${{ github.event.issue.number }}
-          labels=$(gh api repos/$repo/issues/$number/labels)
-          milestone=$(gh api repos/$repo/issues/$number --jq '.milestone.title')
-          if echo $labels | grep -q task && [ -z "$milestone" ]; then
-            gh api repos/$repo/issues/$number/labels \
-              --method POST \
-              --input '{"labels":["not_milestone"]}'
+          label=$(gh api repos/$repo/issues/$number/labels \
+            --jq '.[] | select(.name == "task")'
+          )
+          milestone=$(gh api repos/$repo/issues/$number --jq .milestone)
+          if [ -z $milestone ] && [ -n $label ]; then
+            gh issue edit $number -R $repo --add-label not_milestone
           fi
