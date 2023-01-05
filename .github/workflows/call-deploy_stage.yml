@@ -11,7 +11,7 @@ jobs:
       name: stage
       url: 'http://stage.wonderplace.io:81'
     steps:
-    - uses: actions/checkout@v3.2.0
+    - uses: actions/checkout@v3.3.0
       with:
         clean: false
     - name: Set stage envs
