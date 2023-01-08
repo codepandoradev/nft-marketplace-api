@@ -9,7 +9,7 @@ jobs:
   create:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3.2.0
+      - uses: actions/checkout@v3.3.0
       - name: Get task number
         id: get_task_number
         run: |
